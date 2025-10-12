@@ -1,0 +1,4 @@
+[2m2025-10-11T22:20:03.086878Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'glzr-io.starter'.
+[2m2025-10-11T22:22:17.963278Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'glzr-io.starter'.
+[2m2025-10-11T22:22:17.963374Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'starter'.
+[2m2025-10-12T13:57:26.693454Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'starter'.

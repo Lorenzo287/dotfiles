@@ -1,0 +1,118 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "background": "#dcd7ba",
+          "foreground": "#011627",
+          "leading_diamond": "\ue0b2",
+          "properties": {
+            "macos": "\uf179  ",
+            "ubuntu": "\uf31b  ",
+            "windows": "  "
+          },
+          "style": "diamond",
+          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}}",
+          "trailing_diamond": "<transparent,#dcd7ba>\ue0b2</>",
+          "type": "os"
+        },
+        {
+          "background": "#516BEB",
+          "foreground": "#ffffff",
+          "leading_diamond": "\ue0b2",
+          "style": "diamond",
+          "template": " MEM:{{ round .PhysicalPercentUsed .Precision }}% ",
+          "trailing_diamond": "<transparent,#516BEB>\ue0b2</>",
+          "type": "sysinfo"
+        },
+        {
+          "background": "#575656",
+          "foreground": "#d6deeb",
+          "leading_diamond": "\ue0b2",
+          "properties": {
+            "style": "roundrock",
+            "threshold": 0
+          },
+          "style": "diamond",
+          "template": " {{ .FormattedMs }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "executiontime"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "background": "#17D7A0",
+          "foreground": "#011627",
+          "leading_diamond": "\ue0b2",
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": true,
+            "fetch_upstream_icon": true,
+            "fetch_worktree_count": true
+          },
+          "style": "diamond",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": false,
+      "segments": [
+        {
+          "style": "plain",
+          "template": "",
+          "type": "text"
+        },
+        {
+          "style": "plain",
+          "template": " \uf292 ",
+          "type": "root"
+        },
+        {
+          "properties": {
+            "folder_icon": " ",
+            "folder_separator_icon": "   ",
+            "home_icon": "󰜥 "
+          },
+          "style": "plain",
+          "template": " {{ .Path }} ",
+          "type": "path"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": false,
+      "segments": [
+        {
+          "properties": {
+            "always_enabled": true
+          },
+          "style": "plain",
+          "template": "  ",
+          "type": "status"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "console_title_template": "{{ .Folder }}",
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground": "#dcd7ba",
+    "template": " "
+  },
+  "version": 3
+}
