@@ -1,0 +1,4 @@
+# Ignore generated or volatile files
+nvim/.luarc.json
+wezterm/errors.log
+
