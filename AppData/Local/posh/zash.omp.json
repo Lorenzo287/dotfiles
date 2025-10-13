@@ -16,6 +16,16 @@
           "template": "➜",
           "type": "text"
         },
+		{
+          "foreground": "#DCB977",
+          "style": "plain",
+          "template": " {{ .FormattedMs }}",
+          "properties": {
+            "style": "roundrock",
+            "threshold": 0
+          },
+          "type": "executiontime"
+        },
         {
           "foreground": "#56B6C2",
           "properties": {
@@ -33,16 +43,6 @@
           "style": "plain",
           "template": " <#DDB15F>git(</>{{ .HEAD }}<#DDB15F>)</>",
           "type": "git"
-        },
-        {
-          "foreground": "#DCB977",
-          "style": "plain",
-          "template": " {{ .FormattedMs }}",
-          "properties": {
-            "style": "roundrock",
-            "threshold": 0
-          },
-          "type": "executiontime"
         },
         {
           "foreground": "#DCB977",

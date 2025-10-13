@@ -40,7 +40,7 @@ return {
 				},
 			},
 			window = {
-				width = 25, -- default 40
+				width = 30, -- default 40
 			},
 		})
 	end,
