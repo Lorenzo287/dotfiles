@@ -14,7 +14,7 @@ config.cursor_blink_rate = 500
 
 -- Appearance
 config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
-config.font_size = 14.0
+config.font_size = 14.5
 config.cell_width = 1.0
 config.line_height = 1.0
 
@@ -35,7 +35,7 @@ config.window_frame = {
 }
 
 -- Tabs & Layout
-config.hide_tab_bar_if_only_one_tab = false
+config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.tab_max_width = 100
 config.adjust_window_size_when_changing_font_size = false
@@ -90,7 +90,7 @@ config.keys = {
 	{ key = "P", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
 
 	-- Misc utilities
-	-- { key = "9", mods = "CTRL", action = act.PaneSelect },
+	{ key = "9", mods = "CTRL", action = act.PaneSelect },
 	-- { key = "L", mods = "CTRL", action = act.ShowDebugOverlay },
 
 	-- Toggle transparency

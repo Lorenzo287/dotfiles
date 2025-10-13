@@ -13,7 +13,7 @@
         {
           "foreground": "#62ED8B",
           "style": "plain",
-          "template": "\u279c",
+          "template": "➜",
           "type": "text"
         },
         {
@@ -33,6 +33,16 @@
           "style": "plain",
           "template": " <#DDB15F>git(</>{{ .HEAD }}<#DDB15F>)</>",
           "type": "git"
+        },
+        {
+          "foreground": "#DCB977",
+          "style": "plain",
+          "template": " {{ .FormattedMs }}",
+          "properties": {
+            "style": "roundrock",
+            "threshold": 0
+          },
+          "type": "executiontime"
         },
         {
           "foreground": "#DCB977",
