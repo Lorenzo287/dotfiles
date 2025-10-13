@@ -111,21 +111,21 @@ config.keys = {
 }
 
 -- Window Behavior
-wezterm.on("gui-startup", function(cmd)
-	local _, _, window = wezterm.mux.spawn_window(cmd or {})
-	local gui = window:gui_window()
-
-	-- Optional: comment out this line if you don’t want the window maximized
-	-- gui:maximize()
-
-	-- Center the window manually (only works if not maximized)
-	local screen = wezterm.gui.screens().active
-	local dimensions = gui:get_dimensions()
-
-	gui:set_position(
-		(screen.width - dimensions.pixel_width) / 2,
-		(screen.height - dimensions.pixel_height) / 2
-	)
-end)
+-- wezterm.on("gui-startup", function(cmd)
+-- 	local _, _, window = wezterm.mux.spawn_window(cmd or {})
+-- 	local gui = window:gui_window()
+--
+-- 	-- Optional: comment out this line if you don’t want the window maximized
+-- 	-- gui:maximize()
+--
+-- 	-- Center the window manually (only works if not maximized)
+-- 	local screen = wezterm.gui.screens().active
+-- 	local dimensions = gui:get_dimensions()
+--
+-- 	gui:set_position(
+-- 		(screen.width - dimensions.pixel_width) / 2,
+-- 		(screen.height - dimensions.pixel_height) / 2
+-- 	)
+-- end)
 
 return config
