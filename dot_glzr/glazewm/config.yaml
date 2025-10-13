@@ -153,10 +153,6 @@ window_rules:
         window_class: { not_regex: 'OpusApp' }
       - window_process: { equals: 'POWERPNT' }
         window_class: { not_regex: 'PPTFrameClass' }
-  - commands: ["set-floating"]
-    match:
-      - window_process: { equals: "Microsoft.CmdPal.UI.dll" }
-        window_title: { equals: "Command Palette" }
 
 binding_modes:
   # When enabled, the focused window can be resized via arrow keys or HJKL.
