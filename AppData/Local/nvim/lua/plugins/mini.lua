@@ -20,6 +20,12 @@ return {
 			require("mini.comment").setup()
 		end,
 	},
+	{
+		"nvim-mini/mini.surround",
+		config = function()
+			require("mini.surround").setup()
+		end,
+	},
 	-- {
 	-- 	"nvim-mini/mini.icons",
 	-- 	config = function()

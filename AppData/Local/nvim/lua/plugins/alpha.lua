@@ -15,8 +15,8 @@ return {
 			local dashboard = require("alpha.themes.startify")
 			local ascii = require("ascii")
 
-			-- dashboard.section.header.val = ascii.art.text.neovim.sharp
-			dashboard.section.header.val = ascii.art.text.neovim.bloody
+			dashboard.section.header.val = ascii.art.text.neovim.sharp
+			-- dashboard.section.header.val = ascii.art.text.neovim.bloody
 			-- dashboard.section.header.val = ascii.art.text.neovim.ansi_shadow
 			-- dashboard.section.header.val = ascii.art.text.neovim.slant_relief
 			-- dashboard.section.header.val = ascii.art.planets.planets.saturn

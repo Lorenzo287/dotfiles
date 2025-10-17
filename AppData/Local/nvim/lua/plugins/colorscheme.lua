@@ -3,35 +3,22 @@ return {
 		"rebelot/kanagawa.nvim",
 		priority = 1000,
 		config = function()
-			-- pcall(vim.cmd.colorscheme, "default")
-			pcall(vim.cmd.colorscheme, "kanagawa-wave")
+			-- Path to store last used colorscheme
+			local last_theme_file = vim.fn.stdpath("data") .. "/last_colorscheme"
 
-			local themes = {
-				"kanagawa-dragon",
-				"gruvbox",
-				"tokyonight",
-				"catppuccin",
-				"onedark",
-				"onedark_vivid",
-				"dracula",
-				"rose-pine",
-				"cyberdream",
-				"vscode",
-				"evergarden",
-				"solarized-osaka",
-				"kanagawa-wave",
-			}
+			-- Function to safely apply a colorscheme
+			local function safe_colorscheme(name)
+				if not name or name == "" then
+					return
+				end
 
-			local current = 0
-			local function apply(idx)
-				local theme = themes[idx]
-				if theme == "cyberdream" then
+				-- Theme-specific setup (only for the one being used)
+				if name == "cyberdream" then
 					require("cyberdream").setup({
 						variant = "default",
 						transparent = true,
 					})
-				end
-				if theme == "rose-pine" then
+				elseif name == "rose-pine" then
 					require("rose-pine").setup({
 						palette = {
 							main = {
@@ -44,40 +31,52 @@ return {
 							transparency = false,
 						},
 					})
-				end
-				if theme == "onedark" then
+				elseif name == "onedark" then
 					require("onedark").setup({
 						style = "warmer",
 						colors = {
 							grey = "#7e8084",
 						},
 					})
-				end
-				if theme == "solarized-osaka" then
+				elseif name == "solarized-osaka" then
 					require("solarized-osaka").setup({
 						transparent = false,
 					})
 				end
 
-				local ok, err = pcall(vim.cmd.colorscheme, themes[idx])
-				if ok then
-					vim.notify("Colorscheme: " .. themes[idx], vim.log.levels.INFO)
-				else
-					vim.notify(
-						"Failed to load colorscheme: " .. themes[idx] .. "\n" .. tostring(err),
-						vim.log.levels.WARN
-					)
+				local ok, err = pcall(vim.cmd.colorscheme, name)
+				if not ok then
+					vim.notify("Failed to load colorscheme: " .. name .. "\n" .. tostring(err), vim.log.levels.WARN)
 				end
 			end
 
-			vim.keymap.set("n", "<F8>", function()
-				current = (current % #themes) + 1
-				apply(current)
-			end, { desc = "Next colorscheme" })
+			-- Try to load last used theme
+			local theme = nil
+			if vim.fn.filereadable(last_theme_file) == 1 then
+				theme = vim.fn.readfile(last_theme_file)[1]
+			end
+
+			if theme and theme ~= "" then
+				safe_colorscheme(theme)
+			else
+				safe_colorscheme("kanagawa-wave")
+			end
+
+			-- Save theme on ColorScheme change
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				callback = function(args)
+					local file = io.open(last_theme_file, "w")
+					if file then
+						file:write(args.match)
+						file:close()
+						vim.notify("Saved last theme: " .. args.match, vim.log.levels.INFO)
+					end
+				end,
+			})
 		end,
 	},
 
-	-- { "rebelot/kanagawa.nvim", lazy = true },
+	-- Other themes (lazy-loaded)
 	{ "ellisonleao/gruvbox.nvim", lazy = true },
 	{ "folke/tokyonight.nvim", lazy = true },
 	{ "catppuccin/nvim", name = "catppuccin", lazy = true },
