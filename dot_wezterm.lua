@@ -37,7 +37,7 @@ config.window_frame = {
 -- Tabs & Layout
 config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
-config.tab_max_width = 100
+config.tab_max_width = 25
 config.adjust_window_size_when_changing_font_size = false
 config.initial_cols = 110
 config.initial_rows = 25

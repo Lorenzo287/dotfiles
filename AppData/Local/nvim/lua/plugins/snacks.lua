@@ -24,10 +24,13 @@ return {
 		opts = {
 			bigfile = { enabled = true },
 			dashboard = { enabled = false },
+			explorer = { enabled = false }, -- neotree alternative
 			indent = { enabled = false },
 			input = { enabled = true },
+			picker = { enabled = false }, -- telescope alternative
 			notifier = { enabled = true },
 			quickfile = { enabled = true },
+			scope = { enabled = true },
 			scroll = { enabled = false },
 			statuscolumn = { enabled = false },
 			words = { enabled = false }, -- highliht multiple word occurences
