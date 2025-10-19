@@ -3,7 +3,7 @@ vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
 
 -- vim.cmd([[set mouse=]])
-vim.opt.winborder = "rounded"
+-- vim.opt.winborder = "rounded"
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
 vim.opt.wrap = true

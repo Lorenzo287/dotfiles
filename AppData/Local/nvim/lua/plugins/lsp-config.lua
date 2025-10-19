@@ -3,7 +3,12 @@ return {
 		"williamboman/mason.nvim",
 		event = "VeryLazy",
 		config = function()
-			require("mason").setup()
+			require("mason").setup({
+				ui = {
+					border = "rounded",
+					backdrop = 100,
+				},
+			})
 		end,
 	},
 	{
@@ -28,7 +33,9 @@ return {
 				severity_sort = true,
 			})
 
-			vim.keymap.set("n", "<leader>lk", vim.lsp.buf.hover, { desc = "LSP Hover" })
+			vim.keymap.set("n", "<leader>lk", function()
+				vim.lsp.buf.hover({ border = "rounded" })
+			end, { desc = "LSP Hover" })
 			vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, { desc = "LSP Go to Definition" })
 			vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, { desc = "LSP References" })
 			vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "LSP Code Actions" })

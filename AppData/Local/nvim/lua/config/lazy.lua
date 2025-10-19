@@ -15,9 +15,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	spec = {
-		{ import = "plugins" },
-	},
+	spec = { { import = "plugins" } },
+	ui = { border = "rounded", backdrop = 100 },
 	-- colorscheme that will be used when installing plugins.
 	install = { colorscheme = { "kanagawa" } },
 	checker = { enabled = true },
