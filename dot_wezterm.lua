@@ -25,7 +25,7 @@ config.window_padding = {
 	left = 20,
 	right = 20,
 	top = 20,
-	bottom = 20,
+	bottom = 5,
 }
 
 config.window_decorations = "NONE | RESIZE"
