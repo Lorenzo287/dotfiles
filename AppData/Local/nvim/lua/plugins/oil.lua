@@ -18,6 +18,7 @@ return {
 			},
 			float = {
 				padding = 8,
+				border = "rounded",
 			},
 		})
 		vim.keymap.set("n", "<leader>b", oil.toggle_float, { desc = "Toggle Oil" })
