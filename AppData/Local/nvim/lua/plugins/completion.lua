@@ -20,31 +20,16 @@ return {
 	-- 	end,
 	-- },
 	{
-		{
-			"Exafunction/windsurf.nvim",
-			cmd = { "Codeium Toggle" },
-			config = function()
-				require("codeium").setup({
-					enable_cmp_source = false,
-					virtual_text = { enabled = true },
-				})
-			end,
-			vim.keymap.set("n", "<leader>c", function()
-				local lazy = require("lazy")
-				local cfg = require("lazy.core.config")
-				local plugin = cfg.plugins["windsurf.nvim"]
-
-				if not plugin or not plugin._.loaded then
-					lazy.load({ plugins = { "windsurf.nvim" } })
-					-- defer toggle slightly to allow command registration
-					vim.defer_fn(function()
-						vim.cmd("Codeium Toggle")
-					end, 100)
-				else
-					vim.cmd("Codeium Toggle")
-				end
-			end, { desc = "Toggle Codeium" }),
+		"Exafunction/windsurf.nvim",
+		keys = {
+			{ "<leader>c", "<cmd>Codeium Toggle<CR>", desc = "Toggle Codeium" },
 		},
+		config = function()
+			require("codeium").setup({
+				enable_cmp_source = false,
+				virtual_text = { enabled = true },
+			})
+		end,
 	},
 	{
 		"saghen/blink.cmp",
@@ -56,7 +41,7 @@ return {
 			appearance = { nerd_font_variant = "mono" }, -- or "normal"
 			completion = { menu = { border = "rounded" } },
 			sources = { default = { "lsp", "path", "buffer" } }, -- "snippets"
-			signature = { enabled = true },
+			signature = { enabled = false },
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 	},
