@@ -7,10 +7,11 @@ return {
 		},
 		config = function()
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Telescope find files" })
-			vim.keymap.set("n", "<leader>tg", builtin.live_grep, { desc = "Telescope live grep" })
-			vim.keymap.set("n", "<leader>tc", builtin.colorscheme, { desc = "Telescope colorscheme" })
-			vim.keymap.set("n", "<leader>ts", builtin.lsp_document_symbols, { desc = "Telescope document symbols" })
+			vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Telescope Find Files" })
+			vim.keymap.set("n", "<leader>tg", builtin.live_grep, { desc = "Telescope Live Grep" })
+			vim.keymap.set("n", "<leader>tc", builtin.colorscheme, { desc = "Telescope Colorscheme" })
+			vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, { desc = "LSP Document Symbols" })
+			vim.keymap.set("n", "<leader>lr", builtin.lsp_references, { desc = "LSP References" })
 		end,
 	},
 	{

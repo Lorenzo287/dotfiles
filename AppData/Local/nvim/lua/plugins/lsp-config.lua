@@ -37,7 +37,7 @@ return {
 				vim.lsp.buf.hover({ border = "rounded" })
 			end, { desc = "LSP Hover" })
 			vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, { desc = "LSP Go to Definition" })
-			vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, { desc = "LSP References" })
+			-- vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, { desc = "LSP References" })
 			vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "LSP Code Actions" })
 			vim.keymap.set("n", "<leader>ln", vim.lsp.buf.rename, { desc = "LSP Rename" })
 			vim.keymap.set("n", "<leader>ll", function()
