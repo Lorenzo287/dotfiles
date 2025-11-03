@@ -48,7 +48,7 @@ return {
 					vim.diagnostic.enable()
 					print("Diagnostics enabled")
 				end
-			end, { desc = "LSP Toggle Diagnostics" })
+			end, { desc = "LSP Toggle" })
 		end,
 	},
 }

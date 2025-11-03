@@ -40,6 +40,21 @@ local toggle_terminal = function()
 	end
 end
 
+local close_floating_terminal = function()
+	if vim.api.nvim_buf_is_valid(state.floating.buf) then
+		local chan = vim.b[state.floating.buf].terminal_job_id
+		if chan and vim.fn.jobwait({ chan }, 0)[1] == -1 then
+			vim.fn.jobstop(chan)
+		end
+		vim.api.nvim_buf_delete(state.floating.buf, { force = true })
+	end
+	if vim.api.nvim_win_is_valid(state.floating.win) then
+		vim.api.nvim_win_close(state.floating.win, true)
+	end
+	state.floating = { buf = -1, win = -1 }
+end
+
 vim.keymap.set("t", "<esc>", "<c-\\><c-n>", { desc = "Exit terminal mode" })
 vim.api.nvim_create_user_command("Floaterminal", toggle_terminal, {})
+vim.api.nvim_create_user_command("CloseFloaterminal", close_floating_terminal, {})
 vim.keymap.set({ "n", "t" }, "<leader>j", toggle_terminal, { desc = "Toggle floating terminal" })
