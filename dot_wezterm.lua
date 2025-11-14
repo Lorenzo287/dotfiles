@@ -28,7 +28,7 @@ config.window_padding = {
 	bottom = 5,
 }
 
-config.window_decorations = "NONE | RESIZE"
+config.window_decorations = "RESIZE"
 config.window_frame = {
 	font = wezterm.font({ family = "JetBrainsMono Nerd Font", weight = "Regular" }),
 	active_titlebar_bg = "#1F1F28",

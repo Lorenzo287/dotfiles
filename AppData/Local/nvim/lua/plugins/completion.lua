@@ -1,36 +1,36 @@
 return {
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	event = "VeryLazy",
-	-- 	config = function()
-	-- 		vim.cmd("Copilot disable")
-	-- 		local copilot_enabled = false
-	--
-	-- 		vim.keymap.set("n", "<leader>c", function()
-	-- 			if copilot_enabled then
-	-- 				vim.cmd("Copilot disable")
-	-- 				copilot_enabled = false
-	-- 				print("Copilot disabled")
-	-- 			else
-	-- 				vim.cmd("Copilot enable")
-	-- 				copilot_enabled = true
-	-- 				print("Copilot enabled")
-	-- 			end
-	-- 		end, { noremap = true, silent = true, desc = "Toggle Copilot" })
-	-- 	end,
-	-- },
 	{
-		"Exafunction/windsurf.nvim",
-		keys = {
-			{ "<leader>c", "<cmd>Codeium Toggle<CR>", desc = "Toggle Codeium" },
-		},
+		"github/copilot.vim",
+		event = "VeryLazy",
 		config = function()
-			require("codeium").setup({
-				enable_cmp_source = false,
-				virtual_text = { enabled = true },
-			})
+			vim.cmd("Copilot disable")
+			local copilot_enabled = false
+
+			vim.keymap.set("n", "<leader>c", function()
+				if copilot_enabled then
+					vim.cmd("Copilot disable")
+					copilot_enabled = false
+					print("Copilot disabled")
+				else
+					vim.cmd("Copilot enable")
+					copilot_enabled = true
+					print("Copilot enabled")
+				end
+			end, { noremap = true, silent = true, desc = "Toggle Copilot" })
 		end,
 	},
+	-- {
+	-- 	"Exafunction/windsurf.nvim",
+	-- 	keys = {
+	-- 		{ "<leader>c", "<cmd>Codeium Toggle<CR>", desc = "Toggle Codeium" },
+	-- 	},
+	-- 	config = function()
+	-- 		require("codeium").setup({
+	-- 			enable_cmp_source = false,
+	-- 			virtual_text = { enabled = true },
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"saghen/blink.cmp",
 		event = "VeryLazy",
