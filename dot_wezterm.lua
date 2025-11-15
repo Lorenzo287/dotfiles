@@ -63,8 +63,12 @@ config.color_schemes = {
 			"#7FB4CA", "#D27E99", "#A3D4D5", "#DCD7BA",
 		},
 	},
+	["Solarized Dark - Patched"] = {
+		background = "#001419",
+	}
 }
-config.color_scheme = "Kanagawa"
+-- config.color_scheme = "Kanagawa"
+config.color_scheme = 'Solarized Dark - Patched'
 
 -- Shell / Program Defaults
 config.default_prog = { "pwsh.exe", "-NoLogo" }
