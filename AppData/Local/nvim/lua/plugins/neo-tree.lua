@@ -7,7 +7,8 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle<CR>", { desc = "Toggle NeoTree" })
+		vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle left<CR>", { desc = "Toggle NeoTree" })
+		vim.keymap.set("n", "<leader>N", "<cmd>Neotree toggle right<CR>", { desc = "Open NeoTree Right" })
 		vim.keymap.set("n", "<leader>-", "<cmd>Neotree buffers reveal float<CR>", { desc = "Show Buffers in NeoTree" })
 
 		require("neo-tree").setup({
