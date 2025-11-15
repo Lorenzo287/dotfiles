@@ -35,7 +35,8 @@ return {
 					require("onedark").setup({
 						style = "warmer",
 						colors = {
-							grey = "#7e8084",
+							-- comments
+							-- grey = "#7e8084",
 						},
 					})
 				elseif name == "solarized-osaka" then
@@ -85,7 +86,7 @@ return {
 	{ "rose-pine/neovim", name = "rose-pine", lazy = true },
 	{ "scottmckendry/cyberdream.nvim", lazy = true },
 	{ "Mofiqul/vscode.nvim", lazy = true },
-	{ "olimorris/onedarkpro.nvim", lazy = true },
+	-- { "olimorris/onedarkpro.nvim", lazy = true },
 	{ "everviolet/nvim", name = "evergarden", lazy = true },
 	{ "craftzdog/solarized-osaka.nvim", lazy = true },
 

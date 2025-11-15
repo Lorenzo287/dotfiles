@@ -7,6 +7,7 @@ startup_mode = "Windowed"
 decorations = "Full"
 opacity = 1.0
 padding = { x = 20, y = 0 }
+dynamic_padding = true
 title = ""
 dynamic_title = false
 
