@@ -3,6 +3,5 @@ config files for
 - powershell
 - ohmyposh
 - wezterm
-- windows terminal
 - alacritty
 - glzr
