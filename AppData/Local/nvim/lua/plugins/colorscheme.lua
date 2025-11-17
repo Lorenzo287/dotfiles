@@ -34,14 +34,13 @@ return {
 				elseif name == "onedark" then
 					require("onedark").setup({
 						style = "warmer",
-						colors = {
-							-- comments
-							-- grey = "#7e8084",
-						},
+						-- colors = {
+						-- 	grey = "#7e8084",
+						-- },
 					})
 				elseif name == "solarized-osaka" then
 					require("solarized-osaka").setup({
-						transparent = false,
+						transparent = true,
 					})
 				end
 

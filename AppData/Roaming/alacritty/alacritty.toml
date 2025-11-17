@@ -3,6 +3,7 @@ working_directory = "C:/Users/ltumi"
 
 [window]
 dimensions = { columns = 110, lines = 27 }
+position = "None"
 startup_mode = "Windowed"
 decorations = "Full"
 opacity = 1.0

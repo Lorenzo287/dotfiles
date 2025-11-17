@@ -1,1 +1,8 @@
-config files for nvim, powershell, ohmyposh, glzr, wezterm
+config files for
+- neovim
+- powershell
+- ohmyposh
+- wezterm
+- windows terminal
+- alacritty
+- glzr

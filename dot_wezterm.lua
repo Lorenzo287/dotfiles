@@ -13,13 +13,14 @@ config.default_cursor_style = "BlinkingBlock"
 config.cursor_blink_rate = 500
 
 -- Appearance
-config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
+config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" })
 config.font_size = 14.0
 config.cell_width = 1.0
 config.line_height = 1.0
 
--- Opaque by default
-config.window_background_opacity = 1.0
+config.window_background_opacity = 0.85
+config.win32_system_backdrop = 'Acrylic' -- Mica, Tabbed
+-- config.text_background_opacity = 0.85
 
 config.window_padding = {
 	left = 20,
@@ -28,7 +29,7 @@ config.window_padding = {
 	bottom = 5,
 }
 
-config.window_decorations = "RESIZE"
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_frame = {
 	font = wezterm.font({ family = "JetBrainsMono Nerd Font", weight = "Regular" }),
 	active_titlebar_bg = "#1F1F28",
@@ -37,7 +38,7 @@ config.window_frame = {
 -- Tabs & Layout
 config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
-config.tab_max_width = 25
+-- config.tab_max_width = 25
 config.adjust_window_size_when_changing_font_size = false
 config.initial_cols = 110
 config.initial_rows = 25
