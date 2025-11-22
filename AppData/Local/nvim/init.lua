@@ -76,7 +76,7 @@ vim.keymap.set(
 	{ noremap = true, silent = true, desc = "Insert main() C++" }
 )
 
-vim.keymap.set("n", "<leader>s", function()
+vim.keymap.set("n", "<leader>i", function()
 	---@diagnostic disable-next-line: undefined-field
 	if vim.opt.spell:get() then
 		vim.opt.spell = false

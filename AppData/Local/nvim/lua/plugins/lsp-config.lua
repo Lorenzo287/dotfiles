@@ -25,6 +25,8 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
+			vim.lsp.set_log_level("off")
+
 			vim.diagnostic.config({
 				virtual_text = true,
 				signs = true,
