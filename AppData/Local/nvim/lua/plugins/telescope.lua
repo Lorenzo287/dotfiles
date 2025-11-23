@@ -27,6 +27,7 @@ return {
 					},
 				},
 			})
+			-- telescope.load_extension("refactoring")
 			-- telescope.load_extension("undo")
 			-- vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 			telescope.load_extension("ui-select")

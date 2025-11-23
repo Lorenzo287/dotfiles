@@ -18,7 +18,7 @@ config.font_size = 14.0
 config.cell_width = 1.0
 config.line_height = 1.0
 
-config.window_background_opacity = 0.85
+config.window_background_opacity = 1 -- 0.90
 config.win32_system_backdrop = 'Acrylic' -- Mica, Tabbed
 -- config.text_background_opacity = 0.85
 

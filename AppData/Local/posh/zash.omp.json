@@ -7,24 +7,36 @@
         {
           "foreground": "#E36464",
           "style": "plain",
-          "template": "{{ .UserName }}@{{ .HostName }} ", 
+          "template": "{{ .UserName }}",
           "type": "session"
         },
         {
-          "foreground": "#62ED8B",
+          "foreground": "#E36464",
           "style": "plain",
-          "template": "➜",
-          "type": "text"
+          "template": "@",
+          "type": "session"
         },
-		{
-          "foreground": "#DCB977",
+        {
+          "foreground": "#E36464",
           "style": "plain",
-          "template": " {{ .FormattedMs }}",
+          "template": "{{ .HostName }} ",
+          "type": "session"
+        },
+        {
+          "foreground": "#8BBD8B",
+          "style": "plain",
+          "template": "{{ .FormattedMs }} ",
           "properties": {
             "style": "roundrock",
             "threshold": 0
           },
           "type": "executiontime"
+        },
+        {
+          "foreground": "#8BBD8B",
+          "style": "plain",
+          "template": "⮞",
+          "type": "text"
         },
         {
           "foreground": "#56B6C2",
@@ -41,11 +53,11 @@
             "branch_icon": ""
           },
           "style": "plain",
-          "template": " <#DDB15F>git(</>{{ .HEAD }}<#DDB15F>)</>",
+          "template": " <#CACC90>git(</>{{ .HEAD }}<#CACC90>)</>",
           "type": "git"
         },
         {
-          "foreground": "#DCB977",
+          "foreground": "#E36464",
           "style": "plain",
           "template": " \uf00d",
           "type": "status"

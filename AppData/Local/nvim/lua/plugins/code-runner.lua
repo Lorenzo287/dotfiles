@@ -6,9 +6,11 @@ return {
 			require("code_runner").setup({
 				mode = "float",
 				float = { border = "rounded" },
-				filetype = {},
+				filetype = {
+					lua = { "lua" },
+				},
 			})
-			vim.keymap.set("n", "<leader>r", "<cmd>RunCode<CR>", { desc = "Run code" })
+			vim.keymap.set("n", "<leader><CR>", "<cmd>RunCode<CR>", { desc = "Run code" })
 		end,
 	},
 	{
