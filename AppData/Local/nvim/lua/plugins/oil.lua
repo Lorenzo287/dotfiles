@@ -20,8 +20,11 @@ return {
 				padding = 8,
 				border = "rounded",
 			},
+			confirmation = {
+				border = "rounded",
+			},
 		})
-		vim.keymap.set("n", "<leader>b", oil.toggle_float, { desc = "Toggle Oil" })
-		vim.keymap.set("n", "<leader>o", oil.open, { desc = "Open Oil" })
+		-- vim.keymap.set("n", "<leader>o", oil.toggle_float, { desc = "Toggle Oil" })
+		vim.keymap.set("n", "<leader>b", oil.open, { desc = "Open Oil" })
 	end,
 }

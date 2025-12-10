@@ -53,7 +53,7 @@
             "branch_icon": ""
           },
           "style": "plain",
-          "template": " <#CACC90>git(</>{{ .HEAD }}<#CACC90>)</>",
+          "template": " <#DCB977>git(</>{{ .HEAD }}<#DCB977>)</>",
           "type": "git"
         },
         {

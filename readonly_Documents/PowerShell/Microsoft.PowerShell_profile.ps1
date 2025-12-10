@@ -30,7 +30,7 @@ function ll {
     & eza --color=always --long --git --icons=always --no-user --no-time @args
 }
 Set-Alias cat "bat"       
-Set-Alias find "fd"      
+Set-Alias find "fd"  # find / -iname "*word*" 2>/dev/null    
 Set-Alias grep "rg"     
 
 # --- FZF Integration ---

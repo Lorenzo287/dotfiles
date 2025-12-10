@@ -42,6 +42,10 @@ return {
 					require("solarized-osaka").setup({
 						transparent = true,
 					})
+				elseif name == "vague" then
+					require("vague").setup({
+						transparent = true,
+					})
 				end
 
 				local ok, err = pcall(vim.cmd.colorscheme, name)
@@ -88,6 +92,7 @@ return {
 	-- { "olimorris/onedarkpro.nvim", lazy = true },
 	{ "everviolet/nvim", name = "evergarden", lazy = true },
 	{ "craftzdog/solarized-osaka.nvim", lazy = true },
+	{ "vague-theme/vague.nvim", lazy = true },
 
 	{
 		"catgoose/nvim-colorizer.lua",
