@@ -12,6 +12,22 @@ return {
 				-- component_separators = { left = "", right = "" },
 				-- section_separators = { left = "", right = "" },
 			},
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch", "diff" },
+				lualine_c = { "filename", "filesize" },
+				lualine_x = { "filetype" },
+				lualine_y = {
+					"diagnostics",
+					{
+						"lsp_status",
+						icon = "",
+						symbols = { separator = " | ", done = "" },
+						ignore_lsp = { "null-ls" },
+					},
+				},
+				lualine_z = { "progress", "location" },
+			},
 		})
 	end,
 }
