@@ -25,6 +25,10 @@ Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContin
 # --- ZOXIDE (Fast Directory Switching) ---
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
+# --- DIRENV (Load Environment Variables and Venv) ---
+$env:EDITOR = "nvim"
+Import-Module posh-direnv
+
 # --- ALIASES for Modern Tools ---
 function ll {
     & eza --color=always --long --git --icons=always --no-user --no-time @args
@@ -32,6 +36,9 @@ function ll {
 Set-Alias cat "bat"       
 Set-Alias find "fd"  # find / -iname "*word*" 2>/dev/null    
 Set-Alias grep "rg"     
+function fetch {
+    fastfetch -c examples/13
+}
 
 # --- FZF Integration ---
 # --- Function to search files + open in default editor ---

@@ -1,6 +1,6 @@
 [general]
 working_directory = "C:/Users/ltumi"
-import = ["themes/blood_moon.toml"]
+# import = ["themes/blood_moon.toml"]
 
 [window]
 dimensions = { columns = 110, lines = 27 }
@@ -68,26 +68,26 @@ background = "#2A2A37"
 # foreground = "#a9b1d6"
 
 # Colors: Kanagawa
-# [colors.primary]
-# background = "#1F1F28"
-# foreground = "#DCD7BA"
-#
-# [colors.normal]
-# black   = "#1F1F28"
-# red     = "#E82424"
-# green   = "#76946A"
-# yellow  = "#FF9E3B"
-# blue    = "#658594"
-# magenta = "#957FB8"
-# cyan    = "#9CABCA"
-# white   = "#DCD7BA"
-#
-# [colors.bright]
-# black   = "#8181A9"
-# red     = "#FF5D62"
-# green   = "#98BB6C"
-# yellow  = "#E6C384"
-# blue    = "#7FB4CA"
-# magenta = "#D27E99"
-# cyan    = "#A3D4D5"
-# white   = "#DCD7BA"
+[colors.primary]
+background = "#1F1F28"
+foreground = "#DCD7BA"
+
+[colors.normal]
+black   = "#1F1F28"
+red     = "#E82424"
+green   = "#76946A"
+yellow  = "#FF9E3B"
+blue    = "#658594"
+magenta = "#957FB8"
+cyan    = "#9CABCA"
+white   = "#DCD7BA"
+
+[colors.bright]
+black   = "#8181A9"
+red     = "#FF5D62"
+green   = "#98BB6C"
+yellow  = "#E6C384"
+blue    = "#7FB4CA"
+magenta = "#D27E99"
+cyan    = "#A3D4D5"
+white   = "#DCD7BA"

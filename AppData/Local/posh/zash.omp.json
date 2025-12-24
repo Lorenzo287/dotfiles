@@ -48,6 +48,15 @@
           "type": "path"
         },
         {
+          "type": "python",
+          "style": "plain",
+          "foreground": "#FFD866",
+          "template": " (venv)",
+          "properties": {
+            "display_mode": "environment"
+          }
+        },
+        {
           "foreground": "#D4AAFC",
           "properties": {
             "branch_icon": ""
