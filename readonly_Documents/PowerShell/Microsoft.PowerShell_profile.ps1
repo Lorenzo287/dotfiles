@@ -1,8 +1,10 @@
 # --- BASIC SETTINGS ---
-Set-PSReadLineOption -EditMode Vi 
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -PredictionViewStyle InlineView 
-Set-PSReadLineOption -Colors @{ "InlinePrediction" = "`e[38;5;244m" }
+Set-PSReadLineOption -EditMode Vi
+if ($Host.UI.SupportsVirtualTerminal) {
+    Set-PSReadLineOption -PredictionSource History
+	Set-PSReadLineOption -PredictionViewStyle InlineView 
+	Set-PSReadLineOption -Colors @{ "InlinePrediction" = "`e[38;5;244m" }
+}
 
 # --- PATH SHORTENER + CUSTOM PROMPT ---
 # function prompt {
