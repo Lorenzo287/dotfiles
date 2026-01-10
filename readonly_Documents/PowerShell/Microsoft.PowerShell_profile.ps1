@@ -1,9 +1,11 @@
 # --- BASIC SETTINGS ---
 Set-PSReadLineOption -EditMode Vi
-if ($Host.UI.SupportsVirtualTerminal) {
-    Set-PSReadLineOption -PredictionSource History
-	Set-PSReadLineOption -PredictionViewStyle InlineView 
-	Set-PSReadLineOption -Colors @{ "InlinePrediction" = "`e[38;5;244m" }
+if (Get-Module -ListAvailable PSReadLine -ErrorAction SilentlyContinue) {
+    if ($Host.UI.SupportsVirtualTerminal) {
+        Set-PSReadLineOption -PredictionSource History
+        Set-PSReadLineOption -PredictionViewStyle InlineView
+        Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[38;5;244m" }
+    }
 }
 
 # --- PATH SHORTENER + CUSTOM PROMPT ---
@@ -38,8 +40,25 @@ function ll {
 Set-Alias cat "bat"       
 Set-Alias find "fd"  # find / -iname "*word*" 2>/dev/null    
 Set-Alias grep "rg"     
+Set-Alias v "nvim"     
+function zv {
+    param (
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]]$Args
+    )
+    z @Args
+    v
+}
 function fetch {
     fastfetch -c examples/13
+}
+function dif {
+    param(
+        [string]$file1,
+        [string]$file2
+    )
+    Compare-Object (Get-Content $file1) (Get-Content $file2) |
+        Select-Object SideIndicator, InputObject
 }
 
 # --- FZF Integration ---

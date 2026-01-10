@@ -1,6 +1,7 @@
 [general]
 working_directory = "C:/Users/ltumi"
 # import = ["themes/blood_moon.toml"]
+# import = ["themes/gruber_darker.toml"]
 
 [window]
 dimensions = { columns = 110, lines = 27 }

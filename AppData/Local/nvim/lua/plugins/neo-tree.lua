@@ -7,9 +7,9 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		vim.keymap.set("n", "<leader>N", "<cmd>Neotree toggle left<CR>", { desc = "Toggle NeoTree" })
-		vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle right<CR>", { desc = "Open NeoTree Right" })
-		vim.keymap.set("n", "<leader>-", "<cmd>Neotree buffers reveal float<CR>", { desc = "Show Buffers in NeoTree" })
+		vim.keymap.set("n", "<leader>N", "<cmd>Neotree toggle left<CR>", { desc = "Toggle Neotree" })
+		vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle right<CR>", { desc = "Open Neotree right" })
+		vim.keymap.set("n", "<leader>-", "<cmd>Neotree buffers reveal float<CR>", { desc = "Show buffers in Neotree" })
 
 		require("neo-tree").setup({
 			popup_border_style = "rounded",
@@ -34,7 +34,7 @@ return {
 							end
 
 							-- Use recycle-bin utility to move the file to the Recycle Bin
-							local result = vim.fn.system({ "recycle-bin", path })
+							vim.fn.system({ "recycle-bin", path })
 							require("neo-tree.ui.renderer").redraw(state)
 						end,
 					},

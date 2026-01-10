@@ -93,6 +93,8 @@ return {
 	{ "everviolet/nvim", name = "evergarden", lazy = true },
 	{ "craftzdog/solarized-osaka.nvim", lazy = true },
 	{ "vague-theme/vague.nvim", lazy = true },
+	-- { "blazkowolf/gruber-darker.nvim", lazy = true },
+	{ "https://codeberg.org/ericrulec/gruber-darker.nvim" },
 
 	{
 		"catgoose/nvim-colorizer.lua",

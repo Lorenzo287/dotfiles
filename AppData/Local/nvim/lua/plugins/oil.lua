@@ -3,6 +3,12 @@ return {
 	config = function()
 		local oil = require("oil")
 		oil.setup({
+			columns = {
+				"icon",
+				"permissions",
+				"size",
+				"mtime",
+			},
 			keymaps = {
 				["<C-s>"] = { "actions.select", opts = { vertical = true } },
 				["<C-h>"] = { "actions.select", opts = { horizontal = true } },
@@ -20,6 +26,7 @@ return {
 				padding = 8,
 				border = "rounded",
 			},
+			delete_to_trash = true,
 			confirmation = {
 				border = "rounded",
 			},

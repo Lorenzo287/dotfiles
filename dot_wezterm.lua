@@ -19,7 +19,7 @@ config.cell_width = 1.0
 config.line_height = 1.0
 
 config.window_background_opacity = 1 -- 0.90
-config.win32_system_backdrop = 'Acrylic' -- Mica, Tabbed
+config.win32_system_backdrop = "Acrylic" -- Mica, Tabbed
 -- config.text_background_opacity = 0.85
 
 config.window_padding = {
@@ -41,7 +41,7 @@ config.use_fancy_tab_bar = false
 -- config.tab_max_width = 25
 config.adjust_window_size_when_changing_font_size = false
 config.initial_cols = 110
-config.initial_rows = 25
+config.initial_rows = 26
 config.scrollback_lines = 5000
 config.audible_bell = "Disabled"
 
@@ -68,8 +68,9 @@ config.color_schemes = {
 		background = "#001419",
 	}
 }
-config.color_scheme = "Kanagawa"
+-- config.color_scheme = "Kanagawa"
 -- config.color_scheme = 'Solarized Dark - Patched'
+config.color_scheme = "Gruber (base16)"
 
 -- Shell / Program Defaults
 config.default_prog = { "pwsh.exe", "-NoLogo" }

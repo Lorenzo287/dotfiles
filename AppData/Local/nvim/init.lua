@@ -23,6 +23,7 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
+-- vim.opt.shell = "pwsh -NoLogo"
 
 -- "za" to fold
 vim.wo.foldenable = true
@@ -35,7 +36,7 @@ vim.schedule(function()
 	vim.o.clipboard = "unnamedplus"
 end)
 
-vim.keymap.set("n", "<leader>x", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix list" })
+vim.keymap.set("n", "<leader>x", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<c-k>", "<cmd>wincmd k<CR>")
 vim.keymap.set("n", "<c-j>", "<cmd>wincmd j<CR>")
@@ -97,3 +98,24 @@ end, { desc = "Toggle spell check" })
 -- vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 -- vim.cmd("highlight FloatBorder guibg=NormalFloat")
 -- vim.cmd("highlight FloatTitle guibg=NormalFloat")
+
+if vim.g.neovide then
+	-- vim.o.guifont = "Source Code Pro:h14"
+	-- vim.o.guifont = "Iosevka Nerd Font:h15"
+	vim.o.guifont = "JetBrainsMono Nerd Font:h14"
+
+	vim.g.neovide_padding_top = 0
+	vim.g.neovide_padding_bottom = 0
+	vim.g.neovide_padding_right = 0
+	vim.g.neovide_padding_left = 0
+
+	vim.g.neovide_title_background_color =
+		string.format("%x", vim.api.nvim_get_hl(0, { id = vim.api.nvim_get_hl_id_by_name("Normal") }).bg)
+
+	vim.g.neovide_hide_mouse_when_typing = true
+	vim.g.neovide_fullscreen = false
+
+	vim.g.neovide_cursor_animation_length = 0.150 -- 0 to disable
+	vim.g.neovide_cursor_short_animation_length = 0.04
+	vim.g.neovide_cursor_trail_size = 1
+end

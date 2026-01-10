@@ -7,12 +7,12 @@ return {
 
 		vim.keymap.set("n", "<leader>a", function()
 			harpoon:list():add()
-		end, { desc = "Add file to harpoon" })
+		end, { desc = "Add file to Harpoon" })
 		vim.keymap.set("n", "<leader>h", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list(), {
 				border = "rounded",
 			})
-		end, { desc = "Toggle harpoon window" })
+		end, { desc = "Toggle Harpoon window" })
 		vim.keymap.set("n", "<leader>1", function()
 			harpoon:list():select(1)
 		end, { desc = "Go to file 1" })

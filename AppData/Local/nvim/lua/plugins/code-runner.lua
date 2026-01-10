@@ -4,7 +4,10 @@ return {
 		event = "VeryLazy",
 		config = function()
 			require("code_runner").setup({
-				mode = "float",
+				mode = "term", -- tab, float, better_term, toggle, vimux
+				term = {
+					position = "below", -- "bot" goes over center.lua
+				},
 				float = { border = "rounded" },
 				filetype = {
 					lua = { "lua" },

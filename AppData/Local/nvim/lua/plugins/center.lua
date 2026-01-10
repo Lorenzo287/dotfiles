@@ -3,7 +3,7 @@ return {
 	version = "*",
 	config = function()
 		require("no-neck-pain").setup({
-			width = 80,
+			width = 75,
 			buffers = {
 				-- scratchPad = {
 				-- 	enabled = true, -- autosaving
@@ -20,6 +20,6 @@ return {
 				},
 			},
 		})
-		vim.keymap.set("n", "<leader>z", "<cmd>NoNeckPain<CR>", { desc = "Toggle No Neck Pain" })
+		vim.keymap.set("n", "<leader>z", "<cmd>NoNeckPain<CR>", { desc = "Toggle Noneckpain" })
 	end,
 }

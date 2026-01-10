@@ -5,5 +5,5 @@ return {
 		browser = "firefox",
 		picker = "telescope",
 	},
-	vim.keymap.set("n", "<leader>pf", "<cmd>LivePreview start<CR>", { desc = "Live Preview" }),
+	vim.keymap.set("n", "<leader>pf", "<cmd>LivePreview start<CR>", { desc = "Live preview" }),
 }
