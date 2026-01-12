@@ -77,6 +77,15 @@ vim.keymap.set(
 	{ noremap = true, silent = true, desc = "Insert main() C++" }
 )
 
+local function insert_snippet(name)
+	local path = vim.fn.stdpath("config") .. "/snippets/" .. name
+	vim.api.nvim_put(vim.fn.readfile(path), "l", true, true)
+end
+
+vim.keymap.set("n", "<leader>mb", function()
+	insert_snippet("nob.c")
+end, { desc = "Insert NOB build system" })
+
 vim.keymap.set("n", "<leader>i", function()
 	---@diagnostic disable-next-line: undefined-field
 	if vim.opt.spell:get() then
