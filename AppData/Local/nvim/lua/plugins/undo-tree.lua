@@ -6,6 +6,7 @@ return {
 		position = "left", -- "right", "bottom"
 		window = {
 			winblend = 0,
+			border = BORDER
 		},
 		keymaps = {
 			j = "move_next",

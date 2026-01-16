@@ -15,11 +15,13 @@ int main(int argc, char **argv) {
     Cmd cmd = {0};
     cc(&cmd);
     cc_flags(&cmd);
-// #ifndef _MSC_VER
-//     cmd_append(&cmd, "-O2", "-I" INCLUDE_FOLDER);
-// #else
-//     cmd_append(&cmd, "/O2", "/I" INCLUDE_FOLDER);
-// #endif
+#ifndef _MSC_VER
+//     cmd_append(&cmd, "-O2");
+//     cmd_append(&cmd, "-I" INCLUDE_FOLDER);
+#else
+//     cmd_append(&cmd, "/O2");
+//     cmd_append(&cmd, "/I" INCLUDE_FOLDER);
+#endif
 
     Cmd targets = {0};
     cc_inputs(&targets, SRC_FOLDER "main.c");

@@ -25,7 +25,8 @@ local function create_floating_window(opts)
 		border = BORDER,
 	}
 	local win = vim.api.nvim_open_win(buf, true, win_config)
-	vim.api.nvim_win_set_option(win, "winhl", "NormalFloat:Normal")
+	-- change default window highliting group to background group
+	-- vim.api.nvim_win_set_option(win, "winhl", "NormalFloat:Normal")
 	return { buf = buf, win = win }
 end
 

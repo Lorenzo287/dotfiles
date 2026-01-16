@@ -3,7 +3,8 @@ return {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	opts = {
-		preset = "modern",
+		preset = "classic", -- "modern", "helix"
+		win = { border = BORDER },
 		sort = { "local", "order", "group", "alphanum", "mod" },
 	},
 	-- keys = {

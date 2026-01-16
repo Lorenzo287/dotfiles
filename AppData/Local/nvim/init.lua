@@ -2,10 +2,10 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
 
--- border could be set globally with vim.opt but it is less buggy to do it in each plugin,
--- using a global variable for convenience
+-- border can be set globally with vim.opt but not every plugin supports it,
+-- better to use a global variable for convenience
 BORDER = "bold" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
--- vim.opt.winborder = BORDER,
+vim.opt.winborder = BORDER
 
 -- vim.cmd([[set mouse=]])
 vim.opt.swapfile = false
@@ -110,9 +110,9 @@ end, { desc = "Toggle spell check" })
 -- zug Undo 'good' word (remove from dictionary)
 
 -- change highlight color of floating window (background, border, title)
-vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
-vim.cmd("highlight FloatBorder guibg=NormalFloat")
-vim.cmd("highlight FloatTitle guibg=NormalFloat")
+-- vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+-- vim.cmd("highlight FloatBorder guibg=NormalFloat")
+-- vim.cmd("highlight FloatTitle guibg=NormalFloat")
 
 if vim.g.neovide then
 	-- vim.o.guifont = "Source Code Pro:h14"
