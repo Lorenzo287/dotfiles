@@ -6,7 +6,7 @@ return {
 
 		-- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins
 		null_ls.setup({
-			border = "rounded",
+			border = BORDER,
 			sources = {
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.clang_format,

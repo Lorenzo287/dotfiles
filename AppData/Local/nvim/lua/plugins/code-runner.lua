@@ -8,7 +8,7 @@ return {
 				term = {
 					position = "below", -- "bot" goes over center.lua
 				},
-				float = { border = "rounded" },
+				float = { border = BORDER },
 				filetype = {
 					lua = { "lua" },
 				},

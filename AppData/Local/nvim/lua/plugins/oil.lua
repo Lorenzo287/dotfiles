@@ -24,11 +24,11 @@ return {
 			},
 			float = {
 				padding = 8,
-				border = "rounded",
+				border = BORDER,
 			},
 			delete_to_trash = true,
 			confirmation = {
-				border = "rounded",
+				border = BORDER,
 			},
 		})
 		-- vim.keymap.set("n", "<leader>o", oil.toggle_float, { desc = "Toggle Oil" })

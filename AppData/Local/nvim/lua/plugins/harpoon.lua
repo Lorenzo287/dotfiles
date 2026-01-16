@@ -10,7 +10,7 @@ return {
 		end, { desc = "Add file to Harpoon" })
 		vim.keymap.set("n", "<leader>h", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list(), {
-				border = "rounded",
+				border = BORDER,
 			})
 		end, { desc = "Toggle Harpoon window" })
 		vim.keymap.set("n", "<leader>1", function()

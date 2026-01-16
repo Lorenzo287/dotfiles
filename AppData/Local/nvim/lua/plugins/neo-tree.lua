@@ -12,7 +12,7 @@ return {
 		vim.keymap.set("n", "<leader>-", "<cmd>Neotree buffers reveal float<CR>", { desc = "Show buffers in Neotree" })
 
 		require("neo-tree").setup({
-			popup_border_style = "rounded",
+			popup_border_style = BORDER,
 			filesystem = {
 				filtered_items = {
 					visible = true,

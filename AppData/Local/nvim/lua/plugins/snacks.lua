@@ -27,7 +27,7 @@ return {
 			dashboard = { enabled = false },
 			explorer = { enabled = false }, -- neotree alternative
 			indent = { enabled = false },
-			input = { enabled = true },
+			input = { enabled = false },
 			picker = { enabled = false }, -- telescope alternative
 			notifier = { enabled = true },
 			quickfile = { enabled = true },

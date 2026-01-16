@@ -1,4 +1,44 @@
 return {
+	{
+		"saghen/blink.cmp",
+		event = "VeryLazy",
+		-- dependencies = { "rafamadriz/friendly-snippets" },
+		version = "1.*",
+		opts = {
+			keymap = {
+				["<CR>"] = { "accept", "fallback" },
+				["<C-e>"] = { "show", "hide", "fallback" }, --"show_documentation", "hide_documentation"
+				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+			},
+			appearance = { nerd_font_variant = "normal" }, -- "mono"
+
+			completion = {
+				menu = {
+					border = BORDER,
+					auto_show = false,
+					draw = { treesitter = { "lsp" } },
+				},
+				documentation = {
+					window = { border = BORDER },
+					auto_show = false,
+					auto_show_delay_ms = 0,
+				},
+				-- don't select by default, insert without CR after selection
+				-- list = { selection = { preselect = false, auto_insert = true } },
+			},
+			signature = {
+				window = {
+					border = BORDER,
+					show_documentation = false,
+				},
+				enabled = true,
+				trigger = { enabled = false }, -- does not show automatically
+			},
+
+			sources = { default = { "lsp", "path", "buffer" } }, -- "snippets"
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+	},
 	-- {
 	-- 	"github/copilot.vim",
 	-- 	event = "VeryLazy",
@@ -31,18 +71,4 @@ return {
 	-- 		})
 	-- 	end,
 	-- },
-	{
-		"saghen/blink.cmp",
-		event = "VeryLazy",
-		-- dependencies = { "rafamadriz/friendly-snippets" },
-		version = "1.*",
-		opts = {
-			keymap = { ["<CR>"] = { "accept", "fallback" } },
-			appearance = { nerd_font_variant = "mono" }, -- or "normal"
-			completion = { menu = { border = "rounded" } },
-			sources = { default = { "lsp", "path", "buffer" } }, -- "snippets"
-			signature = { enabled = false },
-			fuzzy = { implementation = "prefer_rust_with_warning" },
-		},
-	},
 }

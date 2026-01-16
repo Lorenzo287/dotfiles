@@ -5,7 +5,7 @@ return {
 		config = function()
 			require("mason").setup({
 				ui = {
-					border = "rounded",
+					border = BORDER,
 					backdrop = 100,
 				},
 			})
@@ -43,7 +43,7 @@ return {
 			})
 
 			vim.keymap.set("n", "<leader>lk", function()
-				vim.lsp.buf.hover({ border = "rounded" })
+				vim.lsp.buf.hover({ border = BORDER })
 			end, { desc = "LSP Hover" })
 			vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, { desc = "LSP Go to definition" })
 			-- vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, { desc = "LSP References" })
