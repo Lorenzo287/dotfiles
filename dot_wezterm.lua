@@ -13,8 +13,10 @@ config.default_cursor_style = "BlinkingBlock"
 config.cursor_blink_rate = 500
 
 -- Appearance
-config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" })
-config.font_size = 14.0
+-- config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" })
+-- config.font_size = 14.0
+config.font = wezterm.font("Iosevka Nerd Font", { weight = "Regular" })
+config.font_size = 15.0
 config.cell_width = 1.0
 config.line_height = 1.0
 
@@ -31,7 +33,8 @@ config.window_padding = {
 
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_frame = {
-	font = wezterm.font({ family = "JetBrainsMono Nerd Font", weight = "Regular" }),
+	-- font = wezterm.font({ family = "JetBrainsMono Nerd Font", weight = "Regular" }),
+	font = wezterm.font({ family = "Iosevka Nerd Font", weight = "Regular" }),
 	active_titlebar_bg = "#1F1F28",
 }
 
@@ -56,17 +59,29 @@ config.color_schemes = {
 		selection_bg = "#2A2A37",
 		selection_fg = "#DCD7BA",
 		ansi = {
-			"#1F1F28", "#E82424", "#76946A", "#FF9E3B",
-			"#658594", "#957FB8", "#9CABCA", "#DCD7BA",
+			"#1F1F28",
+			"#E82424",
+			"#76946A",
+			"#FF9E3B",
+			"#658594",
+			"#957FB8",
+			"#9CABCA",
+			"#DCD7BA",
 		},
 		brights = {
-			"#8181A9", "#FF5D62", "#98BB6C", "#E6C384",
-			"#7FB4CA", "#D27E99", "#A3D4D5", "#DCD7BA",
+			"#8181A9",
+			"#FF5D62",
+			"#98BB6C",
+			"#E6C384",
+			"#7FB4CA",
+			"#D27E99",
+			"#A3D4D5",
+			"#DCD7BA",
 		},
 	},
 	["Solarized Dark - Patched"] = {
 		background = "#001419",
-	}
+	},
 }
 -- config.color_scheme = "Kanagawa"
 -- config.color_scheme = 'Solarized Dark - Patched'
@@ -128,10 +143,9 @@ wezterm.on("gui-startup", function(cmd)
 	local screen = wezterm.gui.screens().active
 	local dimensions = gui:get_dimensions()
 
-	gui:set_position(
-		(screen.width - dimensions.pixel_width) / 2,
-		(screen.height - dimensions.pixel_height) / 2
-	)
+	local x = (screen.width - dimensions.pixel_width) / 2
+	local y = (screen.height - dimensions.pixel_height) / 2 - 30
+	gui:set_position(x, y)
 end)
 
 return config

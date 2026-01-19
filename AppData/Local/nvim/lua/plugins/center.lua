@@ -3,7 +3,7 @@ return {
 	version = "*",
 	config = function()
 		require("no-neck-pain").setup({
-			width = 75,
+			width = 95,
 			buffers = {
 				-- scratchPad = {
 				-- 	enabled = true, -- autosaving

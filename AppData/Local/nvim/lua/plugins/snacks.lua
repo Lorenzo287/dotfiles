@@ -11,7 +11,7 @@ return {
 		"folke/todo-comments.nvim",
 		opts = {
 			keywords = {
-				FIX = { alt = { "FIXED" } },
+				FIX = { alt = { "FIXED", "BUG" } },
 				NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
 				TEST = { icon = "󰓅 ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 				COOL = { icon = " ", color = "error", alt = { "FIGO", "FIGATA" } },
