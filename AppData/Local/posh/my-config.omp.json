@@ -1,0 +1,80 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "#E36464",
+          "style": "plain",
+          "template": "{{ .UserName }}",
+          "type": "session"
+        },
+        {
+          "foreground": "#E36464",
+          "style": "plain",
+          "template": "@",
+          "type": "session"
+        },
+        {
+          "foreground": "#E36464",
+          "style": "plain",
+          "template": "{{ .HostName }} ",
+          "type": "session"
+        },
+        {
+          "foreground": "#8BBD8B",
+          "style": "plain",
+          "template": "{{ .FormattedMs }} ",
+          "properties": {
+            "style": "roundrock",
+            "threshold": 0
+          },
+          "type": "executiontime"
+        },
+        {
+          "foreground": "#8BBD8B",
+          "style": "plain",
+          "template": "⮞",
+          "type": "text"
+        },
+        {
+          "foreground": "#56B6C2",
+          "properties": {
+            "style": "folder"
+          },
+          "style": "plain",
+          "template": " {{ .Path }}",
+          "type": "path"
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "foreground": "#FFD866",
+          "template": " (venv)",
+          "properties": {
+            "display_mode": "environment"
+          }
+        },
+        {
+          "foreground": "#D4AAFC",
+          "properties": {
+            "branch_icon": ""
+          },
+          "style": "plain",
+          "template": " <#DCB977>git(</>{{ .HEAD }}<#DCB977>)</>",
+          "type": "git"
+        },
+        {
+          "foreground": "#E36464",
+          "style": "plain",
+          "template": " \uf00d",
+          "type": "status"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 3
+}

@@ -1,0 +1,2 @@
+Write-Host "Hello .psenvrc"
+Set-Item Env:TEST_ENV "Hello"

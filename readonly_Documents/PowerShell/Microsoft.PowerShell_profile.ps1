@@ -21,7 +21,7 @@ if (Get-Module -ListAvailable PSReadLine -ErrorAction SilentlyContinue) {
 
 # --- OH-MY-POSH (Theme + Aesthetics) ---
 # https://windowsterminalthemes.dev/
-oh-my-posh init pwsh --config "C:/Users/ltumi/AppData/Local/posh/zash.omp.json" | invoke-expression
+oh-my-posh init pwsh --config "C:/Users/ltumi/AppData/Local/posh/my-config.omp.json" | invoke-expression
 
 # --- COMMAND-NOT-FOUND SUGGESTIONS ---
 Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue

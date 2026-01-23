@@ -15,7 +15,7 @@ config.cursor_blink_rate = 500
 -- Appearance
 -- config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" })
 -- config.font_size = 14.0
-config.font = wezterm.font("Iosevka Nerd Font", { weight = "Regular" })
+config.font = wezterm.font("Iosevka Nerd Font", { weight = "Medium" })
 config.font_size = 15.0
 config.cell_width = 1.0
 config.line_height = 1.0
@@ -34,7 +34,7 @@ config.window_padding = {
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_frame = {
 	-- font = wezterm.font({ family = "JetBrainsMono Nerd Font", weight = "Regular" }),
-	font = wezterm.font({ family = "Iosevka Nerd Font", weight = "Regular" }),
+	font = wezterm.font({ family = "Iosevka Nerd Font", weight = "Medium" }),
 	active_titlebar_bg = "#1F1F28",
 }
 

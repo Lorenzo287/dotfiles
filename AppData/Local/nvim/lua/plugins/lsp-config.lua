@@ -15,7 +15,24 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		event = "VeryLazy",
 		opts = {
-			ensure_installed = { "lua_ls", "clangd", "pyright", "ts_ls", "tinymist" },
+			-- this is not needed to use an lsp, once installed manually form Mason it works automatically
+			-- this is useful when importing this config to a new computer to install lsp automatically
+			ensure_installed = {
+				"clangd", -- C server
+				-- "codelldb", -- C lint
+
+				"lua_ls", -- Lua server
+				"stylua", -- Lua format
+
+				"ts_ls", -- JS server
+
+				"tinymist", -- Typst server
+
+				"ty", -- Py server
+				"ruff", -- Py lint, format
+				-- "pyright", -- Py server
+				-- "black", -- Py format
+			},
 		},
 	},
 	{

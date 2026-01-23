@@ -7,40 +7,18 @@
         {
           "foreground": "#E36464",
           "style": "plain",
-          "template": "{{ .UserName }}",
+          "template": "@{{ .UserName }} ",
           "type": "session"
         },
         {
-          "foreground": "#E36464",
+          "foreground": "#62ED8B",
           "style": "plain",
-          "template": "@",
-          "type": "session"
-        },
-        {
-          "foreground": "#E36464",
-          "style": "plain",
-          "template": "{{ .HostName }} ",
-          "type": "session"
-        },
-        {
-          "foreground": "#8BBD8B",
-          "style": "plain",
-          "template": "{{ .FormattedMs }} ",
-          "properties": {
-            "style": "roundrock",
-            "threshold": 0
-          },
-          "type": "executiontime"
-        },
-        {
-          "foreground": "#8BBD8B",
-          "style": "plain",
-          "template": "⮞",
+          "template": "\u279c",
           "type": "text"
         },
         {
           "foreground": "#56B6C2",
-          "properties": {
+          "options": {
             "style": "folder"
           },
           "style": "plain",
@@ -48,27 +26,18 @@
           "type": "path"
         },
         {
-          "type": "python",
-          "style": "plain",
-          "foreground": "#FFD866",
-          "template": " (venv)",
-          "properties": {
-            "display_mode": "environment"
-          }
-        },
-        {
           "foreground": "#D4AAFC",
-          "properties": {
+          "options": {
             "branch_icon": ""
           },
           "style": "plain",
-          "template": " <#DCB977>git(</>{{ .HEAD }}<#DCB977>)</>",
+          "template": " <#DDB15F>git(</>{{ .HEAD }}<#DDB15F>)</>",
           "type": "git"
         },
         {
-          "foreground": "#E36464",
+          "foreground": "#DCB977",
           "style": "plain",
-          "template": " \uf00d",
+          "template": " \uf119",
           "type": "status"
         }
       ],
@@ -76,5 +45,5 @@
     }
   ],
   "final_space": true,
-  "version": 3
+  "version": 4
 }

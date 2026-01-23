@@ -1,3 +1,6 @@
+-- --------------------
+--  Global Variables
+-- --------------------
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
@@ -5,6 +8,10 @@ vim.g.have_nerd_font = true
 -- border can be set globally with vim.opt but not every plugin supports it,
 -- better to use a global variable for convenience
 BORDER = "bold" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
+
+-- --------------------
+--  Options
+-- --------------------
 vim.opt.winborder = BORDER
 
 -- vim.cmd([[set mouse=]])
@@ -41,6 +48,9 @@ vim.schedule(function()
 	vim.o.clipboard = "unnamedplus"
 end)
 
+-- --------------------
+--  Keymaps
+-- --------------------
 vim.keymap.set("n", "<leader>x", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<c-k>", "<cmd>wincmd k<CR>")
@@ -55,18 +65,6 @@ vim.keymap.set("n", "<leader>Q", function()
 end, { desc = "Quit all" })
 vim.keymap.set("n", "<leader>v", "<cmd>e $MYVIMRC<CR>", { desc = "Edit config" })
 -- vim.keymap.set({ "n", "v" }, "<leader>o", ":update<CR> :source<CR>", { desc = "Save and source file" })
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
-})
-
-require("config.lazy")
-require("terminal")
-require("cheat-sh")
 
 vim.keymap.set(
 	"n",
@@ -109,11 +107,47 @@ end, { desc = "Toggle spell check" })
 -- zw  Mark word as wrong
 -- zug Undo 'good' word (remove from dictionary)
 
+-- --------------------
+--  Autocmds
+-- --------------------
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.hl.on_yank()
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
+	callback = function()
+		local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+		if normal.bg then
+			io.stdout:write(string.format("\027]11;#%06x\007", normal.bg))
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "UILeave", "VimSuspend" }, {
+	callback = function()
+		io.stdout:write("\027]111\007")
+	end,
+})
+
 -- change highlight color of floating window (background, border, title)
 -- vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 -- vim.cmd("highlight FloatBorder guibg=NormalFloat")
 -- vim.cmd("highlight FloatTitle guibg=NormalFloat")
 
+-- --------------------
+--  Plugins
+-- --------------------
+require("config.lazy")
+require("terminal")
+require("cheat-sh")
+
+-- --------------------
+--  Neovide
+-- --------------------
 if vim.g.neovide then
 	-- vim.o.guifont = "Source Code Pro:h14"
 	-- vim.o.guifont = "Iosevka Nerd Font:h15"
