@@ -24,7 +24,7 @@ italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
 size = 14.0
 
 [cursor]
-style = { shape = "Block", blinking = "On" }
+style = { shape = "Beam", blinking = "On" }
 
 [terminal]
 shell = { program = "pwsh.exe", args = ["-NoLogo"] }

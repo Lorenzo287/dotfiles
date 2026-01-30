@@ -1,5 +1,16 @@
 # --- BASIC SETTINGS ---
 Set-PSReadLineOption -EditMode Vi
+function OnViModeChange {
+    if ($args[0] -eq 'Command') {
+        # Set the cursor to a blinking block.
+        Write-Host -NoNewline "`e[1 q"
+    } else {
+        # Set the cursor to a blinking line.
+        Write-Host -NoNewline "`e[5 q"
+    }
+}
+Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
+
 if (Get-Module -ListAvailable PSReadLine -ErrorAction SilentlyContinue) {
     if ($Host.UI.SupportsVirtualTerminal) {
         Set-PSReadLineOption -PredictionSource History
@@ -38,7 +49,7 @@ function ll {
     & eza --color=always --long --git --icons=always --no-user --no-time @args
 }
 Set-Alias cat "bat"       
-Set-Alias find "fd"  # find / -iname "*word*" 2>/dev/null    
+Set-Alias find "fd"  
 Set-Alias grep "rg"     
 Set-Alias v "nvim"     
 function zv {

@@ -7,7 +7,7 @@ vim.g.have_nerd_font = true
 
 -- border can be set globally with vim.opt but not every plugin supports it,
 -- better to use a global variable for convenience
-BORDER = "bold" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
+BORDER = "single" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
 
 -- --------------------
 --  Options

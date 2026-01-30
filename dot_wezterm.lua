@@ -9,7 +9,7 @@ config.front_end = "OpenGL"
 config.max_fps = 144
 config.animation_fps = 1
 config.term = "xterm-256color"
-config.default_cursor_style = "BlinkingBlock"
+config.default_cursor_style = "BlinkingBar"
 config.cursor_blink_rate = 500
 
 -- Appearance

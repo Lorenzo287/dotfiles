@@ -94,7 +94,7 @@ return {
 	{ "craftzdog/solarized-osaka.nvim", lazy = true },
 	{ "vague-theme/vague.nvim", lazy = true },
 	-- { "blazkowolf/gruber-darker.nvim", lazy = true },
-	{ "https://codeberg.org/ericrulec/gruber-darker.nvim" },
+	{ "https://codeberg.org/ericrulec/gruber-darker.nvim", lazy = true },
 
 	{
 		"catgoose/nvim-colorizer.lua",

@@ -1,80 +1,74 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "console_title_template": "{{.Shell}}",
+  "final_space": true,
+  "version": 4,
+  "transient_prompt": {
+    "foreground": "#D4AAFC",
+    "template": "⮞ "
+  },
   "blocks": [
     {
+      "type": "prompt",
       "alignment": "left",
       "segments": [
         {
+          "type": "session",
+          "style": "plain",
           "foreground": "#E36464",
-          "style": "plain",
-          "template": "{{ .UserName }}",
-          "type": "session"
+          "template": "{{ .UserName }}<#E36464>@</>{{ .HostName }} "
         },
         {
-          "foreground": "#E36464",
+          "type": "path",
           "style": "plain",
-          "template": "@",
-          "type": "session"
-        },
-        {
-          "foreground": "#E36464",
-          "style": "plain",
-          "template": "{{ .HostName }} ",
-          "type": "session"
-        },
-        {
-          "foreground": "#8BBD8B",
-          "style": "plain",
-          "template": "{{ .FormattedMs }} ",
-          "properties": {
-            "style": "roundrock",
-            "threshold": 0
-          },
-          "type": "executiontime"
-        },
-        {
-          "foreground": "#8BBD8B",
-          "style": "plain",
-          "template": "⮞",
-          "type": "text"
-        },
-        {
           "foreground": "#56B6C2",
-          "properties": {
+          "template": "{{ .Path }} ",
+          "options": {
             "style": "folder"
-          },
+          }
+        },
+        {
+          "type": "git",
           "style": "plain",
-          "template": " {{ .Path }}",
-          "type": "path"
+          "foreground": "#DDB15F",
+          "template": "({{ .HEAD }}) ",
+          "options": {
+            "branch_icon": ""
+          }
         },
         {
           "type": "python",
           "style": "plain",
-          "foreground": "#FFD866",
-          "template": " (venv)",
-          "properties": {
+          "foreground": "#62ED8B",
+          "template": "({{ .Major }}.{{ .Minor }}) ",
+          "options": {
             "display_mode": "environment"
           }
         },
         {
-          "foreground": "#D4AAFC",
-          "properties": {
-            "branch_icon": ""
-          },
+          "type": "executiontime",
           "style": "plain",
-          "template": " <#DCB977>git(</>{{ .HEAD }}<#DCB977>)</>",
-          "type": "git"
+          "foreground": "#D4AAFC",
+          "template": "{{ .FormattedMs }} ",
+          "options": {
+            "threshold": 0,
+            "style": "dallas",
+            "always_enabled": true
+          }
         },
         {
-          "foreground": "#E36464",
+          "type": "text",
           "style": "plain",
-          "template": " \uf00d",
-          "type": "status"
+          "foreground": "#D4AAFC",
+          "template": "⮞"
+        },
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "#E36464",
+          "template": " \uf00d"
         }
-      ],
-      "type": "prompt"
+      ]
     }
-  ],
-  "final_space": true,
-  "version": 3
+  ]
 }
