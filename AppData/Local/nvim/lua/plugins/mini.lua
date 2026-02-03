@@ -11,6 +11,7 @@ return {
 				["]"] = false,
 				['"'] = false,
 				["'"] = false,
+				["`"] = false,
 			},
 		})
 
@@ -21,6 +22,7 @@ return {
 		})
 		-- misc.setup_auto_root()
 		misc.setup_restore_cursor()
+
 		-- works only on Windows Terminal
 		if not (vim.env.WEZTERM_EXECUTABLE or vim.env.ALACRITTY_LOG) then
 			misc.setup_termbg_sync({ explicit_reset = true })

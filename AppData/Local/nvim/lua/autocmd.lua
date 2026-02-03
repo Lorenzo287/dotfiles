@@ -6,15 +6,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
--- 	desc = "Hide markdown backticks",
--- 	pattern = "markdown",
--- 	callback = function()
--- 		vim.opt_local.conceallevel = 2
--- 		vim.opt_local.concealcursor = "nc"
--- 	end,
--- })
-
 vim.api.nvim_create_autocmd("BufReadPost", {
 	desc = "Setup Jupytext and open py file",
 	pattern = "*.ipynb",

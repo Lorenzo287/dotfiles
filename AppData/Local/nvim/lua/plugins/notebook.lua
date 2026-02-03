@@ -5,6 +5,8 @@ return {
 		build = ":UpdateRemotePlugins",
 		dependencies = "willothy/wezterm.nvim",
 		init = function()
+			-- this config works with wezterm on Windows,
+			-- on POSIX images can be shown directly inside nvim
 			vim.g.molten_auto_open_output = false -- cannot be true if molten_image_provider = "wezterm"
 			vim.g.molten_output_show_more = true
 			vim.g.molten_image_provider = "wezterm" -- image.nvim does not work on windows
@@ -33,6 +35,14 @@ return {
 				":MoltenEvaluateOperator<CR>",
 				{ silent = true, desc = "Molten Eval operator" }
 			)
+			vim.keymap.set("n", "<leader>m<CR>", function()
+				vim.cmd("MoltenEvaluateOperator")
+				vim.schedule(function()
+					-- press i (inside) h (cell object befined by mini.ai)
+					local keys = vim.api.nvim_replace_termcodes("ih", true, false, true)
+					vim.api.nvim_feedkeys(keys, "m", false)
+				end)
+			end, { silent = true, desc = "Molten Eval cell" })
 			vim.keymap.set("n", "<leader>ml", ":MoltenEvaluateLine<CR>", { silent = true, desc = "Molten Eval line" })
 			vim.keymap.set(
 				"n",
@@ -46,6 +56,36 @@ return {
 				":<C-u>MoltenEvaluateVisual<CR>gv",
 				{ silent = true, desc = "Molten Eval visual selection" }
 			)
+			vim.keymap.set("n", "<leader>mc", ":MoltenDelete<CR>", { silent = true, desc = "Molten Clear cell" })
+			vim.keymap.set("n", "<leader>mp", ":MoltenImagePopup<CR>", { silent = true, desc = "Molten Popup" })
+			-- vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "Molten Hide output" })
+			-- vim.keymap.set(
+			-- 	"n",
+			-- 	"<leader>mo",
+			-- 	":noautocmd MoltenEnterOutput<CR>",
+			-- 	{ silent = true, desc = "Molten Show output" }
+			-- )
+		end,
+	},
+	{
+		"GCBallesteros/NotebookNavigator.nvim",
+		event = "VeryLazy",
+		config = function()
+			local nn = require("notebook-navigator")
+			nn.setup({
+				cell_markers = {
+					-- python = "## %%",
+				},
+			})
+
+			-- highlight ## separator
+			require("mini.hipatterns").setup({
+				highlighters = { cells = nn.minihipatterns_spec },
+			})
+			-- create new obj (eg can do 'dah' for cells like 'dap' for paragraphs)
+			require("mini.ai").setup({
+				custom_textobjects = { h = nn.miniai_spec },
+			})
 		end,
 	},
 	{
@@ -55,28 +95,16 @@ return {
 		},
 		opts = {
 			code = {
-				-- language = false,
-				style = "language", -- disable codeblock hl
+				language = false, -- show language header
+				style = "language", -- disable codeblock highlighting
 			},
 		},
-		keys = (function()
-			local enabled = false
-			return {
-				{
-					"<leader>md",
-					function()
-						if enabled then
-							vim.cmd("RenderMarkdown disable")
-							print("RenderMarkdown disabled")
-						else
-							vim.cmd("RenderMarkdown enable")
-							print("RenderMarkdown enabled")
-						end
-						enabled = not enabled
-					end,
-					desc = "Toggle RenderMarkdown",
-				},
-			}
-		end)(),
+		keys = {
+			{
+				"<leader>md",
+				"<cmd>RenderMarkdown toggle<CR>",
+				desc = "Toggle RenderMarkdown",
+			},
+		},
 	},
 }
