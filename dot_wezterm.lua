@@ -15,7 +15,7 @@ config.cursor_blink_rate = 500
 -- Appearance
 -- config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" })
 -- config.font_size = 14.0
-config.font = wezterm.font("Iosevka Nerd Font", { weight = "Medium" })
+config.font = wezterm.font("Iosevka Nerd Font", { weight = "Medium" }) -- "Medium"
 config.font_size = 15.0
 config.cell_width = 1.0
 config.line_height = 1.0

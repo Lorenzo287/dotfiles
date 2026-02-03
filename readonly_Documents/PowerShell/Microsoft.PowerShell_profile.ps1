@@ -72,6 +72,10 @@ function dif {
         Select-Object SideIndicator, InputObject
 }
 
+# --- Load Custom Scripts
+. "$HOME\Documents\PowerShell\Scripts\venv.ps1"
+. "$HOME\Documents\PowerShell\Scripts\ai.ps1"
+
 # --- FZF Integration ---
 # --- Function to search files + open in default editor ---
 function fedit {
