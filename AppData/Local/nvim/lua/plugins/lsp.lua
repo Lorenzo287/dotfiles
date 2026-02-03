@@ -19,7 +19,6 @@ return {
 			-- this is useful when importing this config to a new computer to install lsp automatically
 			ensure_installed = {
 				"clangd", -- C server
-				-- "codelldb", -- C lint
 
 				"lua_ls", -- Lua server
 				"stylua", -- Lua format
@@ -75,6 +74,36 @@ return {
 					print("Diagnostics enabled")
 				end
 			end, { desc = "LSP Toggle" })
+		end,
+	},
+	{
+		"nvimtools/none-ls.nvim",
+		event = "VeryLazy",
+		config = function()
+			local null_ls = require("null-ls")
+
+			-- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins
+			null_ls.setup({
+				border = BORDER,
+				sources = {
+					null_ls.builtins.formatting.stylua,
+					null_ls.builtins.formatting.clang_format,
+					null_ls.builtins.formatting.prettier,
+					-- null_ls.builtins.formatting.black,
+
+					-- null_ls.builtins.diagnostics.cppcheck.with({
+					-- 	extra_args = function(params)
+					-- 		return {
+					-- 			params.bufname,
+					-- 			"--suppress=normalCheckLevelMaxBranches",
+					-- 			"--inline-suppr",
+					-- 			"--template=gcc",
+					-- 		}
+					-- 	end,
+					-- }),
+				},
+			})
+			vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format file" })
 		end,
 	},
 }

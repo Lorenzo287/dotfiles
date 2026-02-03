@@ -1,5 +1,6 @@
 return {
 	"jiaoshijie/undotree",
+	enabled = false,
 	opts = {
 		float_diff = true, -- true disables layout
 		layout = "left_bottom", -- "left_bottom", "left_left_bottom"

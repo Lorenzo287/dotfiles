@@ -13,6 +13,7 @@ return {
 		config = function()
 			local alpha = require("alpha")
 			local dashboard = require("alpha.themes.startify")
+			dashboard.file_icons.provider = "devicons" -- default is mini.icons
 			local ascii = require("ascii")
 
 			-- dashboard.section.header.val = ascii.art.text.neovim.sharp

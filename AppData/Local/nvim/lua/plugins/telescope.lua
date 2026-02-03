@@ -21,15 +21,18 @@ return {
 				return borders[style] or borders.rounded
 			end
 			local border_style = BORDER or "rounded"
+			local selected_border = get_border_chars(border_style)
 
 			telescope.setup({
 				defaults = {
-					borderchars = get_border_chars(border_style),
+					borderchars = selected_border,
 				},
 				extensions = {
 					undo = {},
 					["ui-select"] = {
-						require("telescope.themes").get_dropdown({}),
+						require("telescope.themes").get_dropdown({
+							borderchars = selected_border,
+						}),
 					},
 				},
 			})

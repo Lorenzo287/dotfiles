@@ -4,10 +4,11 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
+vim.g.python3_host_prog = vim.fn.expand("~/AppData/local/nvim/nvim_venv/Scripts/python")
 
 -- border can be set globally with vim.opt but not every plugin supports it,
 -- better to use a global variable for convenience
-BORDER = "single" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
+BORDER = "bold" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
 
 -- --------------------
 --  Options
@@ -63,19 +64,19 @@ vim.keymap.set("n", "<leader>Q", function()
 	vim.cmd("CloseFloaterminal")
 	vim.cmd("wqa")
 end, { desc = "Quit all" })
-vim.keymap.set("n", "<leader>v", "<cmd>e $MYVIMRC<CR>", { desc = "Edit config" })
+-- vim.keymap.set("n", "<leader>v", "<cmd>e $MYVIMRC<CR>", { desc = "Edit config" })
 -- vim.keymap.set({ "n", "v" }, "<leader>o", ":update<CR> :source<CR>", { desc = "Save and source file" })
 
 vim.keymap.set(
 	"n",
-	"<leader>mc",
+	"<leader>kc",
 	"i#include <stdio.h><CR><CR>int main(void) {<CR>return 0;<CR>}<Esc>kO",
 	{ noremap = true, silent = true, desc = "Insert main() C" }
 )
 
 vim.keymap.set(
 	"n",
-	"<leader>mp",
+	"<leader>kp",
 	"i#include <bits/stdc++.h><CR>using namespace std;<CR><CR>int main() {<CR>return 0;<CR>}<Esc>kO",
 	{ noremap = true, silent = true, desc = "Insert main() C++" }
 )
@@ -85,7 +86,7 @@ local function insert_snippet(name)
 	vim.api.nvim_put(vim.fn.readfile(path), "l", true, true)
 end
 
-vim.keymap.set("n", "<leader>mb", function()
+vim.keymap.set("n", "<leader>kb", function()
 	insert_snippet("nob.c")
 end, { desc = "Insert NOB build system" })
 
@@ -110,33 +111,7 @@ end, { desc = "Toggle spell check" })
 -- --------------------
 --  Autocmds
 -- --------------------
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
-	callback = function()
-		local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-		if normal.bg then
-			io.stdout:write(string.format("\027]11;#%06x\007", normal.bg))
-		end
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "UILeave", "VimSuspend" }, {
-	callback = function()
-		io.stdout:write("\027]111\007")
-	end,
-})
-
--- change highlight color of floating window (background, border, title)
--- vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
--- vim.cmd("highlight FloatBorder guibg=NormalFloat")
--- vim.cmd("highlight FloatTitle guibg=NormalFloat")
+require("autocmd")
 
 -- --------------------
 --  Plugins
@@ -148,23 +123,4 @@ require("cheat-sh")
 -- --------------------
 --  Neovide
 -- --------------------
-if vim.g.neovide then
-	-- vim.o.guifont = "Source Code Pro:h14"
-	-- vim.o.guifont = "Iosevka Nerd Font:h15"
-	vim.o.guifont = "JetBrainsMono Nerd Font:h14"
-
-	vim.g.neovide_padding_top = 0
-	vim.g.neovide_padding_bottom = 0
-	vim.g.neovide_padding_right = 0
-	vim.g.neovide_padding_left = 0
-
-	vim.g.neovide_title_background_color =
-		string.format("%x", vim.api.nvim_get_hl(0, { id = vim.api.nvim_get_hl_id_by_name("Normal") }).bg)
-
-	vim.g.neovide_hide_mouse_when_typing = true
-	vim.g.neovide_fullscreen = false
-
-	vim.g.neovide_cursor_animation_length = 0.150 -- 0 to disable
-	vim.g.neovide_cursor_short_animation_length = 0.04
-	vim.g.neovide_cursor_trail_size = 1
-end
+require("neovide")
