@@ -72,6 +72,16 @@ function dif {
         Select-Object SideIndicator, InputObject
 }
 
+function Start-Conda {
+    If (Test-Path "C:\Users\ltumi\miniforge3\Scripts\conda.exe") {
+        (& "C:\Users\ltumi\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Where-Object{$_} | Invoke-Expression
+        Write-Host "Conda initialized successfully!" -ForegroundColor Green
+    } else {
+        Write-Host "Conda not found at C:\Users\ltumi\miniforge3\Scripts\conda.exe" -ForegroundColor Red
+    }
+}
+Set-Alias "condaactivate" Start-Conda
+
 # --- Load Custom Scripts
 . "$HOME\Documents\PowerShell\Scripts\venv.ps1"
 . "$HOME\Documents\PowerShell\Scripts\ai.ps1"

@@ -7,11 +7,29 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		vim.keymap.set("n", "<leader>N", "<cmd>Neotree toggle left<CR>", { desc = "Toggle Neotree" })
-		vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle right<CR>", { desc = "Open Neotree right" })
-		vim.keymap.set("n", "<leader>-", "<cmd>Neotree buffers reveal float<CR>", { desc = "Show buffers in Neotree" })
+		vim.keymap.set("n", "<leader>N", "<cmd>Neotree toggle left<CR>", { desc = "Toggle Neotree left" })
+		vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle right<CR>", { desc = "Toggle Neotree right" })
+		vim.keymap.set(
+			"n",
+			"<leader>lS",
+			"<cmd>Neotree document_symbols right<CR>",
+			{ desc = "LSP Document symbols (neo-tree)" }
+		)
 
+		local maps = require("delete")
 		require("neo-tree").setup({
+			log_to_file = false,
+			sources = {
+				"filesystem",
+				"buffers",
+				"git_status",
+				"document_symbols",
+			},
+			source_selector = {
+				winbar = false,
+			},
+			-- "bold" and others are not among the defaults,
+			-- throws an ERROR in checkhealth but still works
 			popup_border_style = BORDER,
 			filesystem = {
 				filtered_items = {
@@ -24,24 +42,13 @@ return {
 				use_libuv_file_watcher = true,
 				window = {
 					mappings = {
-						["d"] = function(state)
-							local node = state.tree:get_node()
-							local path = node:get_id()
-
-							local confirmed = vim.fn.confirm("Delete " .. node.name .. "?", "&Yes\n&No", 2)
-							if confirmed ~= 1 then
-								return
-							end
-
-							-- Use recycle-bin utility to move the file to the Recycle Bin
-							vim.fn.system({ "recycle-bin", path })
-							require("neo-tree.ui.renderer").redraw(state)
-						end,
+						["d"] = maps.delete,
 					},
 				},
 			},
 			window = {
 				width = 30, -- default 40
+				mappings = { ["<C-r>"] = "" }, -- suppress warning
 			},
 		})
 	end,

@@ -49,6 +49,15 @@ return {
 					-- "--compile-commands-dir=" .. vim.fn.getcwd(),
 				},
 			})
+			vim.lsp.config("powershell_es", {
+				settings = {
+					powershell = {
+						codeFormatting = {
+							openBraceOnSameLine = true, -- google style
+						},
+					},
+				},
+			})
 
 			vim.diagnostic.config({
 				virtual_text = true,

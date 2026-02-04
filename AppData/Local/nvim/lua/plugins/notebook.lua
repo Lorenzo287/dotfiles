@@ -15,7 +15,7 @@ return {
 			vim.g.molten_split_size = 40 -- 0-100% size of the screen dedicated to the output window
 			vim.g.molten_virt_text_output = true
 			vim.g.molten_use_border_highlights = true
-			vim.g.molten_virt_lines_off_by_1 = true
+			vim.g.molten_virt_lines_off_by_1 = false
 			vim.g.molten_auto_image_popup = false
 			vim.g.molten_output_win_zindex = 50
 
@@ -28,6 +28,7 @@ return {
 					vim.cmd("MoltenInit python3")
 				end
 			end, { desc = "Molten Initialize", silent = true })
+			vim.keymap.set("n", "<leader>ms", ":MoltenInit<CR>", { silent = true, desc = "Molten Select" })
 
 			vim.keymap.set(
 				"n",
@@ -56,6 +57,7 @@ return {
 				":<C-u>MoltenEvaluateVisual<CR>gv",
 				{ silent = true, desc = "Molten Eval visual selection" }
 			)
+
 			vim.keymap.set("n", "<leader>mc", ":MoltenDelete<CR>", { silent = true, desc = "Molten Clear cell" })
 			vim.keymap.set("n", "<leader>mp", ":MoltenImagePopup<CR>", { silent = true, desc = "Molten Popup" })
 			-- vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "Molten Hide output" })

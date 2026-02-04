@@ -41,22 +41,26 @@ return {
 	},
 	{
 		"github/copilot.vim",
-		event = "VeryLazy",
-		config = function()
-			vim.cmd("Copilot disable")
-			local copilot_enabled = false
-
-			vim.keymap.set("n", "<leader>y", function()
-				if copilot_enabled then
-					vim.cmd("Copilot disable")
-					copilot_enabled = false
-					print("Copilot disabled")
-				else
-					vim.cmd("Copilot enable")
-					copilot_enabled = true
-					print("Copilot enabled")
-				end
-			end, { noremap = true, silent = true, desc = "Toggle Copilot" })
+		lazy = true,
+		keys = {
+			{
+				"<leader>y",
+				function()
+					if vim.g.copilot_enabled then
+						vim.cmd("Copilot disable")
+						vim.g.copilot_enabled = false
+						print("Copilot disabled")
+					else
+						vim.cmd("Copilot enable")
+						vim.g.copilot_enabled = true
+						print("Copilot enabled")
+					end
+				end,
+				desc = "Toggle Copilot",
+			},
+		},
+		init = function()
+			vim.g.copilot_enabled = false
 		end,
 	},
 	-- {
