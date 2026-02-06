@@ -15,16 +15,15 @@ BORDER = "bold" -- "bold", "shadow", "rounded", "single", "double", "solid", "no
 -- --------------------
 vim.opt.winborder = BORDER
 
--- vim.cmd([[set mouse=]])
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
 vim.opt.wrap = true
 vim.opt.breakindent = true
 vim.opt.cursorcolumn = false
-vim.o.cursorline = false
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = { "number" } -- , "line"
 vim.opt.ignorecase = true
 vim.opt.shiftwidth = 4
-vim.opt.smartindent = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
@@ -37,12 +36,17 @@ vim.opt.scrolloff = 10
 vim.opt.confirm = true
 -- vim.opt.shell = "pwsh -NoLogo"
 
+-- these are overruled since indentexpr is set by treesitter
+vim.opt.autoindent = true -- follows previous line
+vim.opt.smartindent = true -- recognizes syntax like {
+-- vim.opt.cindent = true -- more strict for c-like syntax
+
 -- "za" to fold
-vim.wo.foldenable = true
-vim.wo.foldmethod = "expr"
-vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.wo.foldlevel = 99
-vim.wo.foldcolumn = "0"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldcolumn = "0"
 
 -- global clipboard
 vim.schedule(function()

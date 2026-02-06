@@ -26,12 +26,20 @@ return {
 			telescope.setup({
 				defaults = {
 					borderchars = selected_border,
+					sorting_strategy = "ascending",
+					layout_config = {
+						prompt_position = "top",
+					},
 				},
 				extensions = {
 					undo = {},
 					["ui-select"] = {
-						require("telescope.themes").get_dropdown({
+						require("telescope.themes").get_cursor({
 							borderchars = selected_border,
+							layout_config = {
+								width = 0.3, -- can set percentage of screen (0.4) or number (80)
+								height = 7,
+							},
 						}),
 					},
 				},
@@ -47,6 +55,7 @@ return {
 			vim.keymap.set("n", "<leader>tg", builtin.live_grep, { desc = "Telescope Live grep" })
 			vim.keymap.set("n", "<leader>tc", builtin.colorscheme, { desc = "Telescope Colorscheme" })
 			vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope Keymaps" })
+			vim.keymap.set("n", "<leader>ta", "<cmd>Telescope ascii<CR>", { desc = "Telescope Ascii" })
 			vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, { desc = "LSP Document symbols" })
 			vim.keymap.set("n", "<leader>lr", builtin.lsp_references, { desc = "LSP References" })
 			vim.keymap.set("n", "<leader>le", builtin.diagnostics, { desc = "LSP Diagnostics" })

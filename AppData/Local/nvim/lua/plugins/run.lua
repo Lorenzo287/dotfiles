@@ -20,6 +20,14 @@ return {
 				},
 			})
 			vim.keymap.set("n", "<leader><CR>", "<cmd>RunCode<CR>", { desc = "Run code" })
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "crunner",
+				callback = function()
+					vim.wo.number = true
+					vim.wo.relativenumber = true
+					vim.wo.signcolumn = "yes"
+				end,
+			})
 		end,
 	},
 	{
@@ -40,6 +48,13 @@ return {
 				-- auto_jump_to_first_error = false,
 			}
 			vim.keymap.set("n", "<leader>c", "<cmd>below Compile<CR>", { desc = "Compile Mode" })
+			-- vim.api.nvim_create_autocmd("FileType", {
+			-- 	pattern = "compilation",
+			-- 	callback = function()
+			-- 		vim.wo.number = false
+			-- 		vim.wo.signcolumn = "no"
+			-- 	end,
+			-- })
 		end,
 	},
 }
