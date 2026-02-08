@@ -102,6 +102,9 @@ function M.safe_colorscheme(name)
 		return false
 	end
 
+	-- Setup theme-specific config if it exists
+	M.setup_theme(name)
+
 	-- Apply colorscheme
 	local ok, err = pcall(vim.cmd.colorscheme, name)
 	if not ok then

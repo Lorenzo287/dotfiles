@@ -32,7 +32,6 @@ return {
 					},
 				},
 				extensions = {
-					undo = {},
 					["ui-select"] = {
 						require("telescope.themes").get_cursor({
 							borderchars = selected_border,
@@ -43,6 +42,25 @@ return {
 						}),
 					},
 				},
+			})
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "TelescopePrompt",
+				callback = function(args)
+					vim.schedule(function()
+						local picker = require("telescope.actions.state").get_current_picker(args.buf)
+						if picker.prompt_title == "Select language" then
+							picker.layout_strategy = "horizontal"
+							picker.layout_config = {
+								width = 0.8,
+								height = 0.8,
+								prompt_position = "top",
+								preview_width = 0.5,
+							}
+							picker.sorting_strategy = "ascending"
+							picker:full_layout_update()
+						end
+					end)
+				end,
 			})
 
 			telescope.load_extension("ui-select")
