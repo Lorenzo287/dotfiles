@@ -25,15 +25,7 @@ return {
 			function()
 				require("refactoring").debug.print_var()
 			end,
-			mode = { "n", "x" },
 			desc = "Print variable",
-		},
-		{
-			"<leader>rc",
-			function()
-				require("refactoring").debug.cleanup()
-			end,
-			desc = "Cleanup prints",
 		},
 	},
 	opts = {
@@ -50,4 +42,9 @@ return {
 			java = true,
 		},
 	},
+	config = function()
+		vim.keymap.set("n", "<leader>rc", function()
+			require("refactoring").debug.cleanup()
+		end, { desc = "Cleanup prints" })
+	end,
 }

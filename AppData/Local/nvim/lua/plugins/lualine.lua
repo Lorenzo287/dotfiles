@@ -3,11 +3,13 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	lazy = false,
 	config = function()
+		vim.api.nvim_set_hl(0, "dCursor", { fg = "#000000", bg = "#e06c75", bold = false })
 		local dmode_enabled = false
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "DebugModeChanged",
 			callback = function(args)
 				dmode_enabled = args.data.enabled
+				require("lualine").refresh()
 			end,
 		})
 		require("lualine").setup({
@@ -26,8 +28,10 @@ return {
 						fmt = function(str)
 							return dmode_enabled and "DEBUG" or str
 						end,
-						color = function(tb)
-							return dmode_enabled and "dCursor" or tb
+						color = function()
+							if dmode_enabled then
+								return dmode_enabled and "dCursor" or nil
+							end
 						end,
 					},
 				},

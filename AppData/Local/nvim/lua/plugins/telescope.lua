@@ -3,8 +3,8 @@ return {
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"debugloop/telescope-undo.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
+			-- "debugloop/telescope-undo.nvim",
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -33,34 +33,11 @@ return {
 				},
 				extensions = {
 					["ui-select"] = {
-						require("telescope.themes").get_cursor({
+						require("telescope.themes").get_dropdown({
 							borderchars = selected_border,
-							layout_config = {
-								width = 0.3, -- can set percentage of screen (0.4) or number (80)
-								height = 7,
-							},
 						}),
 					},
 				},
-			})
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "TelescopePrompt",
-				callback = function(args)
-					vim.schedule(function()
-						local picker = require("telescope.actions.state").get_current_picker(args.buf)
-						if picker.prompt_title == "Select language" then
-							picker.layout_strategy = "horizontal"
-							picker.layout_config = {
-								width = 0.8,
-								height = 0.8,
-								prompt_position = "top",
-								preview_width = 0.5,
-							}
-							picker.sorting_strategy = "ascending"
-							picker:full_layout_update()
-						end
-					end)
-				end,
 			})
 
 			telescope.load_extension("ui-select")
@@ -77,7 +54,7 @@ return {
 			vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, { desc = "LSP Document symbols" })
 			vim.keymap.set("n", "<leader>lr", builtin.lsp_references, { desc = "LSP References" })
 			vim.keymap.set("n", "<leader>le", builtin.diagnostics, { desc = "LSP Diagnostics" })
-			-- vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Telescope Undo" })
+			-- vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Telescope Undo" })
 		end,
 	},
 }

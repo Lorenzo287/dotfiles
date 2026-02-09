@@ -1,12 +1,19 @@
 return {
 	"miroshQa/debugmaster.nvim",
-	event = "VeryLazy",
+	keys = {
+		{
+			"<leader>d",
+			function()
+				require("debugmaster").mode.toggle()
+			end,
+			desc = "Toggle Debugmaster",
+		},
+	},
 	dependencies = {
 		"mfussenegger/nvim-dap",
 	},
 	config = function()
 		local dm = require("debugmaster")
-		vim.keymap.set({ "n", "v" }, "<leader>d", dm.mode.toggle, { nowait = true, desc = "Toggle Debugmaster" })
 		dm.plugins.osv_integration.enabled = false -- needed if you want to debug neovim lua code
 
 		-- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation

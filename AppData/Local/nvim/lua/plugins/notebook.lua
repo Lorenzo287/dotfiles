@@ -1,7 +1,6 @@
 return {
 	{
 		"benlubas/molten-nvim",
-		event = "VeryLazy",
 		build = ":UpdateRemotePlugins",
 		dependencies = "willothy/wezterm.nvim",
 		init = function()
@@ -18,46 +17,48 @@ return {
 			vim.g.molten_virt_lines_off_by_1 = false
 			vim.g.molten_auto_image_popup = false
 			vim.g.molten_output_win_zindex = 50
-
-			vim.keymap.set("n", "<leader>mi", function()
-				local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
-				if venv ~= nil then
-					local name = venv:match("([^/\\]+)$") -- works on Windows and POSIX
+		end,
+		keys = {
+			-- keys that load the plugin
+			{
+				"<leader>mi",
+				function()
+					local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+					local name = venv and venv:match("([^/\\]+)$") or "python3"
 					vim.cmd(("MoltenInit %s"):format(name))
-				else
-					vim.cmd("MoltenInit python3")
-				end
-			end, { desc = "Molten Initialize", silent = true })
-			vim.keymap.set("n", "<leader>ms", ":MoltenInit<CR>", { silent = true, desc = "Molten Select" })
-
-			vim.keymap.set(
-				"n",
-				"<leader>me",
-				":MoltenEvaluateOperator<CR>",
-				{ silent = true, desc = "Molten Eval operator" }
-			)
-			vim.keymap.set("n", "<leader>m<CR>", function()
-				vim.cmd("MoltenEvaluateOperator")
-				vim.schedule(function()
-					-- press i (inside) h (cell object befined by mini.ai)
-					local keys = vim.api.nvim_replace_termcodes("ih", true, false, true)
-					vim.api.nvim_feedkeys(keys, "m", false)
-				end)
-			end, { silent = true, desc = "Molten Eval cell" })
-			vim.keymap.set("n", "<leader>ml", ":MoltenEvaluateLine<CR>", { silent = true, desc = "Molten Eval line" })
+				end,
+				desc = "Molten Initialize",
+			},
+			{ "<leader>ms", ":MoltenInit<CR>", desc = "Molten Select" },
+			{ "<leader>me", ":MoltenEvaluateOperator<CR>", desc = "Molten Eval operator" },
+			{ "<leader>ml", ":MoltenEvaluateLine<CR>", desc = "Molten Eval line" },
+			{
+				"<leader>mv",
+				":<C-u>MoltenEvaluateVisual<CR>gv",
+				mode = { "v" },
+				desc = "Molten Eval visual selection",
+			},
+			{
+				"<leader>m<CR>",
+				function()
+					vim.cmd("MoltenEvaluateOperator")
+					vim.schedule(function()
+						-- press i (inside) h (cell object befined by mini.ai)
+						local keys = vim.api.nvim_replace_termcodes("ih", true, false, true)
+						vim.api.nvim_feedkeys(keys, "m", false)
+					end)
+				end,
+				desc = "Molten Eval cell",
+			},
+		},
+		config = function()
+			-- keys defined post-loading
 			vim.keymap.set(
 				"n",
 				"<leader>mr",
 				":MoltenReevaluateCell<CR>",
 				{ silent = true, desc = "Molten Re-eval cell" }
 			)
-			vim.keymap.set(
-				"v",
-				"<leader>mv",
-				":<C-u>MoltenEvaluateVisual<CR>gv",
-				{ silent = true, desc = "Molten Eval visual selection" }
-			)
-
 			vim.keymap.set("n", "<leader>mc", ":MoltenDelete<CR>", { silent = true, desc = "Molten Clear cell" })
 			vim.keymap.set("n", "<leader>mp", ":MoltenImagePopup<CR>", { silent = true, desc = "Molten Popup" })
 			-- vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "Molten Hide output" })
@@ -67,26 +68,21 @@ return {
 			-- 	":noautocmd MoltenEnterOutput<CR>",
 			-- 	{ silent = true, desc = "Molten Show output" }
 			-- )
-		end,
-	},
-	{
-		"GCBallesteros/NotebookNavigator.nvim",
-		event = "VeryLazy",
-		config = function()
-			local nn = require("notebook-navigator")
-			nn.setup({
-				cell_markers = {
-					-- python = "## %%",
-				},
-			})
 
-			-- highlight ## separator
-			require("mini.hipatterns").setup({
-				highlighters = { cells = nn.minihipatterns_spec },
-			})
+			local notebook = require("mini_notebook")
 			-- create new obj (eg can do 'dah' for cells like 'dap' for paragraphs)
 			require("mini.ai").setup({
-				custom_textobjects = { h = nn.miniai_spec },
+				custom_textobjects = {
+					h = function()
+						return notebook.miniai_spec("i", { python = "# %%", lua = "-- %%" })
+					end,
+				},
+			})
+			-- highlight # %% separator
+			require("mini.hipatterns").setup({
+				highlighters = {
+					notebook_cells = notebook.minihipatterns_spec({ python = "# %%", lua = "-- %%" }, "Folded"),
+				},
 			})
 		end,
 	},

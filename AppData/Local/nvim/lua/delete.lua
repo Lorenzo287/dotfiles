@@ -1,4 +1,5 @@
 local M = {}
+local Menu = require("nui.menu")
 
 M.delete = function(state)
 	local node = state.tree and state.tree:get_node()
@@ -8,7 +9,8 @@ M.delete = function(state)
 	end
 
 	local path = node:get_id()
-	local prompt = "Delete " .. node.name .. "?"
+	local prompt = " Trash " .. node.name .. " "
+	local width = math.max(20, #prompt + 4)
 
 	local function refresh_and_notify(msg, level)
 		vim.schedule(function()
@@ -21,53 +23,74 @@ M.delete = function(state)
 		end)
 	end
 
-	local function exists(p)
-		return vim.loop.fs_stat(p) ~= nil
-	end
-
-	vim.ui.select({ "Yes", "No" }, { prompt = prompt }, function(choice)
-		if choice ~= "Yes" then
-			return
-		end
-
-		if vim.fn.executable("recycle-bin") == 1 then
-			local cmd = { "recycle-bin", path }
-			vim.fn.jobstart(cmd, {
-				on_exit = function(_, exit_code, _)
-					if exit_code == 0 then
-						refresh_and_notify("Moved to Recycle Bin: " .. path, vim.log.levels.INFO)
-					else
-						refresh_and_notify(
-							"Failed to move to recycle-bin (exit " .. tostring(exit_code) .. ")",
-							vim.log.levels.ERROR
-						)
-					end
-				end,
-			})
-			return
-		end
-
-		-- Fallback to vim.fn.delete (scheduled so we don't block UI work)
-		vim.schedule(function()
-			local ok
-			if node.type == "directory" then
-				ok = pcall(vim.fn.delete, path, "rf")
-			else
-				ok = pcall(vim.fn.delete, path)
-			end
-
-			if not ok then
-				vim.notify("Error deleting " .. path, vim.log.levels.ERROR)
+	local menu
+	menu = Menu({
+		relative = "cursor",
+		position = { row = 1, col = 0 },
+		size = { width = width, height = 2 },
+		border = {
+			style = BORDER,
+			text = { top = prompt, top_align = "center" },
+		},
+	}, {
+		lines = { Menu.item(" Yes"), Menu.item(" No") },
+		keymap = {
+			focus_next = { "j", "<Down>" },
+			focus_prev = { "k", "<Up>" },
+			close = { "<Esc>", "<C-c>", "q" },
+			submit = { "<CR>" },
+		},
+		on_submit = function(item)
+			menu:unmount()
+			if item.text:find("No") then
 				return
 			end
 
-			if exists(path) then
-				vim.notify("Failed to delete " .. path, vim.log.levels.ERROR)
-			else
-				refresh_and_notify("Deleted: " .. path, vim.log.levels.INFO)
-			end
-		end)
-	end)
+			local method = node.type == "directory" and "DeleteDirectory" or "DeleteFile"
+			local powershell_cmd = string.format(
+				'powershell.exe -NoProfile -Command "Add-Type -AssemblyName Microsoft.VisualBasic; '
+					.. "[Microsoft.VisualBasic.FileIO.FileSystem]::%s('%s', 'OnlyErrorDialogs', 'SendToRecycleBin')\"",
+				method,
+				path
+			)
+
+			local error_output = {}
+			vim.fn.jobstart(powershell_cmd, {
+				on_stderr = function(_, data)
+					for _, line in ipairs(data) do
+						if line ~= "" then
+							table.insert(error_output, line)
+						end
+					end
+				end,
+				on_exit = function(_, code)
+					if code == 0 then
+						refresh_and_notify("Trashed: " .. node.name)
+					else
+						-- Simplified error matching
+						local err = table.concat(error_output, " ")
+						local map = {
+							["used by another process"] = "File in use",
+							["Access denied"] = "Access denied",
+							["UnauthorizedAccess"] = "Access denied",
+							["cannot find"] = "Not found",
+						}
+
+						local msg = "Unknown error"
+						for pattern, simple_msg in pairs(map) do
+							if err:find(pattern) then
+								msg = simple_msg
+								break
+							end
+						end
+
+						refresh_and_notify("Failed: " .. msg, vim.log.levels.ERROR)
+					end
+				end,
+			})
+		end,
+	})
+	menu:mount()
 end
 
 M.delete_old = function(state)

@@ -1,11 +1,18 @@
 return {
 	"gruvw/strudel.nvim",
 	build = "npm install",
+	keys = {
+		{
+			"<leader>sl",
+			function()
+				require("strudel").launch()
+			end,
+			desc = "Launch Strudel",
+		},
+	},
 	config = function()
 		local strudel = require("strudel")
 		strudel.setup()
-
-		vim.keymap.set("n", "<leader>sl", strudel.launch, { desc = "Launch Strudel" })
 		vim.keymap.set("n", "<leader>sq", strudel.quit, { desc = "Quit Strudel" })
 		vim.keymap.set("n", "<leader>st", strudel.toggle, { desc = "Strudel toggle play/stop" })
 		vim.keymap.set("n", "<leader>su", strudel.update, { desc = "Strudel update" })

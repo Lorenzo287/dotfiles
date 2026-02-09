@@ -27,7 +27,7 @@ return {
 			dashboard = { enabled = false },
 			explorer = { enabled = false }, -- neotree alternative
 			indent = { enabled = false },
-			input = { enabled = true },
+			input = { enabled = false },
 			picker = { enabled = false }, -- telescope alternative
 			notifier = { enabled = true },
 			quickfile = { enabled = true },
@@ -46,14 +46,5 @@ return {
 			win = { border = BORDER },
 			sort = { "local", "order", "group", "alphanum", "mod" },
 		},
-		-- keys = {
-		-- 	{
-		-- 		"<leader>?",
-		-- 		function()
-		-- 			require("which-key").show({ global = false })
-		-- 		end,
-		-- 		desc = "Buffer Local Keymaps (which-key)",
-		-- 	},
-		-- },
 	},
 }
