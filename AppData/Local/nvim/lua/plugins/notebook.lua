@@ -1,5 +1,7 @@
 return {
 	{
+		-- this is a remote plugin, may need to run :UpdateRemotePlugins after update,
+		-- see https://github.com/benlubas/molten-nvim/blob/main/docs/Windows.md
 		"benlubas/molten-nvim",
 		build = ":UpdateRemotePlugins",
 		dependencies = "willothy/wezterm.nvim",

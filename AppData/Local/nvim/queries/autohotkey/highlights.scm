@@ -1,6 +1,4 @@
-; ===== Basic highlights =====
-
-; Identifiers
+; Identifiers (fallback - FIRST so others override)
 (identifier) @variable
 
 ; Comments
@@ -10,7 +8,11 @@
 
 ; Strings
 (string) @string
+
+; Continuation sections - multiline string content
 (continuation_section) @string
+
+; Escape sequences within strings
 (escape_sequence) @string.escape
 
 ; Numbers
@@ -18,9 +20,20 @@
 
 ; Keywords
 (keyword) @keyword
+
+; Parameter modifier (ByRef)
 (parameter_modifier) @keyword
-(new_expression "new" @keyword)
+
+; Return statement
 (return_statement) @keyword
+
+; Boolean literals
+(boolean) @constant.builtin
+
+; Control flow keywords
+; Note: if, else, while, loop, for, in, try, catch, finally are case-insensitive regex patterns
+; in the grammar and cannot be matched by literal strings in queries.
+; We highlight the entire statement node instead.
 (if_statement) @keyword
 (else_clause) @keyword
 (while_statement) @keyword
@@ -34,6 +47,7 @@
 (finally_clause) @keyword
 
 ; Switch statements
+; Note: switch, case, default are case-insensitive regex patterns
 (switch_statement) @keyword
 (switch_statement "{" @punctuation.bracket)
 (switch_statement "}" @punctuation.bracket)
@@ -46,33 +60,52 @@
 (statement_block "{" @punctuation.bracket)
 (statement_block "}" @punctuation.bracket)
 
-; Parentheses
+; Parenthesized expressions
 (parenthesized_expression "(" @punctuation.bracket)
 (parenthesized_expression ")" @punctuation.bracket)
 
-; Operators
+; Operators - match in all contexts they appear
+
+; Standalone operator rule
 (operator) @operator
+
+; Assignment operators
 (assignment_expression ":=" @operator)
+(assignment_expression "=" @operator)
 (assignment_expression "+=" @operator)
 (assignment_expression "-=" @operator)
 (assignment_expression "*=" @operator)
 (assignment_expression "/=" @operator)
 (assignment_expression ".=" @operator)
+(assignment_expression "//=" @operator)
+
+; Binary operators - Logical
 (binary_expression "||" @operator)
 (binary_expression "&&" @operator)
+(binary_expression "??" @operator)
+; Note: 'or', 'and', 'not', 'is' are case-insensitive regex patterns in the grammar
+; and cannot be matched by literal string in queries
+
+; Binary operators - Bitwise
 (binary_expression "|" @operator)
 (binary_expression "^" @operator)
 (binary_expression "&" @operator)
 (binary_expression "<<" @operator)
 (binary_expression ">>" @operator)
+
+; Binary operators - Equality
 (binary_expression "=" @operator)
 (binary_expression "==" @operator)
 (binary_expression "!=" @operator)
 (binary_expression "<>" @operator)
+
+; Binary operators - Comparison
 (binary_expression "<" @operator)
 (binary_expression ">" @operator)
 (binary_expression "<=" @operator)
 (binary_expression ">=" @operator)
+
+; Binary operators - Arithmetic
 (binary_expression "+" @operator)
 (binary_expression "-" @operator)
 (binary_expression "*" @operator)
@@ -80,27 +113,44 @@
 (binary_expression "//" @operator)
 (binary_expression "%" @operator)
 (binary_expression "**" @operator)
+
+; Binary operators - Concatenation
 (binary_expression "." @operator)
+
+; Unary operators
 (unary_expression "!" @operator)
+(unary_expression "&" @operator)
 (unary_expression "~" @operator)
 (unary_expression "-" @operator)
+(unary_expression "-" @operator)
+
+; Ternary operator
 (ternary_expression "?" @operator)
 (ternary_expression ":" @operator)
-(force_expr_start) @operator
 
-; Hotkeys and Hotstrings
+; Arrow function operator
+(arrow_function "=>" @operator)
+
+; Hotkeys
 (hotkey) @keyword
+
+; Hotstrings
 (hotstring_definition ":" @punctuation.delimiter)
 (hotstring_definition "::" @punctuation.delimiter)
 (hotstring_trigger) @string.special
 (hotstring_options) @attribute
 (hotstring_replacement) @string
 
-; Directives
+; Directives - use @attribute instead of @preproc
 (directive) @attribute
 (directive name: (identifier) @attribute)
 (directive_arguments) @string.special
+
+; Conditional directives (#if)
+; The #if keyword is highlighted as attribute, inner expressions use standard rules
 (if_directive) @attribute
+
+; Window conditional directives (#IfWinActive, #IfWinExist, etc.)
 (if_win_directive) @attribute
 (if_win_directive (if_win_type) @attribute)
 (if_win_directive (if_win_title) @string.special)
@@ -110,71 +160,279 @@
 ; Functions
 (function_definition name: (identifier) @function)
 (function_call name: (identifier) @function)
+(function_call "(" @punctuation.bracket)
+(function_call ")" @punctuation.bracket)
+(argument_list "," @punctuation.delimiter)
+
+; Member expressions - property access
+(member_expression property: (identifier) @property)
+
+; Method calls
 (method_call method: (identifier) @function.method)
 
-; Member expressions and types
-(member_expression property: (identifier) @property)
-(method_call object: (identifier) @type)
-(member_expression object: (identifier) @type)
+; Class references (PascalCase or _PascalCase) in method calls and member expressions
+(method_call object: (identifier) @type
+ (#match? @type "^_?[A-Z]"))
+
+(member_expression object: (identifier) @type
+ (#match? @type "^_?[A-Z]"))
+
+; New expression - highlight class names as types (after member_expression to override @property)
 (new_expression class: (identifier) @type)
 (new_expression class: (member_expression property: (identifier) @type))
+
+; Command names (identifier in command position gets highlighted as function)
 (command name: (identifier) @function)
+
+; if_command names (identifier in if_command position gets highlighted as function)
 (if_command name: (identifier) @function)
 
-; Built-in commands (case-sensitive, with lowercase duplicates)
+; Built-in commands (known AHK commands highlighted as function.builtin via #match?)
+; GUI/Dialog commands
 ((command name: (identifier) @function.builtin)
- (#match? @function.builtin "^(MsgBox|InputBox|ToolTip|TrayTip|Progress|Gui|GuiControl|GuiControlGet|Menu)$"))
-((command name: (identifier) @function.builtin)
- (#match? @function.builtin "^(msgbox|inputbox|tooltip|traytip|progress|gui|guicontrol|guicontrolget|menu)$"))
+ (#match? @function.builtin "^\c(MsgBox|InputBox|ToolTip|TrayTip|Progress|Gui|GuiControl|GuiControlGet|Menu)$"))
 
-; Keywords in commands
+; Input/Output commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(Send|SendInput|SendRaw|SendEvent|SendPlay|SendLevel|Click|MouseClick|MouseClickDrag|MouseGetPos|MouseMove|KeyWait|Input|Hotkey)$"))
+
+; Flow control commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(Sleep|SetTimer|Pause|Suspend|Thread|Run|RunWait|RunAs|Reload|ExitApp|Exit|Shutdown)$"))
+
+; Standalone flow control (highlighted as keywords like return/break)
 ((identifier) @keyword
- (#match? @keyword "^(Reload|Exit|ExitApp|Pause|Suspend|Critical|Thread)$"))
-((command name: (identifier) @keyword)
- (#match? @keyword "^(Goto|Gosub)$"))
+ (#match? @keyword "^\c(Reload|Exit|ExitApp|Pause|Suspend|Critical|Thread)$"))
 
-; Special variables
+; Goto and Gosub commands (highlighted as keywords for consistency with break/continue/return)
+((command name: (identifier) @keyword)
+ (#match? @keyword "^\c(Goto|Gosub)$"))
+
+; Standalone debug commands (highlighted as function.builtin)
+((identifier) @function.builtin
+ (#match? @function.builtin "^\c(KeyHistory|ListHotkeys|ListLines|ListVars)$"))
+
+; Window management commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(WinActivate|WinActivateBottom|WinWait|WinWaitActive|WinWaitClose|WinClose|WinKill|WinMinimize|WinMaximize|WinRestore)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(WinMinimizeAll|WinMinimizeAllUndo|WinHide|WinShow|WinMove|WinSet|WinSetTitle|WinMenuSelectItem)$"))
+
+; Control commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(Control|ControlClick|ControlFocus|ControlGet|ControlGetFocus|ControlGetPos|ControlGetText|ControlMove|ControlSend|ControlSendRaw|ControlSetText)$"))
+
+; File operations commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(FileRead|FileReadLine|FileAppend|FileDelete|FileCopy|FileMove|FileCopyDir|FileMoveDir|FileCreateDir|FileRemoveDir)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(FileCreateShortcut|FileGetShortcut|FileGetAttrib|FileSetAttrib|FileGetSize|FileGetTime|FileGetVersion|FileSetTime)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(FileSelectFile|FileSelectFolder|FileRecycle|FileRecycleEmpty)$"))
+
+; Registry and INI commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(RegRead|RegWrite|RegDelete|IniRead|IniWrite|IniDelete)$"))
+
+; String manipulation commands (legacy)
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(StringCaseSense|StringGetPos|StringLeft|StringRight|StringMid|StringLower|StringUpper|StringLen|StringReplace|StringSplit|StringTrimLeft|StringTrimRight)$"))
+
+; Legacy conditional commands (in regular command context - no block)
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(IfEqual|IfNotEqual|IfLess|IfLessOrEqual|IfGreater|IfGreaterOrEqual|IfExist|IfNotExist|IfInString|IfNotInString|IfMsgBox)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(IfWinExist|IfWinNotExist|IfWinActive|IfWinNotActive)$"))
+
+; Legacy conditional commands in if_command context (with block/else)
+((if_command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(IfEqual|IfNotEqual|IfLess|IfLessOrEqual|IfGreater|IfGreaterOrEqual|IfExist|IfNotExist|IfInString|IfNotInString|IfMsgBox)$"))
+
+((if_command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(IfWinExist|IfWinNotExist|IfWinActive|IfWinNotActive)$"))
+
+; Configuration commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(SetWorkingDir|CoordMode|SetFormat|SetBatchLines|SetDefaultMouseSpeed|SetWinDelay|SetControlDelay|SetKeyDelay|SetMouseDelay)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(SetTitleMatchMode|SetRegView|SetStoreCapsLockMode|SetCapsLockState|SetNumLockState|SetScrollLockState|AutoTrim|DetectHiddenWindows|DetectHiddenText)$"))
+
+; Sound commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(SoundBeep|SoundGet|SoundPlay|SoundSet)$"))
+
+; Group commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(GroupActivate|GroupAdd|GroupClose|GroupDeactivate)$"))
+
+; Other commands
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(BlockInput|Drive|DriveGet|DriveSpaceFree|Edit|KeyHistory|ListHotkeys|ListLines|ListVars)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(Process|Random|Sort|Transform|UrlDownloadToFile|ClipWait|EnvGet|EnvSet|EnvUpdate|FormatTime)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(SplitPath|StatusBarGetText|StatusBarWait|SysGet|WinGet|WinGetActiveStats|WinGetActiveTitle|WinGetClass|WinGetPos|WinGetText|WinGetTitle)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(PostMessage|SendMessage|OnMessage|DllCall|NumGet|NumPut|VarSetCapacity)$"))
+
+((command name: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(ComObjCreate|ComObjGet|ComObjConnect|ComObjError|ObjAddRef|ObjRelease|ObjBindMethod|ObjRawSet)$"))
+
+; Variable references in commands
+(variable_ref (identifier) @variable)
+(variable_ref "%" @punctuation.special)
+
+; Force expression - % symbol highlighted, sub-expressions via their own rules
+(force_expr_start) @operator
+; (identifiers, strings, operators, etc. inherit from expression highlighting)
+
+; Built-in variables (via #match? - highlights identifiers matching A_* patterns)
+; Script properties
 ((identifier) @variable.special
- (#match? @variable.special "^(A_ScriptDir|A_ScriptName|A_ScriptFullPath|A_ScriptHwnd|WorkingDir|ThisFunc|ThisLabel)$"))
+ (#match? @variable.special "^\cA_(ScriptDir|ScriptName|ScriptFullPath|ScriptHwnd|WorkingDir|InitialWorkingDir|Args|LineNumber|LineFile|ThisFunc|ThisLabel|AhkVersion|AhkPath|IsUnicode|IsCompiled|ExitReason)$"))
+
+; Date and time
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(Now|NowUTC|YYYY|MM|DD|MMMM|MMM|DDDD|DDD|WDay|YDay|YWeek|Hour|Min|Sec|MSec|TickCount)$"))
+
+; Script settings
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(IsSuspended|IsPaused|IsCritical|BatchLines|ListLines|TitleMatchMode|TitleMatchModeSpeed|DetectHiddenWindows|DetectHiddenText|AutoTrim|StringCaseSense|FileEncoding|FormatInteger|FormatFloat)$"))
+
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(SendMode|SendLevel|StoreCapsLockMode|KeyDelay|KeyDuration|KeyDelayPlay|KeyDurationPlay|WinDelay|ControlDelay|MouseDelay|MouseDelayPlay|DefaultMouseSpeed)$"))
+
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(CoordModeToolTip|CoordModePixel|CoordModeMouse|CoordModeCaret|CoordModeMenu|RegView|IconHidden|IconTip|IconFile|IconNumber)$"))
+
+; User idle time
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(TimeIdle|TimeIdlePhysical|TimeIdleKeyboard|TimeIdleMouse)$"))
+
+; GUI windows
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(DefaultGui|DefaultListView|DefaultTreeView|Gui|GuiControl|GuiWidth|GuiHeight|GuiX|GuiY|GuiEvent|GuiControlEvent|EventInfo)$"))
+
+; Hotkeys, hotstrings, menus
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(ThisMenuItem|ThisMenu|ThisMenuItemPos|ThisHotkey|PriorHotkey|PriorKey|TimeSinceThisHotkey|TimeSincePriorHotkey|EndChar)$"))
+
+; OS and user info
+((identifier) @variable.special
+ (#match? @variable.special "^\c(A_ComSpec|ComSpec|A_Temp|A_OSType|A_OSVersion|A_Is64bitOS|A_PtrSize|A_Language|A_ComputerName|A_UserName|A_WinDir|A_ProgramFiles)$"))
+
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(AppData|AppDataCommon|Desktop|DesktopCommon|StartMenu|StartMenuCommon|Programs|ProgramsCommon|Startup|StartupCommon|MyDocuments|IsAdmin)$"))
+
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(ScreenWidth|ScreenHeight|ScreenDPI|IPAddress1|IPAddress2|IPAddress3|IPAddress4)$"))
+
+; Special characters and misc
+((identifier) @variable.special
+ (#match? @variable.special "^\c(A_Space|A_Tab|A_Cursor|A_CaretX|A_CaretY|A_Clipboard|Clipboard|ClipboardAll|A_LastError|True|False|ErrorLevel)$"))
+
+; Loop variables
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(Index|LoopFileName|LoopFileExt|LoopFileFullPath|LoopFileLongPath|LoopFileShortPath|LoopFileShortName|LoopFileDir)$"))
+
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(LoopFileTimeModified|LoopFileTimeCreated|LoopFileTimeAccessed|LoopFileAttrib|LoopFileSize|LoopFileSizeKB|LoopFileSizeMB)$"))
+
+((identifier) @variable.special
+ (#match? @variable.special "^\cA_(LoopRegName|LoopRegType|LoopRegKey|LoopRegSubKey|LoopRegTimeModified|LoopReadLine|LoopField)$"))
+
+; Window matching criteria (WinTitle parameters)
 ((identifier) @constant.builtin
- (#match? @constant.builtin "^(ahk_id|ahk_class|ahk_exe|ahk_pid|ahk_group)$"))
+ (#match? @constant.builtin "^\cahk_(id|class|exe|pid|group)$"))
 
 ; Labels
 (label . (identifier) @label)
 
-; GUI
+; GUI action highlighting (e.g., MyGui:Add in Gui, MyGui:Add)
 (gui_action gui_name: (identifier) @string.special)
+
+; GUI target highlighting (e.g., MyGui: in GuiControl, MyGui:, Control)
+; This matches "identifier:," patterns that would otherwise parse as labels during injection
 (gui_target gui_name: (identifier) @string.special)
+
+; Drive letter highlighting (e.g., C: in DriveGet commands)
+; This matches "X:" patterns that would otherwise parse as labels during injection
+(drive_letter) @string.special
+
+; GUI options highlighting (e.g., MyGui:-Caption in Gui, MyGui:-Caption)
+; Structured node with gui_name and option fields
 (gui_options gui_name: (identifier) @string.special)
 (gui_options option: (gui_option_flag) @constant)
-(gui_option_flag) @constant
-(gui_action_spaced gui_name: (identifier) @string.special)
-((gui_action_spaced action: (identifier) @function.builtin)
- (#match? @function.builtin "^(Add|Show|Submit|Cancel|Hide|Destroy|Font|Color|Margin|Menu|Minimize|Maximize|Restore|Flash|Default|New|Options)$"))
 
-; Arrays and objects
+; GUI options with space highlighting (e.g., MyGui: +Border in Gui, MyGui: +Border)
+(gui_options_spaced gui_name: (identifier) @string.special)
+(gui_options_spaced option: (gui_option_flag) @constant)
+
+; GUI option names as identifiers (for option names that follow gui_options - no space variant)
+((identifier) @constant
+ (#match? @constant "^\c(AlwaysOnTop|Border|Caption|Delimiter|Disabled|DPIScale|Hwnd|Label|LastFound|LastFoundExist|MaximizeBox|MinimizeBox|MinSize|MaxSize|OwnDialogs|Owner|Parent|Resize|SysMenu|Theme|ToolWindow)$"))
+
+; GUI sub-commands - highlight known sub-commands as function.builtin
+((gui_action action: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c(Add|Show|Submit|Cancel|Hide|Destroy|Font|Color|Margin|Menu|Minimize|Maximize|Restore|Flash|Default|New)$"))
+
+; GUI action with space highlighting (e.g., MyGui: Color in Gui, MyGui: Color)
+(gui_action_spaced gui_name: (identifier) @string.special)
+
+; GUI sub-commands in spaced actions - highlight known sub-commands as function.builtin
+; Note: The action includes leading whitespace from the token
+((gui_action_spaced action: (identifier) @function.builtin)
+ (#match? @function.builtin "^\c[ \\t]*(Add|Show|Submit|Cancel|Hide|Destroy|Font|Color|Margin|Menu|Minimize|Maximize|Restore|Flash|Default|New|Options)$"))
+
+; GUI option flags (+Option or -Option) - only highlight recognized options
+; Token includes +/- prefix, so regex accounts for it
+((gui_option_flag) @constant
+ (#match? @constant "^\c[+-](AlwaysOnTop|Border|Caption|Delimiter|Disabled|DPIScale|Hwnd|Label|LastFound|LastFoundExist|MaximizeBox|MinimizeBox|MinSize|MaxSize|OwnDialogs|Owner|Parent|Resize|SysMenu|Theme|ToolWindow)$"))
+
+; Arrays
 (array_literal "[" @punctuation.bracket)
 (array_literal "]" @punctuation.bracket)
 (index_expression "[" @punctuation.bracket)
 (index_expression "]" @punctuation.bracket)
+
+; Object literals
 (object_literal "{" @punctuation.bracket)
 (object_literal "}" @punctuation.bracket)
 (object_property key: (identifier) @property)
 (object_property key: (string) @property)
 (object_property key: (number) @property)
+(object_property ":" @punctuation.delimiter)
 
-; Classes
+; Class definitions
+; Note: class, extends, static are case-insensitive regex patterns
 (class_definition) @keyword
 (class_definition name: (identifier) @type)
 (class_definition parent: (identifier) @type)
 (class_definition "{" @punctuation.bracket)
 (class_definition "}" @punctuation.bracket)
+
+; Method definitions
 (method_definition) @keyword
 (method_definition name: (identifier) @function.method)
+
+; Special method names (constructor, destructor, meta-functions)
 (method_definition
   name: (identifier) @function.special
-  (#match? @function.special "^(New|Delete|Get|Set|Call)$"))
+  (#match? @function.special "^__(New|Delete|Get|Set|Call)$"))
+
+; Class properties
 (class_property) @keyword
 (class_property name: (identifier) @property)
+
+; this, base, and super keywords
 (this_expression) @variable.special
 (base_expression) @variable.special
+(super_expression) @variable.special

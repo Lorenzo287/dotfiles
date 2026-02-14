@@ -83,6 +83,7 @@ return {
 					print("Diagnostics enabled")
 				end
 			end, { desc = "LSP Toggle" })
+			vim.keymap.set("n", "<leader>lt", "<cmd>InspectTree<CR>", { desc = "LSP Treesitter" })
 		end,
 	},
 	{

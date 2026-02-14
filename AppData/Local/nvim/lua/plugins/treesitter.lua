@@ -17,7 +17,7 @@ return {
 		-- must manually copy queries to nvim/queries/autohotkey/*.scm
 		require("nvim-treesitter.parsers").get_parser_configs().autohotkey = {
 			install_info = {
-				url = "https://github.com/alfredomtx/tree-sitter-autohotkey",
+				url = "https://github.com/Lorenzo287/tree-sitter-autohotkey",
 				files = { "src/parser.c", "src/scanner.c" },
 				branch = "master",
 			},

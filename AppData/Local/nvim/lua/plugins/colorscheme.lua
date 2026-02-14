@@ -24,6 +24,9 @@ return {
 	{ "vague-theme/vague.nvim", lazy = true },
 	{ "https://codeberg.org/ericrulec/gruber-darker.nvim", lazy = true },
 	-- { "blazkowolf/gruber-darker.nvim", lazy = true },
+	{ "lunacookies/vim-colors-xcode", lazy = true },
+	{ "ribru17/bamboo.nvim", lazy = true },
+	{ "EdenEast/nightfox.nvim", lazy = true },
 
 	{
 		"catgoose/nvim-colorizer.lua",

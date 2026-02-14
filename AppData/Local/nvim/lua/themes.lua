@@ -59,6 +59,10 @@ function M.detect_terminal()
 		return "alacritty"
 	end
 
+	if vim.g.neovide then
+		return "neovide"
+	end
+
 	-- Fallback to TERM variable
 	local term = vim.env.TERM or ""
 	if term:match("alacritty") then
