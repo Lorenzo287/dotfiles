@@ -56,7 +56,10 @@ local close_floating_terminal = function()
 	state.floating = { buf = -1, win = -1 }
 end
 
-vim.keymap.set("t", "<esc>", "<c-\\><c-n>", { desc = "Exit terminal mode" })
 vim.api.nvim_create_user_command("Floaterminal", toggle_terminal, {})
-vim.api.nvim_create_user_command("CloseFloaterminal", close_floating_terminal, {})
+vim.api.nvim_create_user_command("FloaterminalClose", close_floating_terminal, {})
 vim.keymap.set({ "n", "t" }, "<leader>j", toggle_terminal, { desc = "Toggle floating terminal" })
+vim.keymap.set("n", "<leader>J", function()
+	vim.cmd("tab term pwsh -NoLogo")
+	vim.api.nvim_command("startinsert")
+end, { desc = "Open terminal" })

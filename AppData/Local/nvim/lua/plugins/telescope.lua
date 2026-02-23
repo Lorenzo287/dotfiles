@@ -51,6 +51,7 @@ return {
 			vim.keymap.set("n", "<leader>tc", builtin.colorscheme, { desc = "Telescope Colorscheme" })
 			vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope Keymaps" })
 			vim.keymap.set("n", "<leader>ta", "<cmd>Telescope ascii<CR>", { desc = "Telescope Ascii" })
+			vim.keymap.set("n", "<leader>td", "<cmd>TodoTelescope<CR>", { desc = "Telescope Todo" })
 			vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, { desc = "LSP Document symbols" })
 			vim.keymap.set("n", "<leader>lr", builtin.lsp_references, { desc = "LSP References" })
 			vim.keymap.set("n", "<leader>le", builtin.diagnostics, { desc = "LSP Diagnostics" })

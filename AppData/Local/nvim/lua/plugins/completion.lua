@@ -7,7 +7,7 @@ return {
 		opts = {
 			keymap = {
 				["<CR>"] = { "accept", "fallback" },
-				["<C-e>"] = { "show", "hide", "fallback" }, --"show_documentation", "hide_documentation"
+				["<C-e>"] = { "show", "show_documentation", "hide_documentation" }, -- "hide" for toggle behavior
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 			},
 			appearance = { nerd_font_variant = "normal" }, -- "mono"
@@ -15,7 +15,7 @@ return {
 			completion = {
 				menu = {
 					border = BORDER,
-					auto_show = false,
+					auto_show = false, -- for buffers
 					draw = { treesitter = { "lsp" } },
 				},
 				documentation = {
@@ -23,8 +23,12 @@ return {
 					auto_show = false,
 					auto_show_delay_ms = 0,
 				},
-				-- don't select by default, insert without CR after selection
-				-- list = { selection = { preselect = false, auto_insert = true } },
+				list = {
+					selection = {
+						preselect = true, -- open with first item selected
+						auto_insert = false, -- insert without CR after selection
+					},
+				},
 			},
 			signature = {
 				window = {
@@ -33,6 +37,13 @@ return {
 				},
 				enabled = true,
 				trigger = { enabled = false }, -- does not show automatically
+			},
+			cmdline = {
+				completion = {
+					menu = {
+						auto_show = true, -- for cmdline
+					},
+				},
 			},
 
 			sources = { default = { "lsp", "path", "buffer" } }, -- "snippets"

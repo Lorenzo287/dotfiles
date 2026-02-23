@@ -26,8 +26,8 @@ return {
 		-- fallback to native nvim indentation
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "autohotkey",
-			callback = function()
-				vim.bo.indentexpr = ""
+			callback = function(args)
+				vim.bo[args.buf].indentexpr = ""
 			end,
 		})
 	end,

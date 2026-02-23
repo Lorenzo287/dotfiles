@@ -34,6 +34,7 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
+vim.opt.showtabline = 0
 -- vim.opt.shell = "pwsh -NoLogo"
 
 -- these are overruled since indentexpr is set by treesitter
@@ -62,12 +63,18 @@ vim.keymap.set("n", "<c-k>", "<cmd>wincmd k<CR>")
 vim.keymap.set("n", "<c-j>", "<cmd>wincmd j<CR>")
 vim.keymap.set("n", "<c-h>", "<cmd>wincmd h<CR>")
 vim.keymap.set("n", "<c-l>", "<cmd>wincmd l<CR>")
+local str = string.format
+for i = 1, 9 do
+	vim.keymap.set("n", str("<A-%s>", i), str("%sgt", i), { desc = str("Goto tab %s", i) })
+end
+vim.keymap.set("n", "<A-0>", "<cmd>tab split<CR>", { desc = "Clone window in new tab" })
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit" })
 vim.keymap.set("n", "<leader>Q", function()
-	vim.cmd("CloseFloaterminal")
-	vim.cmd("wqa")
+	vim.cmd("FloaterminalClose")
+	vim.cmd("qa")
 end, { desc = "Quit all" })
+vim.keymap.set("t", "<esc>", "<c-\\><c-n>", { desc = "Exit terminal mode" })
 -- vim.keymap.set("n", "<leader>v", "<cmd>e $MYVIMRC<CR>", { desc = "Edit config" })
 -- vim.keymap.set({ "n", "v" }, "<leader>o", ":update<CR> :source<CR>", { desc = "Save and source file" })
 

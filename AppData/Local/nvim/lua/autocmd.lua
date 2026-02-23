@@ -97,3 +97,10 @@ vim.api.nvim_create_autocmd({ "UILeave", "VimSuspend" }, {
 -- vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 -- vim.cmd("highlight FloatBorder guibg=NormalFloat")
 -- vim.cmd("highlight FloatTitle guibg=NormalFloat")
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	desc = "Set scrolloff to 0 locally",
+	callback = function()
+		vim.opt_local.scrolloff = 0
+	end,
+})

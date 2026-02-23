@@ -52,6 +52,8 @@ Set-Alias cat "bat"
 Set-Alias find "fd"  
 Set-Alias grep "rg"     
 Set-Alias v "nvim"     
+
+# --- CUSTOM ALIASES ---
 function zv {
     param (
         [Parameter(ValueFromRemainingArguments = $true)]
