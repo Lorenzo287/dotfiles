@@ -29,12 +29,15 @@ return {
 	{ "EdenEast/nightfox.nvim", lazy = true },
 
 	{
-		"catgoose/nvim-colorizer.lua",
+		"norcalli/nvim-colorizer.lua",
+		-- event = { "BufReadPre", "BufNewFile" },
 		event = "VeryLazy",
-		opts = {
-			user_default_options = {
+		config = function()
+			require("colorizer").setup({
+				"*",
+			}, {
 				names = false,
-			},
-		},
+			})
+		end,
 	},
 }

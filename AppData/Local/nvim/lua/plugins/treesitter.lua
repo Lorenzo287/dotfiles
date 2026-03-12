@@ -14,10 +14,13 @@ return {
 			indent = { enable = true },
 			fold = { enable = true },
 		})
-		-- must manually copy queries to nvim/queries/autohotkey/*.scm
+		-- must manually copy queries to ~/AppData/Local/nvim/queries/autohotkey/*.scm
+		-- the default folder managed by treesitter should not be used
+		-- ~/AppData/Local/nvim-data/lazy/nvim-treesitter/queries/autohotkey/*.scm
 		require("nvim-treesitter.parsers").get_parser_configs().autohotkey = {
 			install_info = {
-				url = "https://github.com/Lorenzo287/tree-sitter-autohotkey",
+				-- make the repo public to be able to connect
+				url = "https://github.com/Lorenzo287/tree-sitter-autohotkey.git",
 				files = { "src/parser.c", "src/scanner.c" },
 				branch = "master",
 			},

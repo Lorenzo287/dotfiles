@@ -99,6 +99,28 @@ return {
 					null_ls.builtins.formatting.stylua,
 					null_ls.builtins.formatting.clang_format,
 					null_ls.builtins.formatting.prettier,
+					null_ls.builtins.formatting.emacs_vhdl_mode.with({
+						args = {
+							"-batch",
+							"-Q",
+							"--insert",
+							"$FILENAME",
+							"--eval",
+							[[
+							  (progn
+								(vhdl-mode)
+								;; Override the save function to do nothing
+								(defun basic-save-buffer (&optional arg) (message "Skip save"))
+								(setq vhdl-basic-offset 4
+									  vhdl-upper-case-keywords t
+									  vhdl-upper-case-types t
+									  vhdl-upper-case-attributes t)
+								;; Format and output
+								(vhdl-beautify-buffer)
+								(princ (buffer-string)))
+							]],
+						},
+					}),
 					-- null_ls.builtins.formatting.black,
 
 					-- null_ls.builtins.diagnostics.cppcheck.with({

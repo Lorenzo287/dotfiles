@@ -1,6 +1,7 @@
 return {
 	{
 		"CRAG666/code_runner.nvim",
+		commit = "45dfea066a6110abcbc3cd361457ac3cbaefd68b",
 		event = "VeryLazy",
 		dependencies = {
 			-- "CRAG666/betterTerm.nvim", -- for better_term mode

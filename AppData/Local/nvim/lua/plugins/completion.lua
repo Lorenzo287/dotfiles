@@ -39,6 +39,9 @@ return {
 				trigger = { enabled = false }, -- does not show automatically
 			},
 			cmdline = {
+				keymap = {
+					["<Tab>"] = { "accept", "fallback" },
+				},
 				completion = {
 					menu = {
 						auto_show = true, -- for cmdline

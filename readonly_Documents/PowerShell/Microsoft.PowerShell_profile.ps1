@@ -65,6 +65,9 @@ function zv {
 function fetch {
     fastfetch -c examples/13
 }
+function ncdu {
+	dua i
+}
 function dif {
     param(
         [string]$file1,
