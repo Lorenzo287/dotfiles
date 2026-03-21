@@ -1,0 +1,72 @@
+# --- Windows System Files ---
+[Tt]humbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# --- Chezmoi Local State ---
+# Never commit your local chezmoi config which might contain secrets or local paths
+chezmoi.toml
+chezmoi.yaml
+chezmoi.json
+.chezmoiroot
+.chezmoidata/
+
+# --- Neovim / Vim ---
+# Swap, backup, and undo files
+*.swp
+*.swo
+*.swn
+*.bak
+*~
+.netrwhist
+undo/
+backup/
+swap/
+# Neovim state/data that shouldn't be in dotfiles
+AppData/Local/nvim-data/
+AppData/Local/nvim/lazy-lock.json
+
+# --- Emacs ---
+# Auto-save and backup files
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# --- Python ---
+# Virtual environments and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# --- Shell History & Sensitive ---
+# Guard against accidental history/key commits
+.bash_history
+.zsh_history
+.history
+.python_history
+.node_repl_history
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+
+# --- Project Specific ---
+# GlazeWM / Zebar logs (already in .chezmoiignore, but good to have here too)
+.glzr/glazewm/errors.log
+.glzr/zebar/errors.log
+.luarc.json

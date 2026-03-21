@@ -36,7 +36,7 @@ return {
 					visible = true,
 					-- Uncomment these if you don't want to see them gray
 					-- hide_dotfiles = false,
-					-- hide_gitignored = false,
+					hide_gitignored = false,
 				},
 				follow_current_file = { enabled = true },
 				use_libuv_file_watcher = true,

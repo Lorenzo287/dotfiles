@@ -84,6 +84,9 @@ return {
 				end
 			end, { desc = "LSP Toggle" })
 			vim.keymap.set("n", "<leader>lt", "<cmd>InspectTree<CR>", { desc = "LSP Treesitter" })
+			vim.keymap.set("n", "<leader>li", function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			end, { desc = "LSP Inlay hints" })
 		end,
 	},
 	{

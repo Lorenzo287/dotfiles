@@ -54,6 +54,9 @@ Set-Alias grep "rg"
 Set-Alias v "nvim"     
 
 # --- CUSTOM ALIASES ---
+function nvims {
+    nvim --listen $env:NVIM_LISTEN_ADDRESS $args
+}
 function zv {
     param (
         [Parameter(ValueFromRemainingArguments = $true)]
@@ -97,6 +100,9 @@ function fedit {
     $file = fd --type f | fzf
     if ($file) { nvim $file }
 }
+
+# --- Nvim Server Address ---
+# $env:NVIM_LISTEN_ADDRESS="127.0.0.1:6666"
 
 # --- BAT as Default Pager ---
 # $env:PAGER = "bat"

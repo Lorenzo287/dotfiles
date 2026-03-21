@@ -54,6 +54,12 @@ vim.schedule(function()
 	vim.o.clipboard = "unnamedplus"
 end)
 
+vim.filetype.add({
+	extension = {
+		h = "c",
+	},
+})
+
 -- --------------------
 --  Keymaps
 -- --------------------

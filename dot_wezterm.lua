@@ -43,8 +43,8 @@ config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 -- config.tab_max_width = 25
 config.adjust_window_size_when_changing_font_size = false
-config.initial_cols = 110
-config.initial_rows = 26
+config.initial_cols = 122
+config.initial_rows = 27
 config.scrollback_lines = 5000
 config.audible_bell = "Disabled"
 

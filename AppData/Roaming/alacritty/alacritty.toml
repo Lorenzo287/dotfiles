@@ -5,8 +5,11 @@ working_directory = "C:/Users/ltumi"
 import = ["themes/blood_moon.toml"]
 # import = ["themes/gruber_darker.toml"]
 
+# [colors]
+# cursor = { text = "#1f1f28", cursor = "#dcd7ba" }
+
 [window]
-dimensions = { columns = 110, lines = 27 }
+dimensions = { columns = 115, lines = 30 }
 position = "None"
 startup_mode = "Windowed"
 decorations = "Full"

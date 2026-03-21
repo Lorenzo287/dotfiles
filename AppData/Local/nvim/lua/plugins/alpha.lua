@@ -16,12 +16,15 @@ return {
 			dashboard.file_icons.provider = "devicons" -- default is mini.icons
 			local ascii = require("ascii")
 
+			dashboard.section.header.val = ascii.art.text.neovim.elite
 			-- dashboard.section.header.val = ascii.art.text.neovim.sharp
-			dashboard.section.header.val = ascii.art.text.neovim.bloody
+			-- dashboard.section.header.val = ascii.art.text.neovim.bloody
 			-- dashboard.section.header.val = ascii.art.text.neovim.ansi_shadow
 			-- dashboard.section.header.val = ascii.art.text.neovim.slant_relief
-			-- dashboard.section.header.val = ascii.art.planets.planets.saturn
 			-- dashboard.section.header.val = ascii.get_random("text", "neovim")
+			-- dashboard.section.header.val = ascii.art.text.doom.MF_DooM_graffiti
+			-- dashboard.section.header.val = ascii.art.text.doom.DooM
+			-- dashboard.section.header.val = ascii.art.planets.planets.saturn
 
 			alpha.setup(dashboard.opts)
 		end,
