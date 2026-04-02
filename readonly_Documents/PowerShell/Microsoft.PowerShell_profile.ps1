@@ -79,6 +79,9 @@ function dif {
     Compare-Object (Get-Content $file1) (Get-Content $file2) |
         Select-Object SideIndicator, InputObject
 }
+function psln ($target, $link) {
+    New-Item -Path $link -ItemType SymbolicLink -Value $target
+}
 
 function Start-Conda {
     If (Test-Path "C:\Users\ltumi\miniforge3\Scripts\conda.exe") {

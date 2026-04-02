@@ -6,6 +6,7 @@ return {
 		version = "1.*",
 		opts = {
 			keymap = {
+				["<Tab>"] = { "accept", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
 				["<C-e>"] = { "show", "show_documentation", "hide_documentation" }, -- "hide" for toggle behavior
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
