@@ -8,7 +8,7 @@ vim.g.python3_host_prog = vim.fn.expand("~/AppData/local/nvim/nvim_venv/Scripts/
 
 -- border can be set globally with vim.opt but not every plugin supports it,
 -- better to use a global variable for convenience
-BORDER = "bold" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
+BORDER = "rounded" -- "bold", "shadow", "rounded", "single", "double", "solid", "none"
 
 -- --------------------
 --  Options

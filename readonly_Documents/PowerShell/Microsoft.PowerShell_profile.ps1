@@ -52,6 +52,8 @@ Set-Alias cat "bat"
 Set-Alias find "fd"  
 Set-Alias grep "rg"     
 Set-Alias v "nvim"     
+Set-Alias fastcp "robocopy"
+Set-Alias "&&" ";"
 
 # --- CUSTOM ALIASES ---
 function nvims {
@@ -81,6 +83,9 @@ function dif {
 }
 function psln ($target, $link) {
     New-Item -Path $link -ItemType SymbolicLink -Value $target
+}
+function ascii {
+    less "$HOME\.local\share\ascii.txt"
 }
 
 function Start-Conda {

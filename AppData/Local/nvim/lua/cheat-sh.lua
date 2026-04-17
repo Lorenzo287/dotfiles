@@ -29,6 +29,25 @@ local function create_floating_window(content, ft, opts)
 	vim.bo[buf].modifiable = false
 end
 
+local function create_buffer_tab(content, ft)
+	local buf = vim.api.nvim_create_buf(false, true) -- unlisted + scratch
+
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, content or {})
+
+	if ft then
+		vim.bo[buf].filetype = ft
+	end
+
+	vim.bo[buf].buftype = "nofile"
+	vim.bo[buf].bufhidden = "wipe"
+	vim.bo[buf].swapfile = false
+	vim.bo[buf].modifiable = false
+
+	-- open in new tab
+	vim.cmd("tabnew")
+	vim.api.nvim_set_current_buf(buf)
+end
+
 local function parse_query(query)
 	if not query or query == "" then
 		return "", nil
@@ -76,28 +95,37 @@ local function parse_query(query)
 	return cheat_query, ft
 end
 
-local function run_cheat(query)
+local function run_cheat(query, opts)
+	opts = opts or {}
+
 	local cheat_query, ft = parse_query(query)
 	local url = "cheat.sh/" .. cheat_query .. "?T"
-
-	-- print("Fetching: " .. url)
 
 	vim.fn.jobstart({ "curl", "-s", url }, {
 		stdout_buffered = true,
 		on_stdout = function(_, data)
 			if data and not (#data == 1 and data[1] == "") then
-				create_floating_window(data, ft)
+				if opts.tab then
+					create_buffer_tab(data, ft)
+				else
+					create_floating_window(data, ft)
+				end
 			end
 		end,
 		on_stderr = function(_, data)
 			if data and #data > 0 and data[1] ~= "" then
-				create_floating_window({ "Error: " .. table.concat(data, "\n") }, "text")
+				local err = { "Error: " .. table.concat(data, "\n") }
+				if opts.tab then
+					create_buffer_tab(err, "text")
+				else
+					create_floating_window(err, "text")
+				end
 			end
 		end,
 	})
 end
 
-local function cheat_prompt()
+local function cheat_prompt_float()
 	vim.ui.input({ prompt = "cheat.sh: " }, function(input)
 		if input then
 			run_cheat(input)
@@ -105,11 +133,27 @@ local function cheat_prompt()
 	end)
 end
 
-vim.api.nvim_create_user_command("Cheat", function(opts)
+local function cheat_prompt_tab()
+	vim.ui.input({ prompt = "cheat.sh (tab): " }, function(input)
+		if input then
+			run_cheat(input, { tab = true })
+		end
+	end)
+end
+
+vim.api.nvim_create_user_command("CheatFloat", function(opts)
 	run_cheat(opts.args)
 end, {
 	nargs = "*",
 	desc = "Search cheat.sh",
 })
 
-vim.keymap.set("n", "<leader>e", cheat_prompt, { desc = "Search cheat.sh" })
+vim.api.nvim_create_user_command("CheatTab", function(opts)
+	run_cheat(opts.args, { tab = true })
+end, {
+	nargs = "*",
+	desc = "Search cheat.sh in new tab",
+})
+
+vim.keymap.set("n", "<leader>e", cheat_prompt_float, { desc = "Search cheat.sh" })
+vim.keymap.set("n", "<leader>E", cheat_prompt_tab, { desc = "Search cheat.sh (tab)" })
