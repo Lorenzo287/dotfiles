@@ -9,7 +9,7 @@ return {
 			auto_install = true,
 			highlight = {
 				enable = true,
-				disable = { "csv" },
+				disable = { "csv", "forth" },
 			},
 			indent = { enable = true },
 			fold = { enable = true },

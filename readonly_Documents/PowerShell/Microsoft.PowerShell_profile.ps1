@@ -1,124 +1,132 @@
-# --- BASIC SETTINGS ---
+# -------- CORE SETTINGS --------
 Set-PSReadLineOption -EditMode Vi
-function OnViModeChange {
-    if ($args[0] -eq 'Command') {
-        # Set the cursor to a blinking block.
-        Write-Host -NoNewline "`e[1 q"
-    } else {
-        # Set the cursor to a blinking line.
-        Write-Host -NoNewline "`e[5 q"
-    }
+
+function OnViModeChange($mode) {
+	if ($mode -eq 'Command') {
+		Write-Host -NoNewline "`e[1 q"
+	} else {
+		Write-Host -NoNewline "`e[5 q"
+	}
 }
+
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
+Set-PSReadLineOption -HistoryNoDuplicates
+Set-PSReadLineOption -MaximumHistoryCount 10000
 
-if (Get-Module -ListAvailable PSReadLine -ErrorAction SilentlyContinue) {
-    if ($Host.UI.SupportsVirtualTerminal) {
-        Set-PSReadLineOption -PredictionSource History
-        Set-PSReadLineOption -PredictionViewStyle InlineView
-        Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[38;5;244m" }
-    }
+if ($Host.UI.SupportsVirtualTerminal) {
+	Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+	Set-PSReadLineOption -PredictionViewStyle InlineView
+	Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[38;5;244m" }
 }
 
-# --- PATH SHORTENER + CUSTOM PROMPT ---
-# function prompt {
-#     $path = (Get-Location).Path
-#     if ($path -like "$HOME*") {
-#         $path = $path -replace [regex]::Escape($HOME), '~'
-#     }
-#     Write-Host ""
-#     Write-Host "$path ⮞ " -ForegroundColor Blue -NoNewLine
-#     return " "
-# }
+$ErrorView = "ConciseView"
 
-# --- OH-MY-POSH (Theme + Aesthetics) ---
+# -------- PROMPT (Oh My Posh + fallback) --------
 # https://windowsterminalthemes.dev/
-oh-my-posh init pwsh --config "C:/Users/ltumi/AppData/Local/posh/my-config.omp.json" | invoke-expression
+$ompConfig = "$HOME\AppData\Local\posh\my-config.omp.json"
 
-# --- COMMAND-NOT-FOUND SUGGESTIONS ---
-Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
+	oh-my-posh init pwsh --config $ompConfig | Invoke-Expression
+} else {
+	function prompt {
+		$path = (Get-Location).Path
+		if ($path -like "$HOME*") {
+			$path = $path -replace [regex]::Escape($HOME), '~'
+		}
+		Write-Host "`n$path ⮞ " -ForegroundColor Blue -NoNewline
+		return " "
+	}
+}
 
-# --- ZOXIDE (Fast Directory Switching) ---
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
-
-# --- DIRENV (Load Environment Variables and Venv) ---
+# -------- ENVIRONMENT --------
 $env:EDITOR = "nvim"
-Import-Module posh-direnv
+$env:FZF_DEFAULT_COMMAND = "fd --type f --hidden --exclude .git"
+$env:FZF_CTRL_T_COMMAND = $env:FZF_DEFAULT_COMMAND
+$env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse"
+$env:FZF_CTRL_T_OPTS = "--preview 'bat --color=always --style=plain --line-range=:200 {}'"
+$env:FZF_CTRL_R_OPTS = "--preview 'echo {} | bat --color=always --language=sh'"
+$env:BAT_THEME = "ansi"
+$env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
 
-# --- ALIASES for Modern Tools ---
-function ll {
-    & eza --color=always --long --git --icons=always --no-user --no-time @args
+# -------- MODULES --------
+Import-Module Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+Import-Module posh-direnv -ErrorAction SilentlyContinue
+Import-Module PSFzf -ErrorAction SilentlyContinue
+
+# -------- EXTERNAL TOOLS INIT --------
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
+Set-PsFzfOption -PSReadlineChordSetLocation 'Alt+c'
+
+# -------- ALIASES --------
+Set-Alias cat bat
+Set-Alias find fd
+Set-Alias grep rg
+Set-Alias v nvim
+Set-Alias fastcp robocopy
+
+function .. { Set-Location .. }
+function ... { Set-Location ../.. }
+
+# -------- FUNCTIONS --------
+if (Get-Command eza -ErrorAction SilentlyContinue) {
+	function ll {
+		eza --color=always --long --git --icons=always --no-user --no-time @args
+	}
+} else {
+	function ll {
+		Get-ChildItem @args
+	}
 }
-Set-Alias cat "bat"       
-Set-Alias find "fd"  
-Set-Alias grep "rg"     
-Set-Alias v "nvim"     
-Set-Alias fastcp "robocopy"
-Set-Alias "&&" ";"
 
-# --- CUSTOM ALIASES ---
+function gitree {
+	git log --graph --oneline --all --decorate --color=always
+}
+
 function nvims {
-    nvim --listen $env:NVIM_LISTEN_ADDRESS $args
+	if (-not $env:NVIM_LISTEN_ADDRESS) {
+		$env:NVIM_LISTEN_ADDRESS = "127.0.0.1:6666"
+	}
+	nvim --listen $env:NVIM_LISTEN_ADDRESS @args
 }
+
 function zv {
-    param (
-        [Parameter(ValueFromRemainingArguments = $true)]
-        [string[]]$Args
-    )
-    z @Args
-    v
+	param ([Parameter(ValueFromRemainingArguments = $true)][string[]]$Args)
+	if (Get-Command z -ErrorAction SilentlyContinue) {
+		z @Args
+		nvim
+	}
 }
-function fetch {
-    fastfetch -c examples/13
+
+function fedit {
+	nvim (fd --type f | fzf --preview "bat --style=numbers --color=always {}")
 }
-function ncdu {
-	dua i
-}
+
 function dif {
-    param(
-        [string]$file1,
-        [string]$file2
-    )
-    Compare-Object (Get-Content $file1) (Get-Content $file2) |
-        Select-Object SideIndicator, InputObject
+	param([string]$file1, [string]$file2)
+	git diff --no-index $file1 $file2
 }
+
 function psln ($target, $link) {
-    New-Item -Path $link -ItemType SymbolicLink -Value $target
+	New-Item -Path $link -ItemType SymbolicLink -Value $target
 }
-function ascii {
-    less "$HOME\.local\share\ascii.txt"
-}
+
+function fetch { fastfetch -c examples/13 }
+function ncdu { dua i }
+function ascii { less "$HOME\.local\share\ascii.txt" }
 
 function Start-Conda {
-    If (Test-Path "C:\Users\ltumi\miniforge3\Scripts\conda.exe") {
-        (& "C:\Users\ltumi\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Where-Object{$_} | Invoke-Expression
-        Write-Host "Conda initialized successfully!" -ForegroundColor Green
-    } else {
-        Write-Host "Conda not found at C:\Users\ltumi\miniforge3\Scripts\conda.exe" -ForegroundColor Red
-    }
+	$condaPath = "$HOME\miniforge3\Scripts\conda.exe"
+	if (Test-Path $condaPath) {
+		(& $condaPath "shell.powershell" "hook") | Out-String | Invoke-Expression
+		Write-Host "Conda initialized" -ForegroundColor Green
+	} else {
+		Write-Host "Conda not found" -ForegroundColor Red
+	}
 }
-Set-Alias "condaactivate" Start-Conda
+Set-Alias condaactivate Start-Conda
 
-# --- Load Custom Scripts
+# -------- CUSTOM SCRIPTS --------
 . "$HOME\Documents\PowerShell\Scripts\venv.ps1"
 . "$HOME\Documents\PowerShell\Scripts\ai.ps1"
-
-# --- FZF Integration ---
-# --- Function to search files + open in default editor ---
-function fedit {
-    $file = fd --type f | fzf
-    if ($file) { nvim $file }
-}
-
-# --- Nvim Server Address ---
-# $env:NVIM_LISTEN_ADDRESS="127.0.0.1:6666"
-
-# --- BAT as Default Pager ---
-# $env:PAGER = "bat"
-$env:BAT_THEME = "Nord"
-
-# --- FZF Default Options ---
-$env:FZF_DEFAULT_COMMAND = "fd --type f --hidden --exclude .git"
-$env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse --border --preview 'bat --color=always --style=plain --line-range=:200 {}'"
-
-# --- RIPGREP Defaults ---
-$env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
