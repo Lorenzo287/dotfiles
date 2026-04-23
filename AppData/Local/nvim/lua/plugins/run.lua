@@ -18,6 +18,7 @@ return {
 				filetype = {
 					lua = { "lua54" }, -- by default uses nvim api
 					python = "python", -- default is unbuffered (-u)
+					toyforth = "C:/Users/ltumi/OneDrive/CLOUD/CODE/C/antirez/toy_forth/build/toy_forth.exe"
 				},
 			})
 			vim.keymap.set("n", "<leader><CR>", "<cmd>RunCode<CR>", { desc = "Run code" })

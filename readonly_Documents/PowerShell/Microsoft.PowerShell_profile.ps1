@@ -112,6 +112,24 @@ function psln ($target, $link) {
 	New-Item -Path $link -ItemType SymbolicLink -Value $target
 }
 
+function start-claude-local {
+    $env:ANTHROPIC_AUTH_TOKEN="freecc"
+    $env:ANTHROPIC_BASE_URL="http://localhost:8082"
+    claude
+}
+
+function ccc {
+    $cwd = (Get-Location).Path
+    if ($env:WT_SESSION) {
+        wt -w 0 new-tab -d $cwd -p "PowerShell" free-claude-code
+        wt -w 0 new-tab -d $cwd -p "PowerShell" pwsh -NoLogo -NoExit -Command "start-claude-local"
+    }
+    else {
+        Start-Process free-claude-code -WorkingDirectory $cwd
+		start-claude-local
+    }
+}
+
 function fetch { fastfetch -c examples/13 }
 function ncdu { dua i }
 function ascii { less "$HOME\.local\share\ascii.txt" }
