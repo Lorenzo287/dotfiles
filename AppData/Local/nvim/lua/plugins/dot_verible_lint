@@ -1,0 +1,8 @@
+-module-port
+-module-filename
+-module-parameter
+-package-filename
+-parameter-name-style
+-signal-name-style
+-posix-eof
+line-length=length:80
