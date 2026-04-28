@@ -14,7 +14,9 @@ Set-PSReadLineOption -HistoryNoDuplicates
 Set-PSReadLineOption -MaximumHistoryCount 10000
 
 if ($Host.UI.SupportsVirtualTerminal) {
-	Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+	try {
+		Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+	} catch {}
 	Set-PSReadLineOption -PredictionViewStyle InlineView
 	Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[38;5;244m" }
 }
@@ -120,14 +122,24 @@ function start-claude-local {
 
 function ccc {
     $cwd = (Get-Location).Path
+    $configDir = Join-Path $HOME ".config/free-claude-code"
+    
     if ($env:WT_SESSION) {
-        wt -w 0 new-tab -d $cwd -p "PowerShell" free-claude-code
-        wt -w 0 new-tab -d $cwd -p "PowerShell" pwsh -NoLogo -NoExit -Command "start-claude-local"
+        wt -w 0 new-tab -d "$configDir" -p "PowerShell" free-claude-code
+        wt -w 0 new-tab -d "$cwd" -p "PowerShell" pwsh -NoLogo -NoExit -Command "start-claude-local"
     }
     else {
-        Start-Process free-claude-code -WorkingDirectory $cwd
-		start-claude-local
+        Start-Process free-claude-code -WorkingDirectory "$configDir"
+        start-claude-local
     }
+}
+
+# https://github.com/openai/codex/issues/17112
+# set sanbox settings in .codex/config.toml 
+Set-Alias cx codex 
+
+function hist {
+	nvim (Get-PSReadLineOption).HistorySavePath
 }
 
 function fetch { fastfetch -c examples/13 }

@@ -31,6 +31,8 @@ return {
 				"ruff", -- Py lint, format
 				-- "pyright", -- Py server
 				-- "black", -- Py format
+
+				"gopls", -- Go server
 			},
 		},
 	},
@@ -58,6 +60,11 @@ return {
 					},
 				},
 			})
+			vim.lsp.config("toyforth_lsp", {
+				cmd = { "C:\\toy_forth\\toyforth-lsp.exe" },
+				root_markers = { ".git", "README.md" },
+			})
+			vim.lsp.enable("toyforth_lsp")
 
 			vim.diagnostic.config({
 				virtual_text = true,
@@ -102,6 +109,29 @@ return {
 					null_ls.builtins.formatting.stylua,
 					null_ls.builtins.formatting.clang_format,
 					null_ls.builtins.formatting.prettier,
+					null_ls.builtins.formatting.verible_verilog_format.with({
+						args = {
+							"--column_limit=80",
+							"--indentation_spaces=4",
+							"--wrap_spaces=4",
+							"--try_wrap_long_lines=true",
+							"--wrap_end_else_clauses=false",
+							"--assignment_statement_alignment=flush-left",
+							"--port_declarations_alignment=flush-left",
+							"--named_port_alignment=flush-left",
+							"--named_parameter_alignment=flush-left",
+							"--formal_parameters_alignment=flush-left",
+							"--module_net_variable_alignment=flush-left",
+							"--struct_union_members_alignment=flush-left",
+							"--class_member_variable_alignment=flush-left",
+							"--case_items_alignment=flush-left",
+							"--port_declarations_indentation=indent",
+							"--named_port_indentation=indent",
+							"--named_parameter_indentation=indent",
+							"--formal_parameters_indentation=indent",
+							"$FILENAME", -- null-ls requires this at the end
+						},
+					}),
 					null_ls.builtins.formatting.emacs_vhdl_mode.with({
 						args = {
 							"-batch",

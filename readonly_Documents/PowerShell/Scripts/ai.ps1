@@ -11,7 +11,7 @@ function ai {
     $choice = (Read-Host "Select AI").ToLower()
 
     switch ($choice) {
-        { $_ -in "1","claude" } { claude; break }
+        { $_ -in "1","claude" } { ccc; break }
         { $_ -in "2","gemini" } { gemini; break }
         { $_ -in "3","opencode" } { opencode; break }
         { $_ -in "4","codex" } { codex; break }

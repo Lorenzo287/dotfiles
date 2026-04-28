@@ -36,20 +36,13 @@ return {
 
 		require("nvim-treesitter.parsers").get_parser_configs().toyforth = {
 			install_info = {
-				url = "C:/Users/ltumi/OneDrive/CLOUD/CODE/C/antirez/toy_forth/tools/tree-sitter-toyforth",
+				url = "C:/toy_forth/tree-sitter-toyforth",
 				files = { "src/parser.c" },
 				branch = "main",
 			},
 			filetype = "toyforth",
 		}
-		-- must manually copy queries to ~/AppData/Local/nvim/queries/toyforth/*.scm,
-		-- alternatively add the repo to the nvim run time path
-		vim.opt.rtp:append("C:/Users/ltumi/OneDrive/CLOUD/CODE/C/antirez/toy_forth/tools/tree-sitter-toyforth")
-		vim.filetype.add({
-			extension = {
-				fth = "toyforth",
-				tf = "toyforth",
-			},
-		})
+		-- Add queries to runtime path
+		vim.opt.rtp:append("C:/toy_forth/tree-sitter-toyforth")
 	end,
 }

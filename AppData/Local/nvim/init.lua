@@ -57,6 +57,8 @@ end)
 vim.filetype.add({
 	extension = {
 		h = "c",
+		fth = "toyforth",
+		tf = "toyforth",
 	},
 })
 
