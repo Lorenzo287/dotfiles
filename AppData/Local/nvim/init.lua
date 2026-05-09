@@ -35,6 +35,7 @@ vim.opt.timeoutlen = 300
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
 vim.opt.showtabline = 0
+vim.opt.fileformats = { "unix", "dos" }
 -- vim.opt.shell = "pwsh -NoLogo"
 
 -- these are overruled when indentexpr is set (eg by treesitter)

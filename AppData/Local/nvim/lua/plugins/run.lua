@@ -16,9 +16,12 @@ return {
 				},
 				float = { border = BORDER },
 				filetype = {
-					lua = { "lua54" }, -- by default uses nvim api
-					python = "python", -- default is unbuffered (-u)
-					toyforth = "tf"
+					lua = "lua54", -- by default uses nvim api
+					-- lua = 'pwsh -NoProfile -Command "lua54 \"$file\""',
+					python = "python",
+					-- python = 'pwsh -NoProfile -Command "python "$file""',
+					toyforth = "tf",
+					verilog = 'pwsh -NoProfile -ExecutionPolicy Bypass -File "C:/iverilog/bin/simulate.ps1" "$file"',
 				},
 			})
 			vim.keymap.set("n", "<leader><CR>", "<cmd>RunCode<CR>", { desc = "Run code" })

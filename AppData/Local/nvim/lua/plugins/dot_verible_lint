@@ -5,4 +5,8 @@
 -parameter-name-style
 -signal-name-style
 -posix-eof
-line-length=length:80
+-no-tabs
+-always-comb
+-case-missing-default
+-explicit-parameter-storage-type
+-explicit-task-lifetime

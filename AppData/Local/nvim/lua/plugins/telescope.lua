@@ -4,6 +4,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
+			"nvim-telescope/telescope-live-grep-args.nvim",
 			-- "debugloop/telescope-undo.nvim",
 		},
 		config = function()
@@ -42,12 +43,14 @@ return {
 
 			telescope.load_extension("ui-select")
 			telescope.load_extension("ascii")
+			telescope.load_extension("live_grep_args")
 			-- telescope.load_extension("undo")
 			-- telescope.load_extension("refactoring")
 
 			local builtin = require("telescope.builtin")
+			local extension = require("telescope").extensions
 			vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Telescope Find files" })
-			vim.keymap.set("n", "<leader>tg", builtin.live_grep, { desc = "Telescope Live grep" })
+			vim.keymap.set("n", "<leader>tg", extension.live_grep_args.live_grep_args, { desc = "Telescope Live grep" })
 			vim.keymap.set("n", "<leader>tc", builtin.colorscheme, { desc = "Telescope Colorscheme" })
 			vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope Keymaps" })
 			vim.keymap.set("n", "<leader>ta", "<cmd>Telescope ascii<CR>", { desc = "Telescope Ascii" })
