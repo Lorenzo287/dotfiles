@@ -17,7 +17,7 @@ if ($Host.UI.SupportsVirtualTerminal) {
 	try {
 		Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 	} catch {}
-	Set-PSReadLineOption -PredictionViewStyle InlineView
+	Set-PSReadLineOption -PredictionViewStyle InlineView #ListView
 	Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[38;5;244m" }
 }
 
@@ -54,6 +54,7 @@ $env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
 Import-Module Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
 Import-Module posh-direnv -ErrorAction SilentlyContinue
 Import-Module PSFzf -ErrorAction SilentlyContinue
+Import-Module -Name Terminal-Icons
 
 # -------- EXTERNAL TOOLS INIT --------
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
