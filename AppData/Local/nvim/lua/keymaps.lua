@@ -42,6 +42,14 @@ vim.keymap.set("n", "<leader>kb", function()
 	insert_snippet("nob.c")
 end, { desc = "Insert NOB build system" })
 
+vim.keymap.set("n", "<leader>kan", function()
+	insert_snippet("template_nasm.asm")
+end, { desc = "Insert nasm template" })
+
+vim.keymap.set("n", "<leader>kam", function()
+	insert_snippet("template_masm.asm")
+end, { desc = "Insert masm template" })
+
 vim.keymap.set("n", "<leader>i", function()
 	---@diagnostic disable-next-line: undefined-field
 	if vim.opt.spell:get() then

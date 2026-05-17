@@ -2,7 +2,10 @@ return {
 	{
 		"saghen/blink.cmp",
 		event = "VeryLazy",
-		-- dependencies = { "rafamadriz/friendly-snippets" },
+		dependencies = {
+			"saghen/blink.lib",
+			-- "rafamadriz/friendly-snippets",
+		},
 		version = "1.*",
 		opts = {
 			keymap = {
@@ -50,44 +53,62 @@ return {
 				},
 			},
 
-			sources = { default = { "lsp", "path", "buffer" } }, -- "snippets"
+			sources = {
+				default = function()
+					local sources = { "lsp", "path", "buffer" } -- "snippets"
+					if vim.g.copilot_enabled then
+						table.insert(sources, "copilot")
+					end
+					return sources
+				end,
+				providers = {
+					copilot = {
+						name = "copilot",
+						module = "blink-cmp-copilot",
+						score_offset = 100,
+						async = true,
+					},
+				},
+			},
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 	},
 	{
-		"github/copilot.vim",
+		"giuxtaposition/blink-cmp-copilot",
 		lazy = true,
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		opts = {
+			suggestion = { enabled = false },
+			panel = { enabled = false },
+		},
+		init = function()
+			vim.g.copilot_enabled = false
+		end,
 		keys = {
 			{
 				"<leader>y",
 				function()
+					vim.g.copilot_enabled = not vim.g.copilot_enabled
 					if vim.g.copilot_enabled then
-						vim.cmd("Copilot disable")
-						vim.g.copilot_enabled = false
-						print("Copilot disabled")
-					else
+						require("lazy").load({
+							plugins = {
+								"copilot.lua",
+								"blink-cmp-copilot",
+							},
+						})
 						vim.cmd("Copilot enable")
-						vim.g.copilot_enabled = true
+						-- require("blink.cmp").show()
 						print("Copilot enabled")
+					else
+						vim.cmd("Copilot disable")
+						print("Copilot disabled")
 					end
 				end,
 				desc = "Toggle Copilot",
 			},
 		},
-		init = function()
-			vim.g.copilot_enabled = false
-		end,
 	},
-	-- {
-	-- 	"Exafunction/windsurf.nvim",
-	-- 	keys = {
-	-- 		{ "<leader>c", "<cmd>Codeium Toggle<CR>", desc = "Toggle Codeium" },
-	-- 	},
-	-- 	config = function()
-	-- 		require("codeium").setup({
-	-- 			enable_cmp_source = false,
-	-- 			virtual_text = { enabled = true },
-	-- 		})
-	-- 	end,
-	-- },
 }

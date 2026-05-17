@@ -63,14 +63,14 @@ return {
 			})
 		end,
 	},
-	{
-		"willothy/flatten.nvim",
-		lazy = false,
-		priority = 1001,
-		opts = {
-			integrations = {
-				wezterm = false,
-			},
-		},
-	},
+	-- {
+	-- 	"willothy/flatten.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1001,
+	-- 	opts = {
+	-- 		integrations = {
+	-- 			wezterm = false,
+	-- 		},
+	-- 	},
+	-- },
 }
