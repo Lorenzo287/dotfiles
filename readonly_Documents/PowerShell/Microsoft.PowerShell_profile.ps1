@@ -12,6 +12,7 @@ function OnViModeChange($mode) {
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
 Set-PSReadLineOption -HistoryNoDuplicates
 Set-PSReadLineOption -MaximumHistoryCount 10000
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 if ($Host.UI.SupportsVirtualTerminal) {
 	try {
@@ -54,13 +55,17 @@ $env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
 Import-Module Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
 Import-Module posh-direnv -ErrorAction SilentlyContinue
 Import-Module PSFzf -ErrorAction SilentlyContinue
-Import-Module -Name Terminal-Icons
+Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
 
 # -------- EXTERNAL TOOLS INIT --------
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
-Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
-Set-PsFzfOption -PSReadlineChordSetLocation 'Alt+c'
+if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+}
+if (Get-Module PSFzf) {
+    Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
+    Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
+    Set-PsFzfOption -PSReadlineChordSetLocation 'Alt+c'
+}
 
 # -------- ALIASES --------
 Set-Alias cat bat

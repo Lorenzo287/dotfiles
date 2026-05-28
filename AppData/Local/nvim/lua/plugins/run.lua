@@ -20,7 +20,7 @@ return {
 					-- lua = 'pwsh -NoProfile -Command "lua54 \"$file\""',
 					python = "python",
 					-- python = 'pwsh -NoProfile -Command "python "$file""',
-					toyforth = "tf",
+					toy = "toy",
 					verilog = 'pwsh -NoProfile -ExecutionPolicy Bypass -File "C:/iverilog/bin/simulate.ps1" "$file"',
 				},
 			})

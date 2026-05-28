@@ -34,15 +34,15 @@ return {
 			end,
 		})
 
-		require("nvim-treesitter.parsers").get_parser_configs().toyforth = {
+		require("nvim-treesitter.parsers").get_parser_configs().toyforth= {
 			install_info = {
-				url = "C:/toy_forth/tree-sitter-toyforth",
+				url = "C:/toy/tree-sitter-toyforth",
 				files = { "src/parser.c" },
 				branch = "main",
 			},
-			filetype = "toyforth",
+			filetype = "toy",
 		}
 		-- Add queries to runtime path
-		vim.opt.rtp:append("C:/toy_forth/tree-sitter-toyforth")
+		vim.opt.rtp:append("C:/toy/tree-sitter-toyforth")
 	end,
 }

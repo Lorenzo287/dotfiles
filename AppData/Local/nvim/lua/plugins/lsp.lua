@@ -60,12 +60,12 @@ return {
 					},
 				},
 			})
-			vim.lsp.config("toyforth_lsp", {
-				cmd = { "C:\\toy_forth\\toyforth-lsp.exe" },
-				filetypes = { "toyforth" },
+			vim.lsp.config("toyls", {
+				cmd = { "C:\\toy\\toyforth-lsp.exe" },
+				filetypes = { "toy" },
 				root_markers = { ".git", "README.md" },
 			})
-			vim.lsp.enable("toyforth_lsp")
+			vim.lsp.enable("toyls")
 			vim.lsp.config("verible", {
 				cmd = {
 					"verible-verilog-ls",
