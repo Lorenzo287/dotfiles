@@ -73,6 +73,9 @@ Set-Alias find fd
 Set-Alias grep rg
 Set-Alias v nvim
 Set-Alias fastcp robocopy
+# https://github.com/openai/codex/issues/17112
+# set sanbox settings in .codex/config.toml 
+Set-Alias cx codex 
 
 function .. { Set-Location .. }
 function ... { Set-Location ../.. }
@@ -140,12 +143,26 @@ function ccc {
     }
 }
 
-# https://github.com/openai/codex/issues/17112
-# set sanbox settings in .codex/config.toml 
-Set-Alias cx codex 
-
 function hist {
 	nvim (Get-PSReadLineOption).HistorySavePath
+}
+
+function lines {
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$ext
+    )
+    $files = (git ls-files) -replace '\r$'
+    if ($ext) {
+        $extset = $ext | foreach-object { if ($_ -notmatch '^\.') { ".$_" } else { $_ } }
+        $files = $files | where-object { $extset -contains [io.path]::getextension($_) }
+    }
+    if (-not $files) { write-host "no matching files."; return }
+    $results = $files | where-object { test-path $_ } | foreach-object {
+        [pscustomobject]@{ lines = (get-content $_).count; file = $_ }
+    } | sort-object lines -descending
+    $results | format-table -autosize
+    "`ntotal lines: $(($results | measure-object lines -sum).sum)"
 }
 
 function fetch { fastfetch -c examples/13 }
