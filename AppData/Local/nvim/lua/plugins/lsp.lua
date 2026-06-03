@@ -19,19 +19,14 @@ return {
 			-- this is useful when importing this config to a new computer to install lsp automatically
 			ensure_installed = {
 				"clangd", -- C server
-
 				"lua_ls", -- Lua server
 				"stylua", -- Lua format
-
 				"ts_ls", -- JS server
-
 				"tinymist", -- Typst server
-
 				"ty", -- Py server
 				"ruff", -- Py lint, format
 				-- "pyright", -- Py server
 				-- "black", -- Py format
-
 				"gopls", -- Go server
 			},
 		},

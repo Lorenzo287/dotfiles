@@ -31,6 +31,13 @@ return {
 					layout_config = {
 						prompt_position = "top",
 					},
+					vimgrep_arguments = {
+						"rg",
+						"--hidden",
+						"--vimgrep",
+						"--smart-case",
+						"--column",
+					},
 				},
 				extensions = {
 					["ui-select"] = {

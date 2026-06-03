@@ -20,6 +20,8 @@ return {
 					-- lua = 'pwsh -NoProfile -Command "lua54 \"$file\""',
 					python = "python",
 					-- python = 'pwsh -NoProfile -Command "python "$file""',
+					go = "go run",
+					clojure = "clj -M",
 					toy = "toy",
 					verilog = 'pwsh -NoProfile -ExecutionPolicy Bypass -File "C:/iverilog/bin/simulate.ps1" "$file"',
 				},
