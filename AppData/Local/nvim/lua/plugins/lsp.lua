@@ -28,6 +28,8 @@ return {
 				-- "pyright", -- Py server
 				-- "black", -- Py format
 				"gopls", -- Go server
+				"ols", -- Odin server
+				"clojure_lsp", -- Clojure server
 			},
 		},
 	},

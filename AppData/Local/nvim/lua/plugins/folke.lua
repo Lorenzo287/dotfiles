@@ -26,10 +26,18 @@ return {
 			bigfile = { enabled = true },
 			dashboard = { enabled = false },
 			explorer = { enabled = false }, -- neotree alternative
-			indent = { enabled = false },
+			indent = {
+				enabled = true,
+				animate = { enabled = false },
+				scope = { enabled = false }, -- this disables highlighting
+			},
 			input = { enabled = false },
 			picker = { enabled = false }, -- telescope alternative
-			notifier = { enabled = true },
+			notifier = {
+				enabled = true,
+				margin = { top = 0, right = 1000, bottom = 0 },
+				style = "compact", -- "compact", "fancy", "minimal"
+			},
 			quickfile = { enabled = true },
 			scope = { enabled = true },
 			scroll = { enabled = false },

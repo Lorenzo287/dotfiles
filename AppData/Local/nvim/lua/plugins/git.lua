@@ -11,6 +11,7 @@ return {
 			require("gitsigns").setup()
 			vim.keymap.set("n", "<leader>gh", ":Gitsigns preview_hunk<CR>", { desc = "Git Preview hunk" })
 			vim.keymap.set("n", "<leader>gb", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Git Toggle blame" })
+			vim.keymap.set("n", "<leader>gn", ":Gitsigns next_hunk<CR>", { desc = "Git Next hunk" })
 		end,
 	},
 }

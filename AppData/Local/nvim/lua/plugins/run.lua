@@ -21,6 +21,7 @@ return {
 					python = "python",
 					-- python = 'pwsh -NoProfile -Command "python "$file""',
 					go = "go run",
+					odin = "odin run $dir",
 					clojure = "clj -M",
 					toy = "toy",
 					verilog = 'pwsh -NoProfile -ExecutionPolicy Bypass -File "C:/iverilog/bin/simulate.ps1" "$file"',

@@ -1,5 +1,6 @@
 return {
 	"kawre/leetcode.nvim",
+	enabled = false,
 	lazy = true,
 	build = ":TSUpdate html",
 	dependencies = {

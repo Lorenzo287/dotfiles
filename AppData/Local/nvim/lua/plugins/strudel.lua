@@ -1,5 +1,6 @@
 return {
 	"gruvw/strudel.nvim",
+	enabled = false,
 	build = "npm install",
 	keys = {
 		{
