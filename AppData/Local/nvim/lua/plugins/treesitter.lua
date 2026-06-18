@@ -11,17 +11,10 @@ return {
 		local function add_custom_parsers()
 			local parsers = require("nvim-treesitter.parsers")
 
-			parsers.autohotkey = {
-				install_info = {
-					-- make the repo public to be able to connect
-					url = "https://github.com/Lorenzo287/tree-sitter-autohotkey.git",
-					branch = "master",
-				},
-			}
-
 			parsers.toyforth = {
 				install_info = {
 					path = "C:/toy/tree-sitter-toyforth",
+					queries = "queries/toyforth",
 				},
 			}
 		end
@@ -32,29 +25,18 @@ return {
 			callback = add_custom_parsers,
 		})
 
-		vim.treesitter.language.register("autohotkey", "autohotkey")
-
-		-- must manually copy queries to ~/AppData/Local/nvim/queries/autohotkey/*.scm
-		-- the default folder managed by treesitter should not be used
-		-- ( ~/AppData/Local/nvim-data/lazy/nvim-treesitter/queries/autohotkey/*.scm )
-
-		-- fallback to native nvim indentation
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "autohotkey",
-			callback = function(args)
-				vim.bo[args.buf].indentexpr = ""
-			end,
-		})
-
 		vim.treesitter.language.register("toyforth", "toy")
-		-- Add queries to runtime path
-		vim.opt.rtp:append("C:/toy/tree-sitter-toyforth")
+
+		local skip_filetypes = {
+			csv = true,
+		}
 
 		vim.api.nvim_create_autocmd("FileType", {
 			desc = "Enable Treesitter highlighting, indentation, and folds",
 			group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
 			callback = function(args)
-				if vim.bo[args.buf].filetype == "csv" then
+				local filetype = vim.bo[args.buf].filetype
+				if skip_filetypes[filetype] then
 					return
 				end
 
