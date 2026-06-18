@@ -44,8 +44,6 @@ vim.opt.smartindent = true -- recognizes syntax like '{'
 -- vim.opt.cindent = true -- more strict for c-like syntax
 
 -- "za" to fold
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 vim.opt.foldcolumn = "0"

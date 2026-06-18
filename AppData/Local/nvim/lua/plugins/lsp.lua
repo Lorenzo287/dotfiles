@@ -40,7 +40,7 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
-			vim.lsp.set_log_level("off")
+			vim.lsp.log.set_level("off")
 			vim.lsp.config("clangd", {
 				cmd = {
 					"clangd",

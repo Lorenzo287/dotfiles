@@ -29,15 +29,8 @@ return {
 	{ "EdenEast/nightfox.nvim", lazy = true },
 
 	{
-		"norcalli/nvim-colorizer.lua",
-		-- event = { "BufReadPre", "BufNewFile" },
-		event = "VeryLazy",
-		config = function()
-			require("colorizer").setup({
-				"*",
-			}, {
-				names = false,
-			})
-		end,
+		"catgoose/nvim-colorizer.lua",
+		event = { "BufReadPre", "BufNewFile" },
+		opts = { parsers = { names = { enable = false } } },
 	},
 }

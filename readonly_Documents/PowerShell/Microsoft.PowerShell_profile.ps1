@@ -148,21 +148,40 @@ function hist {
 }
 
 function lines {
+    [CmdletBinding()]
     param(
-        [Parameter(ValueFromRemainingArguments=$true)]
-        [string[]]$ext
+        [Parameter(Position=0, ValueFromRemainingArguments=$true)]
+        [string[]]$ext,
+
+        [string]$path = "."
     )
-    $files = (git ls-files) -replace '\r$'
-    if ($ext) {
-        $extset = $ext | foreach-object { if ($_ -notmatch '^\.') { ".$_" } else { $_ } }
-        $files = $files | where-object { $extset -contains [io.path]::getextension($_) }
+    
+    if (-not (Test-Path $path)) {
+        Write-Error "The path '$path' does not exist."
+        return
     }
-    if (-not $files) { write-host "no matching files."; return }
-    $results = $files | where-object { test-path $_ } | foreach-object {
-        [pscustomobject]@{ lines = (get-content $_).count; file = $_ }
-    } | sort-object lines -descending
-    $results | format-table -autosize
-    "`ntotal lines: $(($results | measure-object lines -sum).sum)"
+    
+    $fullPath = (Resolve-Path $path).Path
+
+    if (Test-Path (Join-Path $fullPath ".git")) {
+        $files = (git -C $fullPath ls-files) -replace '\r$' | ForEach-Object { Join-Path $fullPath $_ }
+    } else {
+        $files = Get-ChildItem -Path $fullPath -Recurse -File | Select-Object -ExpandProperty FullName
+    }
+
+    if ($ext) {
+        $extset = $ext | ForEach-Object { if ($_ -notmatch '^\.') { ".$_" } else { $_ } }
+        $files = $files | Where-Object { $extset -contains [IO.Path]::GetExtension($_) }
+    }
+    
+    if (-not $files) { Write-Host "no matching files."; return }
+    
+    $results = $files | Where-Object { Test-Path $_ } | ForEach-Object {
+        [PSCustomObject]@{ lines = @(Get-Content $_).Count; file = $_ }
+    } | Sort-Object lines -Descending
+    
+    $results | Format-Table -AutoSize
+    "`ntotal lines: $(($results | Measure-Object lines -Sum).Sum)"
 }
 
 function fetch { fastfetch -c examples/13 }
