@@ -18,6 +18,7 @@ vim.opt.winborder = BORDER
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
 vim.opt.wrap = true
+vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.cursorcolumn = false
 vim.opt.cursorline = true
