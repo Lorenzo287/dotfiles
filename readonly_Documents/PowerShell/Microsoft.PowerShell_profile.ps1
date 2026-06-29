@@ -72,6 +72,7 @@ Set-Alias cat bat
 Set-Alias find fd
 Set-Alias grep rg
 Set-Alias v nvim
+Set-Alias wc cloc 
 Set-Alias fastcp robocopy
 # https://github.com/openai/codex/issues/17112
 # set sanbox settings in .codex/config.toml 

@@ -16,14 +16,15 @@ return {
 				},
 				float = { border = BORDER },
 				filetype = {
-					lua = "lua54", -- by default uses nvim api
+					lua = "cd $dir && lua54 $fileName", -- by default uses nvim api
 					-- lua = 'pwsh -NoProfile -Command "lua54 \"$file\""',
-					python = "python",
+					python = "cd $dir && python -u $fileName",
 					-- python = 'pwsh -NoProfile -Command "python "$file""',
-					go = "go run",
-					odin = "odin run $dir",
-					clojure = "clj -M",
-					toy = "toy",
+					go = "cd $dir && go run $fileName",
+					odin = "cd $dir && odin run $dir",
+					clojure = "cd $dir && clj -M $fileName",
+					toy = "cd $dir && toy $fileName",
+					cuda = "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $fileNameWithoutExt",
 					verilog = 'pwsh -NoProfile -ExecutionPolicy Bypass -File "C:/iverilog/bin/simulate.ps1" "$file"',
 				},
 			})

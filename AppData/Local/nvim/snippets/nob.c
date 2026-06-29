@@ -7,13 +7,13 @@
 #define NOB_COMPILE_COMMANDS_IMPLEMENTATION
 #include <nob_compile_commands.h>
 
-#define BUILD_FOLDER "build/"
+#define BUILD_FOLDER ""
 #define SRC_FOLDER ""
 #define INCLUDE_FOLDER ""
 
 int main(int argc, char **argv) {
     GO_REBUILD_URSELF(argc, argv);
-    if (!mkdir_if_not_exists(BUILD_FOLDER)) return 1;
+    // if (!mkdir_if_not_exists(BUILD_FOLDER)) return 1;
 
     Cmd cmd = {0};
     nob_cc(&cmd);
@@ -29,9 +29,8 @@ int main(int argc, char **argv) {
     Cmd targets = {0};
     nob_cc_inputs(&targets, SRC_FOLDER "main.c");
 
-    if (!compile_commands(&cmd, &targets, BUILD_FOLDER "compile_commands.json")) {
-		return 1;
-	}
+	// if (!compile_commands(&cmd, &targets, 
+	// 				      BUILD_FOLDER "compile_commands.json")) return 1;
 
     nob_cc_output(&cmd, BUILD_FOLDER "main");
     cmd_extend(&cmd, &targets);

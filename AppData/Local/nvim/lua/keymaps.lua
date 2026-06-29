@@ -50,6 +50,10 @@ vim.keymap.set("n", "<leader>kam", function()
 	insert_snippet("template_masm.asm")
 end, { desc = "Insert masm template" })
 
+vim.keymap.set("n", "<leader>km", function()
+	insert_snippet("AGENTS.md")
+end, { desc = "Insert AGENTS template" })
+
 vim.keymap.set("n", "<leader>i", function()
 	---@diagnostic disable-next-line: undefined-field
 	if vim.opt.spell:get() then

@@ -93,10 +93,10 @@ return {
 			vim.keymap.set("n", "<leader>ln", vim.lsp.buf.rename, { desc = "LSP Rename" })
 			vim.keymap.set("n", "<leader>ll", function()
 				if vim.diagnostic.is_enabled() then
-					vim.diagnostic.disable()
+					vim.diagnostic.enable(false)
 					print("Diagnostics disabled")
 				else
-					vim.diagnostic.enable()
+					vim.diagnostic.enable(true)
 					print("Diagnostics enabled")
 				end
 			end, { desc = "LSP Toggle" })
