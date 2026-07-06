@@ -4,7 +4,15 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
-vim.g.python3_host_prog = vim.fn.expand("~/AppData/local/nvim/nvim_venv/Scripts/python")
+
+local env = require("utils.env")
+local python_host = env.is_windows and vim.fn.expand("~/AppData/Local/nvim/nvim_venv/Scripts/python.exe")
+	or vim.fn.expand("~/.local/share/nvim/nvim_venv/bin/python")
+if python_host then
+	if env.executable(python_host) then
+		vim.g.python3_host_prog = python_host
+	end
+end
 
 -- border can be set globally with vim.opt but not every plugin supports it,
 -- better to use a global variable for convenience

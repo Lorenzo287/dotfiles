@@ -1,4 +1,7 @@
+local env = require("utils.env")
+
 local state = { floating = { buf = -1, win = -1 } }
+local shell = env.default_shell()
 
 local function create_floating_window(opts)
 	opts = opts or {}
@@ -34,7 +37,7 @@ local toggle_terminal = function()
 	if not vim.api.nvim_win_is_valid(state.floating.win) then
 		state.floating = create_floating_window({ buf = state.floating.buf })
 		if vim.bo[state.floating.buf].buftype ~= "terminal" then
-			vim.cmd("terminal pwsh -NoLogo")
+			vim.cmd("terminal " .. shell)
 		end
 		vim.api.nvim_command("startinsert")
 	else
@@ -60,6 +63,6 @@ vim.api.nvim_create_user_command("Floaterminal", toggle_terminal, {})
 vim.api.nvim_create_user_command("FloaterminalClose", close_floating_terminal, {})
 vim.keymap.set({ "n", "t" }, "<leader>j", toggle_terminal, { desc = "Toggle floating terminal" })
 vim.keymap.set("n", "<leader>J", function()
-	vim.cmd("tab term pwsh -NoLogo")
+	vim.cmd("tab term " .. shell)
 	vim.api.nvim_command("startinsert")
 end, { desc = "Open terminal" })

@@ -40,6 +40,8 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
+			local env = require("utils.env")
+
 			vim.lsp.log.set_level("off")
 			vim.lsp.config("clangd", {
 				cmd = {
@@ -57,24 +59,32 @@ return {
 					},
 				},
 			})
-			vim.lsp.config("toyls", {
-				cmd = { "C:\\toy\\toyforth-lsp.exe" },
-				filetypes = { "toy" },
-				root_markers = { ".git", "README.md" },
-			})
-			vim.lsp.enable("toyls")
-			vim.lsp.config("verible", {
-				cmd = {
-					"verible-verilog-ls",
-					-- linting
-					"--rules_config=C:/Users/ltumi/AppData/Local/nvim/lua/plugins/.verible_lint",
-					-- formatting
-					"--column_limit=80",
-					"--indentation_spaces=4",
-					"--wrap_spaces=4",
-					"--try_wrap_long_lines=true",
-				},
-			})
+
+			local toyforth_lsp = "C:/toy/toyforth-lsp.exe"
+			if env.readable(toyforth_lsp) or env.executable("toyforth-lsp") then
+				vim.lsp.config("toyls", {
+					cmd = env.executable("toyforth-lsp") and { "toyforth-lsp" } or { toyforth_lsp },
+					filetypes = { "toy" },
+					root_markers = { ".git", "README.md" },
+				})
+				vim.lsp.enable("toyls")
+			end
+
+			local verible_ls = env.command_path("verible-verilog-ls")
+			if verible_ls then
+				vim.lsp.config("verible", {
+					cmd = {
+						verible_ls,
+						-- linting
+						"--rules_config=" .. env.config_path("lua", "plugins", ".verible_lint"),
+						-- formatting
+						"--column_limit=80",
+						"--indentation_spaces=4",
+						"--wrap_spaces=4",
+						"--try_wrap_long_lines=true",
+					},
+				})
+			end
 
 			vim.diagnostic.config({
 				virtual_text = true,
@@ -110,16 +120,32 @@ return {
 		"nvimtools/none-ls.nvim",
 		event = "VeryLazy",
 		config = function()
+			local env = require("utils.env")
 			local null_ls = require("null-ls")
 
 			-- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins
-			null_ls.setup({
-				border = BORDER,
-				sources = {
-					null_ls.builtins.formatting.stylua,
-					null_ls.builtins.formatting.clang_format,
-					null_ls.builtins.formatting.prettier,
-					null_ls.builtins.formatting.asmfmt,
+			local sources = {
+				null_ls.builtins.formatting.stylua,
+				null_ls.builtins.formatting.clang_format,
+				null_ls.builtins.formatting.prettier,
+				null_ls.builtins.formatting.asmfmt,
+				-- null_ls.builtins.formatting.black,
+
+				-- null_ls.builtins.diagnostics.cppcheck.with({
+				-- 	extra_args = function(params)
+				-- 		return {
+				-- 			params.bufname,
+				-- 			"--suppress=normalCheckLevelMaxBranches",
+				-- 			"--inline-suppr",
+				-- 			"--template=gcc",
+				-- 		}
+				-- 	end,
+				-- }),
+			}
+
+			if env.executable("emacs") then
+				table.insert(
+					sources,
 					null_ls.builtins.formatting.emacs_vhdl_mode.with({
 						args = {
 							"-batch",
@@ -127,22 +153,15 @@ return {
 							"--insert",
 							"$FILENAME",
 							"-l",
-							"C:/Users/ltumi/AppData/Local/nvim/lua/plugins/.emacs_vhdl_format.el",
+							env.config_path("lua", "plugins", ".emacs_vhdl_format.el"),
 						},
-					}),
-					-- null_ls.builtins.formatting.black,
+					})
+				)
+			end
 
-					-- null_ls.builtins.diagnostics.cppcheck.with({
-					-- 	extra_args = function(params)
-					-- 		return {
-					-- 			params.bufname,
-					-- 			"--suppress=normalCheckLevelMaxBranches",
-					-- 			"--inline-suppr",
-					-- 			"--template=gcc",
-					-- 		}
-					-- 	end,
-					-- }),
-				},
+			null_ls.setup({
+				border = BORDER,
+				sources = sources,
 			})
 			vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format file" })
 		end,

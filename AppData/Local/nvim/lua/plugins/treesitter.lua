@@ -4,6 +4,7 @@ return {
 	lazy = false,
 	build = ":TSUpdate",
 	config = function()
+		local env = require("utils.env")
 		require("nvim-treesitter").setup({
 			install_dir = vim.fn.stdpath("data") .. "/site",
 		})
@@ -11,12 +12,15 @@ return {
 		local function add_custom_parsers()
 			local parsers = require("nvim-treesitter.parsers")
 
-			parsers.toyforth = {
-				install_info = {
-					path = "C:/toy/tree-sitter-toyforth",
-					queries = "queries/toyforth",
-				},
-			}
+			local toyforth_parser = "C:/toy/tree-sitter-toyforth"
+			if env.isdir(toyforth_parser) then
+				parsers.toyforth = {
+					install_info = {
+						path = toyforth_parser,
+						queries = "queries/toyforth",
+					},
+				}
+			end
 		end
 
 		add_custom_parsers()
