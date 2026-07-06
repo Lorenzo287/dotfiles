@@ -1,6 +1,15 @@
 # Ignore generated or volatile files
 AppData/Local/nvim/lazy-lock.json
+.config/nvim/lazy-lock.json
 .glzr/glazewm/errors.log
 .glzr/zebar/errors.log
 .luarc.json
 
+# OS-specific config trees
+{{ if eq .chezmoi.os "windows" }}
+.config/nvim/**
+{{ else }}
+AppData/**
+Documents/PowerShell/**
+.glzr/**
+{{ end }}
