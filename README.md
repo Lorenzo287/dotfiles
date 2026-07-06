@@ -7,17 +7,15 @@ Personal configuration files managed with [chezmoi](https://www.chezmoi.io/).
 - **shell**: pwsh + oh-my-posh
 - **term**: Windows Terminal / WezTerm / Alacritty
 - **editor**: Neovim
-- **window manager**: GlazeWM / Zebar on Windows
 
 ## Requirements
 
 - chezmoi
 - git
 - Neovim **0.12+** on both Windows and Linux/WSL
-- ripgrep (`rg`) for Telescope
-- build tools / C compiler for Treesitter parsers
+- ripgrep for Telescope
 
-Avoid old distro Neovim packages if they are below 0.12.
+On Linux avoid old distro Neovim packages if they are below 0.12.
 
 ## Layout
 
