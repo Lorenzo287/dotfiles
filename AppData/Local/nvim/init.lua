@@ -1,6 +1,12 @@
 -- --------------------
 --  Global Variables
 -- --------------------
+if vim.fn.has("nvim-0.12") ~= 1 then
+	local version = tostring(vim.version())
+	vim.api.nvim_err_writeln("This config requires Neovim 0.12+; current version is " .. version)
+	return
+end
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true

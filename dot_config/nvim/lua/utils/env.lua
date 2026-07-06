@@ -5,23 +5,6 @@ M.is_linux = vim.fn.has("linux") == 1
 M.is_wsl = vim.fn.has("wsl") == 1
 M.is_macos = vim.fn.has("mac") == 1 or vim.fn.has("macunix") == 1
 
-local path_separator = M.is_windows and "\\" or "/"
-
-local function join_path(...)
-	if vim.fs and vim.fs.joinpath then
-		return vim.fs.joinpath(...)
-	end
-
-	local parts = { ... }
-	local result = table.remove(parts, 1) or ""
-	for _, part in ipairs(parts) do
-		if part ~= nil and part ~= "" then
-			result = result:gsub("[\\/]+$", "") .. path_separator .. tostring(part):gsub("^[\\/]+", "")
-		end
-	end
-	return result
-end
-
 function M.executable(cmd)
 	return vim.fn.executable(cmd) == 1
 end
@@ -35,11 +18,11 @@ function M.isdir(path)
 end
 
 function M.config_path(...)
-	return join_path(vim.fn.stdpath("config"), ...)
+	return vim.fs.joinpath(vim.fn.stdpath("config"), ...)
 end
 
 function M.data_path(...)
-	return join_path(vim.fn.stdpath("data"), ...)
+	return vim.fs.joinpath(vim.fn.stdpath("data"), ...)
 end
 
 function M.mason_bin(...)
