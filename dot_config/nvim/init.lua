@@ -21,7 +21,9 @@ BORDER = "rounded" -- "bold", "shadow", "rounded", "single", "double", "solid", 
 -- --------------------
 --  Options
 -- --------------------
-vim.opt.winborder = BORDER
+pcall(function()
+	vim.opt.winborder = BORDER
+end)
 
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
