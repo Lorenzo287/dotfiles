@@ -60,10 +60,10 @@ return {
 				},
 			})
 
-			local toyforth_lsp = "C:/toy/toyforth-lsp.exe"
-			if env.readable(toyforth_lsp) or env.executable("toyforth-lsp") then
+			local toy_lsp = "C:/toy/toy-lsp.exe"
+			if env.readable(toy_lsp) or env.executable("toy-lsp") then
 				vim.lsp.config("toyls", {
-					cmd = env.executable("toyforth-lsp") and { "toyforth-lsp" } or { toyforth_lsp },
+					cmd = env.executable("toy-lsp") and { "toy-lsp" } or { toy_lsp },
 					filetypes = { "toy" },
 					root_markers = { ".git", "README.md" },
 				})

@@ -12,12 +12,12 @@ return {
 		local function add_custom_parsers()
 			local parsers = require("nvim-treesitter.parsers")
 
-			local toyforth_parser = "C:/toy/tree-sitter-toyforth"
-			if env.isdir(toyforth_parser) then
-				parsers.toyforth = {
+			local toy_parser = "C:/toy/tree-sitter-toy"
+			if env.isdir(toy_parser) then
+				parsers.toy = {
 					install_info = {
-						path = toyforth_parser,
-						queries = "queries/toyforth",
+						path = toy_parser,
+						queries = "queries/toy",
 					},
 				}
 			end
@@ -29,7 +29,7 @@ return {
 			callback = add_custom_parsers,
 		})
 
-		vim.treesitter.language.register("toyforth", "toy")
+		vim.treesitter.language.register("toy", "toy")
 
 		local skip_filetypes = {
 			csv = true,

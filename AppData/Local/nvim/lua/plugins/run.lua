@@ -18,6 +18,7 @@ return {
 				clojure = "cd $dir && clj -M $fileName",
 				toy = "cd $dir && toy $fileName",
 				cuda = "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $fileNameWithoutExt",
+				haskell = "cd $dir && runghc $fileName"
 			}
 
 			if env.is_windows and env.readable("C:/iverilog/bin/simulate.ps1") then
