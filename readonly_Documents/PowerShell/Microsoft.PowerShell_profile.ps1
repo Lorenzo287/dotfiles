@@ -1,3 +1,16 @@
+# -------- TIMING DIAGNOSTICS --------
+# enable with "$env:PROFILE_TIMING = 1; pwsh"
+if ($env:PROFILE_TIMING) {
+	$__swTotal = [System.Diagnostics.Stopwatch]::StartNew()
+	$__sw = [System.Diagnostics.Stopwatch]::StartNew()
+	function __step($name) {
+		Write-Host ("{0,-28} {1,6:N0} ms" -f $name, $__sw.ElapsedMilliseconds) -ForegroundColor DarkGray
+		$__sw.Restart()
+	}
+} else {
+	function __step($name) {}
+}
+
 # -------- CORE SETTINGS --------
 Set-PSReadLineOption -EditMode Vi
 
@@ -23,6 +36,7 @@ if ($Host.UI.SupportsVirtualTerminal) {
 }
 
 $ErrorView = "ConciseView"
+__step "PSReadLine core"
 
 # -------- PROMPT (Oh My Posh + fallback) --------
 # https://windowsterminalthemes.dev/
@@ -40,6 +54,7 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
 		return " "
 	}
 }
+__step "Prompt (oh-my-posh)"
 
 # -------- ENVIRONMENT --------
 $env:EDITOR = "nvim"
@@ -50,22 +65,29 @@ $env:FZF_CTRL_T_OPTS = "--preview 'bat --color=always --style=plain --line-range
 $env:FZF_CTRL_R_OPTS = "--preview 'echo {} | bat --color=always --language=sh'"
 $env:BAT_THEME = "ansi"
 $env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
+__step "Environment vars"
 
 # -------- MODULES --------
-Import-Module Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
-Import-Module posh-direnv -ErrorAction SilentlyContinue
-Import-Module PSFzf -ErrorAction SilentlyContinue
-Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
+# deferred to PowerShell's idle event
+Register-EngineEvent -SourceIdentifier PowerShell.OnIdle -MaxTriggerCount 1 -Action {
+	Import-Module posh-direnv -ErrorAction SilentlyContinue
+	Import-Module Terminal-Icons -ErrorAction SilentlyContinue
+	Import-Module Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+	Import-Module PSFzf -ErrorAction SilentlyContinue
+	if (Get-Module PSFzf) {
+		Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
+		Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
+		Set-PsFzfOption -PSReadlineChordSetLocation 'Alt+c'
+	}
+} | Out-Null
+__step "  Modules: deferred registration"
+
 
 # -------- EXTERNAL TOOLS INIT --------
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
 }
-if (Get-Module PSFzf) {
-    Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
-    Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
-    Set-PsFzfOption -PSReadlineChordSetLocation 'Alt+c'
-}
+__step "External tools: zoxide"
 
 # -------- ALIASES --------
 Set-Alias cat bat
@@ -199,7 +221,14 @@ function Start-Conda {
 	}
 }
 Set-Alias condaactivate Start-Conda
+__step "Aliases & functions"
 
 # -------- CUSTOM SCRIPTS --------
-. "$HOME\Documents\PowerShell\Scripts\venv.ps1"
+# . "$HOME\Documents\PowerShell\Scripts\venv.ps1"
+# __step "venv.ps1"
 . "$HOME\Documents\PowerShell\Scripts\ai.ps1"
+__step "ai.ps1"
+
+if ($env:PROFILE_TIMING) {
+	Write-Host ("{0,-28} {1,6:N0} ms" -f "TOTAL", $__swTotal.ElapsedMilliseconds) -ForegroundColor Yellow
+}
