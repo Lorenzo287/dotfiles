@@ -34,7 +34,7 @@ return {
 		}
 		dap.adapters.toy = {
 			type = "executable",
-			command = "C:/toy/toy-dap.exe",
+			command = "C:/Toy/bin/toy-dap.exe",
 			options = { detached = false }, -- useful on Windows
 		}
 		dap.configurations.c = {

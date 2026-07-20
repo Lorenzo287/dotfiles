@@ -50,7 +50,11 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
 		if ($path -like "$HOME*") {
 			$path = $path -replace [regex]::Escape($HOME), '~'
 		}
-		Write-Host "`n$path ⮞ " -ForegroundColor Blue -NoNewline
+		$parts = $path -split '[\\/]'
+		if ($parts.Count -gt 3) {
+			$path = ".../" + (($parts | Select-Object -Last 2) -join "/")
+		}
+		Write-Host "$path ⮞" -ForegroundColor Blue -NoNewline
 		return " "
 	}
 }

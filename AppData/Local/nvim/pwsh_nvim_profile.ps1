@@ -10,17 +10,15 @@ $env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
 
 function prompt {
     $path = (Get-Location).Path
-
     if ($path -like "$HOME*") {
         $path = $path -replace [regex]::Escape($HOME), "~"
     }
-
     $parts = $path -split '[\\/]'
     if ($parts.Count -gt 3) {
         $path = ".../" + (($parts | Select-Object -Last 2) -join "/")
     }
-
-    "PS $path> "
+    Write-Host "$path ⮞" -ForegroundColor Blue -NoNewline
+    return " "
 }
 
 Set-Alias cat bat

@@ -12,7 +12,7 @@ return {
 		local function add_custom_parsers()
 			local parsers = require("nvim-treesitter.parsers")
 
-			local toy_parser = "C:/toy/tree-sitter-toy"
+			local toy_parser = "C:/Toy/share/toy/tree-sitter-toy"
 			if env.isdir(toy_parser) then
 				parsers.toy = {
 					install_info = {

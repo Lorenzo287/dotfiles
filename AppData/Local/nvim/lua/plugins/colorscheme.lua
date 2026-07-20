@@ -27,6 +27,7 @@ return {
 	{ "lunacookies/vim-colors-xcode", lazy = true },
 	{ "ribru17/bamboo.nvim", lazy = true },
 	{ "EdenEast/nightfox.nvim", lazy = true },
+	{ 'projekt0n/github-nvim-theme', name = 'github-theme', lazy = true },
 
 	{
 		"catgoose/nvim-colorizer.lua",
