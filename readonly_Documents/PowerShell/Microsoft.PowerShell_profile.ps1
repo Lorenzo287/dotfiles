@@ -72,9 +72,11 @@ $env:RIPGREP_CONFIG_PATH = "$HOME\.ripgreprc"
 __step "Environment vars"
 
 # -------- MODULES --------
+Import-Module posh-direnv -ErrorAction SilentlyContinue
+__step "  Modules: registration"
+
 # deferred to PowerShell's idle event
 Register-EngineEvent -SourceIdentifier PowerShell.OnIdle -MaxTriggerCount 1 -Action {
-	Import-Module posh-direnv -ErrorAction SilentlyContinue
 	Import-Module Terminal-Icons -ErrorAction SilentlyContinue
 	Import-Module Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
 	Import-Module PSFzf -ErrorAction SilentlyContinue

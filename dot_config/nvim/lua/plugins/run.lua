@@ -16,7 +16,7 @@ return {
 				go = "cd $dir && go run $fileName",
 				odin = "cd $dir && odin run $dir",
 				clojure = "cd $dir && clj -M $fileName",
-				toy = "cd $dir && toy $fileName",
+				toy = "cd $dir && toy --file $fileName",
 				cuda = "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $fileNameWithoutExt",
 				haskell = "cd $dir && runghc $fileName"
 			}
