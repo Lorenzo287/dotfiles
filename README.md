@@ -7,6 +7,7 @@ Personal configuration files managed with [chezmoi](https://www.chezmoi.io/).
 - **shell**: pwsh + oh-my-posh
 - **term**: Windows Terminal / WezTerm / Alacritty
 - **editor**: Neovim
+- **multiplexer**: Herdr
 
 ## Requirements
 
